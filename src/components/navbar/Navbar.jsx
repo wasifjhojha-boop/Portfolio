@@ -22,22 +22,29 @@ export default function Navbar() {
   const currentPath = window.location.pathname.replace(/\/$/, '') || '/'
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
+    // Lenis smooth-scroll drives window.scrollY without reliably firing
+    // native 'scroll' events, so a rAF poll is used instead of a listener.
+    let rafId
+    let wasScrolled = false
+
+    const tick = () => {
+      const scrolled = window.scrollY > 50
+      if (scrolled !== wasScrolled) {
+        wasScrolled = scrolled
+        setIsScrolled(scrolled)
       }
+      rafId = requestAnimationFrame(tick)
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    rafId = requestAnimationFrame(tick)
+
+    return () => cancelAnimationFrame(rafId)
   }, [])
 
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'py-4 bg-[#0a1628]/90 backdrop-blur-md border-b border-[#d4a13a]/20 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
+          ? 'py-4 bg-[#0d0b08]/90 backdrop-blur-lg border-b border-[#d4a13a]/20 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
           : 'py-6 bg-transparent'
       }`}
     >
@@ -72,7 +79,7 @@ export default function Navbar() {
             href={contact.resume}
             target="_blank"
             rel="noreferrer"
-            className="px-5 py-2 border border-[#d4a13a]/40 text-[#d4a13a] font-headings text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-gradient-to-r hover:from-[#d4a13a] hover:to-[#d4a13a] hover:text-[#0a1628] hover:border-[#d4a13a] transition-all duration-400 rounded-sm"
+            className="px-5 py-2 border border-[#d4a13a]/40 text-[#d4a13a] font-headings text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-gradient-to-r hover:from-[#d4a13a] hover:to-[#d4a13a] hover:text-[#0d0b08] hover:border-[#d4a13a] transition-all duration-400 rounded-sm"
           >
             Download CV
           </a>
@@ -96,7 +103,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="lg:hidden w-full bg-[#0a1628]/98 border-b border-[#d4a13a]/20 px-6 py-6 flex flex-col gap-4 shadow-xl backdrop-blur-lg"
+            className="lg:hidden w-full bg-[#0d0b08]/98 border-b border-[#d4a13a]/20 px-6 py-6 flex flex-col gap-4 shadow-xl backdrop-blur-lg"
           >
             {NAV_ITEMS.map((item) => (
               <a
@@ -116,7 +123,7 @@ export default function Navbar() {
               target="_blank"
               rel="noreferrer"
               onClick={() => setIsOpen(false)}
-              className="mt-4 text-center py-4 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0a1628] font-headings font-bold rounded-sm tracking-[0.2em] uppercase border border-[#d4a13a]"
+              className="mt-4 text-center py-4 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] font-headings font-bold rounded-sm tracking-[0.2em] uppercase border border-[#d4a13a]"
             >
               Download CV
             </a>

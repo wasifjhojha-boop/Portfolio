@@ -17,7 +17,7 @@ export default function Testimonials() {
   const current = testimonials[index]
 
   return (
-    <section id="testimonials" className="relative w-full py-24 bg-[#0a1628] border-t border-[#d4a13a]/10 overflow-hidden ambient-ocean">
+    <section id="testimonials" className="relative w-full py-24 bg-[#0d0b08] border-t border-[#d4a13a]/10 overflow-hidden ambient-ocean">
       {/* Background graphic */}
       <div className="absolute top-10 left-10 text-[#d4a13a] opacity-[0.02] pointer-events-none select-none">
         <FaQuoteLeft size={240} />
@@ -40,7 +40,7 @@ export default function Testimonials() {
         </div>
 
         {/* Carousel Container */}
-        <div className="relative bg-[#0a1628] border border-[#d4a13a]/20 p-8 md:p-12 shadow-[0_0_30px_rgba(212,161,58,0.05)] overflow-hidden min-h-[300px] flex flex-col justify-between rounded-sm">
+        <div className="relative bg-[#0d0b08] border border-[#d4a13a]/20 p-8 md:p-12 shadow-[0_0_30px_rgba(212,161,58,0.05)] overflow-hidden min-h-[300px] flex flex-col justify-between rounded-sm">
           <FaQuoteLeft className="text-[#d4a13a] text-3xl opacity-30 mb-6" />
 
           <AnimatePresence mode="wait">

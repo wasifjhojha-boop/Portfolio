@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Scene from '../three/Scene'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -58,7 +59,6 @@ const CHAPTERS = [
 export default function Hero() {
   const containerRef = useRef(null)
   const stickyRef = useRef(null)
-  const videoRef = useRef(null)
   const overlayRef = useRef(null)
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
@@ -70,7 +70,7 @@ export default function Hero() {
   const runeBarRef = useRef(null)
 
   const [activeChapter, setActiveChapter] = useState(0)
-  const [videoReady, setVideoReady] = useState(false)
+  const [ready, setReady] = useState(false)
 
   const prevChapter = useRef(-1)
 
@@ -119,59 +119,21 @@ export default function Hero() {
     }
   }
 
-  // Setup video metadata loaded listener
+  // Initialise chapter text + drop the loading veil once mounted
   useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const onReady = () => {
-      setTimeout(() => setVideoReady(true), 1200)
-    }
-
-    video.addEventListener('loadedmetadata', onReady)
-    if (video.readyState >= 1) onReady()
-
-    // Initialize text
     const ch0 = CHAPTERS[0]
     if (titleRef.current) titleRef.current.textContent = ch0.title
     if (subtitleRef.current) subtitleRef.current.textContent = ch0.subtitle
     if (bodyRef.current) bodyRef.current.textContent = ch0.body
     if (sigilRef.current) sigilRef.current.textContent = ch0.sigil
 
-    return () => video.removeEventListener('loadedmetadata', onReady)
+    const t = setTimeout(() => setReady(true), 700)
+    return () => clearTimeout(t)
   }, [])
 
-  // Setup GSAP ScrollTrigger
+  // Setup GSAP ScrollTrigger — chapter storytelling driven purely by scroll
   useEffect(() => {
-    if (!videoReady) return
-
-    const video = videoRef.current
-    const duration = video.duration || 1
     const scrollHeight = window.innerHeight * 6
-
-    let targetTime = 0
-    let currentTime = 0
-
-    // High performance ticker frame loop for hardware-smooth seeking
-    const updateVideoSeek = () => {
-      if (!video) return
-      
-      const diff = targetTime - currentTime
-      
-      // If we have scaled enough diff, slide the video playhead
-      if (Math.abs(diff) > 0.001) {
-        currentTime += diff * 0.12 // Lerping factor
-        
-        // Ensure currentTime stays in bounds of duration
-        const boundedTime = Math.max(0, Math.min(duration - 0.02, currentTime))
-        
-        if (video.readyState >= 2) {
-          video.currentTime = boundedTime
-        }
-      }
-    }
-
-    gsap.ticker.add(updateVideoSeek)
 
     // Pin viewport
     const pinTrigger = ScrollTrigger.create({
@@ -183,7 +145,7 @@ export default function Hero() {
       anticipatePin: 1,
     })
 
-    // Main scrub timeline
+    // Main scroll-linked timeline (chapters + progress + vignette)
     const scrubTl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
@@ -191,9 +153,6 @@ export default function Hero() {
         end: `+=${scrollHeight}`,
         scrub: 1.0,
         onUpdate: (self) => {
-          // Set target time which is smoothly reached by the ticker loop
-          targetTime = self.progress * duration
-
           // Bottom progress bar width
           if (progressRef.current) {
             progressRef.current.style.width = `${self.progress * 100}%`
@@ -215,7 +174,7 @@ export default function Hero() {
 
     // Subtle overlay color gradient shift
     gsap.to(overlayRef.current, {
-      background: 'linear-gradient(to top, rgba(10,22,40,0.95) 0%, rgba(10,22,40,0.2) 60%)',
+      background: 'linear-gradient(to top, rgba(13,11,8,0.95) 0%, rgba(13,11,8,0.2) 60%)',
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
@@ -251,17 +210,16 @@ export default function Hero() {
     return () => {
       scrubTl.kill()
       pinTrigger.kill()
-      gsap.ticker.remove(updateVideoSeek)
       ScrollTrigger.getAll().forEach((t) => t.kill())
     }
-  }, [videoReady])
+  }, [])
 
   return (
     <>
       {/* Loading Overlay */}
       <div
-        className={`fixed inset-0 bg-[#0a1628] z-[999] flex flex-col items-center justify-center gap-6 transition-all duration-1000 ${
-          videoReady ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        className={`fixed inset-0 bg-[#0d0b08] z-[999] flex flex-col items-center justify-center gap-6 transition-all duration-1000 ${
+          ready ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       >
         <div className="font-headings text-2xl md:text-3xl text-[#d4a13a] tracking-widest uppercase animate-pulse drop-shadow-[0_0_10px_rgba(212,161,58,0.3)]">
@@ -282,31 +240,23 @@ export default function Hero() {
         style={{ height: `${window.innerHeight * 6 + window.innerHeight}px` }}
       >
         {/* Sticky Viewport Wrapper */}
-        <div ref={stickyRef} className="sticky top-0 w-full h-screen overflow-hidden bg-[#0a1628]">
-          {/* Background Video */}
-          <video
-            ref={videoRef}
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            src="/video/one.mp4"
-            playsInline
-            muted
-            preload="auto"
-          />
+        <div ref={stickyRef} className="sticky top-0 w-full h-screen overflow-hidden bg-[#0d0b08]">
+          {/* 3D Ocean & Ship Scene (background) */}
+          <div className="absolute inset-0">
+            <Scene />
+          </div>
 
           {/* Vignette Layer */}
           <div
             ref={vignetteRef}
-            className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(10,22,40,0.9)_100%)] pointer-events-none z-10 transition-opacity duration-300"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(13,11,8,0.9)_100%)] pointer-events-none z-10 transition-opacity duration-300"
           />
 
           {/* Overlay Gradient */}
           <div
             ref={overlayRef}
-            className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/90 via-transparent to-transparent pointer-events-none z-10"
+            className="absolute inset-0 bg-gradient-to-t from-[#0d0b08]/90 via-transparent to-transparent pointer-events-none z-10"
           />
-
-          {/* Film Grain */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-10 bg-repeat bg-[size:180px] bg-[image:url('data:image/svg+xml,%3Csvg_viewBox=%220_0_200_200%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.9%22_numOctaves=%224%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
 
           {/* Corner Ornaments */}
           {['top-6 left-6', 'top-6 right-6 scale-x-[-1]', 'bottom-6 left-6 scale-y-[-1]', 'bottom-6 right-6 scale-[-1]'].map(
@@ -367,17 +317,17 @@ export default function Hero() {
             />
           </div>
 
-          {/* Centre CTAs over the video, independent from the bottom text panel */}
+          {/* Centre CTAs over the scene, independent from the bottom text panel */}
           <div className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 whitespace-nowrap sm:flex-row">
             <a
               href="/projects"
-              className="px-7 py-3.5 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0a1628] font-headings font-bold text-[10px] tracking-[0.2em] uppercase shadow-[0_6px_20px_-6px_rgba(212,161,58,0.6)] hover:shadow-[0_10px_28px_-6px_rgba(212,161,58,0.7)] hover:-translate-y-0.5 transition-all duration-300"
+              className="px-7 py-3.5 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-headings font-bold text-[10px] tracking-[0.2em] uppercase shadow-[0_6px_20px_-6px_rgba(212,161,58,0.6)] hover:shadow-[0_10px_28px_-6px_rgba(212,161,58,0.7)] hover:-translate-y-0.5 transition-all duration-300"
             >
               View Projects
             </a>
             <a
               href="/contact"
-              className="px-7 py-3.5 rounded-sm border border-[#d4a13a]/40 bg-[#0a1628]/50 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-[0.2em] uppercase hover:border-[#d4a13a] hover:bg-[#d4a13a]/10 hover:text-[#d4a13a] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
+              className="px-7 py-3.5 rounded-sm border border-[#d4a13a]/40 bg-[#0d0b08]/50 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-[0.2em] uppercase hover:border-[#d4a13a] hover:bg-[#d4a13a]/10 hover:text-[#d4a13a] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
             >
               Get In Touch
             </a>

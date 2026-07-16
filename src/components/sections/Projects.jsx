@@ -37,29 +37,44 @@ function ProjectCard({ project }) {
       transition={{ duration: 0.4 }}
       className="group relative flex flex-col p-[1px] rounded-sm bg-gradient-to-b from-[#d4a13a]/30 to-transparent overflow-hidden"
     >
-      <div className="w-full h-full bg-[#0e3b4f] p-6 flex flex-col relative z-10">
+      <div className="w-full h-full bg-[#1a1512] p-6 flex flex-col relative z-10">
         {/* Visual Header */}
         <div
-          className="w-full h-48 mb-6 bg-[#0a1628] relative overflow-hidden flex items-center justify-center border-b border-[#d4a13a]/10 cursor-pointer"
+          className="w-full h-48 mb-6 bg-[#0d0b08] relative overflow-hidden flex items-center justify-center border-b border-[#d4a13a]/10 cursor-pointer"
           style={{ borderTop: `3px solid ${style.color}` }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <div className="absolute w-32 h-32 rounded-full border border-[#d4a13a]/5 -top-8 -right-8" />
-          <div className="absolute w-40 h-40 rounded-full border border-[#d4a13a]/5 -bottom-12 -left-12" />
+          {project.image ? (
+            <>
+              <img
+                src={project.image}
+                alt={project.title}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b08]/95 via-[#0d0b08]/25 to-[#0d0b08]/10" />
+            </>
+          ) : (
+            <>
+              <div className="absolute w-32 h-32 rounded-full border border-[#d4a13a]/5 -top-8 -right-8" />
+              <div className="absolute w-40 h-40 rounded-full border border-[#d4a13a]/5 -bottom-12 -left-12" />
+            </>
+          )}
 
           <AnimatePresence mode="wait">
             {!hovered ? (
-              <motion.div
-                key="icon"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ type: 'spring', stiffness: 200, damping: 10 }}
-              >
-                <Icon size={40} className="text-white/10" />
-              </motion.div>
+              project.image ? null : (
+                <motion.div
+                  key="icon"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 10 }}
+                >
+                  <Icon size={40} className="text-white/10" />
+                </motion.div>
+              )
             ) : (
               <motion.p
                 key="desc"
@@ -67,7 +82,7 @@ function ProjectCard({ project }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25 }}
-                className="px-6 text-center text-[#8a8070] text-xs font-body leading-relaxed"
+                className="relative px-6 text-center text-[#f0e4c8] text-xs font-body leading-relaxed"
               >
                 {project.story ? project.story[0] : `${project.category} — ${project.topics.join(', ')}`}
               </motion.p>
@@ -75,7 +90,7 @@ function ProjectCard({ project }) {
           </AnimatePresence>
 
           {/* Impact Stats Overlay */}
-          <div className="absolute inset-x-4 bottom-4 p-3 bg-[#0e3b4f]/90 backdrop-blur-sm border border-[#d4a13a]/20 flex items-center gap-3">
+          <div className="absolute inset-x-4 bottom-4 p-3 bg-[#1a1512]/90 backdrop-blur-sm border border-[#d4a13a]/20 flex items-center gap-3">
             <FaScroll className="text-[#d4a13a] text-xs shrink-0" />
             <span className="text-[10px] font-headings tracking-widest text-[#f0e4c8] leading-tight">
               {impactLine(project)}
@@ -106,7 +121,7 @@ function ProjectCard({ project }) {
           ) : (
             <div className="flex flex-wrap gap-2 mb-6 flex-1">
               {project.topics.map((t) => (
-                <span key={t} className="text-[10px] font-body text-[#8a8070] bg-[#0a1628] px-2 py-1 rounded-sm">{t}</span>
+                <span key={t} className="text-[10px] font-body text-[#8a8070] bg-[#0d0b08] px-2 py-1 rounded-sm">{t}</span>
               ))}
             </div>
           )}
@@ -160,7 +175,7 @@ function ProjectCard({ project }) {
                   <h4 className="font-headings text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Responsibilities</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.responsibilities.map((r) => (
-                      <span key={r} className="text-[10px] font-body text-[#8a8070] bg-[#0a1628] px-2 py-1 rounded-sm">{r}</span>
+                      <span key={r} className="text-[10px] font-body text-[#8a8070] bg-[#0d0b08] px-2 py-1 rounded-sm">{r}</span>
                     ))}
                   </div>
                 </div>
@@ -170,7 +185,7 @@ function ProjectCard({ project }) {
                     <h4 className="font-headings text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">SEO Target Keywords</h4>
                     <div className="flex flex-wrap gap-2">
                       {project.seoKeywords.map((k) => (
-                        <span key={k} className="text-[10px] font-body text-[#8a8070] bg-[#0a1628] px-2 py-1 rounded-sm">{k}</span>
+                        <span key={k} className="text-[10px] font-body text-[#8a8070] bg-[#0d0b08] px-2 py-1 rounded-sm">{k}</span>
                       ))}
                     </div>
                   </div>
@@ -215,7 +230,7 @@ export default function Projects() {
   )
 
   return (
-    <section id="projects" className="relative w-full py-24 bg-[#0a1628] overflow-hidden ambient-ocean">
+    <section id="projects" className="relative w-full py-24 bg-[#0d0b08] overflow-hidden ambient-ocean">
       {/* Decorative texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')]" />
 
@@ -269,7 +284,7 @@ export default function Projects() {
           {demoWebsites.map((name) => (
             <div
               key={name}
-              className="aspect-square flex items-center justify-center text-center p-3 bg-[#0e3b4f]/20 border border-[#d4a13a]/5 rounded-sm text-[#8a8070] text-xs font-body"
+              className="aspect-square flex items-center justify-center text-center p-3 bg-[#1a1512]/20 border border-[#d4a13a]/5 rounded-sm text-[#8a8070] text-xs font-body"
             >
               {name}
             </div>

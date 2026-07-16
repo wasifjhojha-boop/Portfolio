@@ -15,7 +15,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative bg-[#0a1628] pt-24 pb-12 overflow-hidden border-t-2 border-[#d4a13a]/20">
+    <footer className="relative bg-[#0d0b08] pt-24 pb-12 overflow-hidden border-t-2 border-[#d4a13a]/20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 border-b border-[#d4a13a]/10 pb-12">
           {/* Logo & Slogan */}
@@ -32,7 +32,7 @@ export default function Footer() {
           <div className="flex items-center gap-6">
             <a
               href={`mailto:${contact.email}`}
-              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#0e3b4f]"
+              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#1a1512]"
               aria-label="Email"
             >
               <FaEnvelope size={18} />
@@ -41,7 +41,7 @@ export default function Footer() {
               href={contact.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#0e3b4f]"
+              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#1a1512]"
               aria-label="LinkedIn"
             >
               <FaLinkedin size={18} />
@@ -50,7 +50,7 @@ export default function Footer() {
               href={contact.github}
               target="_blank"
               rel="noreferrer"
-              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#0e3b4f]"
+              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#1a1512]"
               aria-label="GitHub"
             >
               <FaGithub size={18} />
@@ -59,7 +59,7 @@ export default function Footer() {
               href={`https://wa.me/${contact.whatsapp}`}
               target="_blank"
               rel="noreferrer"
-              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#0e3b4f]"
+              className="w-12 h-12 rounded-sm border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a] hover:-translate-y-1 transition-all duration-300 bg-[#1a1512]"
               aria-label="WhatsApp"
             >
               <FaWhatsapp size={18} />

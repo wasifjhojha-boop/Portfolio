@@ -35,6 +35,7 @@ export const projects = [
     techStack: ["React", "FastAPI", "MongoDB", "WordPress", "Tailwind", "Vercel", "GA4", "GSC", "Schema.org"],
     github: "https://github.com/wasifjhojha-boop/jurisroots",
     demo: "https://jurisroots.vercel.app",
+    image: "/projects/jurisroots.jpg",
   },
   {
     status: "detailed",
@@ -63,6 +64,7 @@ export const projects = [
       "Meta campaign: 74K reach, 266 landing page views, ₹2.62 cost per landing page view",
     ],
     techStack: ["Google Ads", "Meta Ads", "Google Analytics", "Search Console"],
+    image: "/projects/muqeem-brothers.svg",
   },
   {
     status: "detailed",
@@ -80,6 +82,7 @@ export const projects = [
     challenges: ["Launching a full store solo, end to end, on a new platform"],
     results: ["Fully functional e-commerce store shipped and run to close"],
     techStack: ["Shopify", "On-Page SEO"],
+    image: "/projects/flowzle.svg",
   },
   {
     status: "pending",
@@ -87,6 +90,7 @@ export const projects = [
     title: "Business Service Websites (2 Projects)",
     category: "WordPress",
     topics: ["Google Sites", "Responsive Design", "Content Structuring", "Basic SEO"],
+    image: "/projects/google-sites-business.svg",
   },
   {
     status: "pending",
@@ -94,6 +98,7 @@ export const projects = [
     title: "Scrap Traders",
     category: "Marketing",
     topics: ["Problem", "Business Goals", "Research", "Wireframes", "Development", "SEO", "Deployment", "Future Plans"],
+    image: "/projects/scrap-traders.svg",
   },
   {
     status: "pending",
@@ -101,6 +106,7 @@ export const projects = [
     title: "LinearDial — Luxury Watches",
     category: "Engineering",
     topics: ["UI", "Performance", "Maintenance", "Optimization"],
+    image: "/projects/lineardial.svg",
   },
   {
     status: "pending",
@@ -108,6 +114,7 @@ export const projects = [
     title: "Zawaz Studio — Ethical Wear & Fashion",
     category: "WordPress",
     topics: ["Brand Identity", "Luxury UI", "Responsive Design", "Shopping Experience", "Site Architecture", "Modern Design", "3D Elements"],
+    image: "/projects/zawaz-studio.png",
   },
   {
     status: "pending",
@@ -115,6 +122,7 @@ export const projects = [
     title: "Zamzam Pet Shop",
     category: "WordPress",
     topics: ["Minimal Design", "Color Palette", "E-commerce Ready"],
+    image: "/projects/pet-shop.svg",
   },
 ];
 

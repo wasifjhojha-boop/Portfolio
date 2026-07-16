@@ -48,10 +48,10 @@ const STATS = [
 
 export default function About() {
   return (
-    <section id="about" className="relative w-full py-24 md:py-32 bg-[#0a1628] overflow-hidden">
+    <section id="about" className="relative w-full py-24 md:py-32 bg-[#0d0b08] overflow-hidden">
       {/* Decorative background grid & ambient light */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#d4a13a_1px,transparent_1px),linear-gradient(to_bottom,#d4a13a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,transparent_20%,#0a1628_100%)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,transparent_20%,#0d0b08_100%)]" />
       
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
@@ -71,33 +71,38 @@ export default function About() {
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Glassmorphic Astrolabe/Seal Card */}
+          {/* Left Column: Portrait in a gold porthole frame */}
           <div className="lg:col-span-5 flex justify-center">
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.4 }}
-              className="relative w-full max-w-sm aspect-square rounded-full border-2 border-[#d4a13a]/20 bg-[#0e3b4f]/80 backdrop-blur-md p-8 flex flex-col items-center justify-center shadow-[0_0_40px_rgba(212,161,58,0.05)] overflow-hidden group"
+              className="relative w-full max-w-sm aspect-square rounded-full border-[6px] border-[#1a1512] shadow-[0_0_0_2px_rgba(212,161,58,0.4),0_0_50px_rgba(212,161,58,0.1)] overflow-hidden group"
             >
-              {/* Outer compass ring */}
-              <div className="absolute w-[85%] h-[85%] rounded-full border-2 border-dashed border-[#d4a13a]/30 flex items-center justify-center animate-spin-slow" />
-              
-              {/* Gold compass markings */}
-              <div className="absolute top-6 text-[#d4a13a]/60 font-headings text-sm font-bold tracking-widest">XII</div>
-              <div className="absolute right-6 text-[#d4a13a]/60 font-headings text-sm font-bold tracking-widest">III</div>
-              <div className="absolute bottom-6 text-[#d4a13a]/60 font-headings text-sm font-bold tracking-widest">VI</div>
-              <div className="absolute left-6 text-[#d4a13a]/60 font-headings text-sm font-bold tracking-widest">IX</div>
+              {/* Portrait photo, clipped into the porthole */}
+              <img
+                src="/wasif-photo.jpg"
+                alt="Mohd Wasif"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b08]/70 via-transparent to-transparent" />
 
-              {/* Decorative inner graphics (Sun Spear/Astrolabe style) */}
-              <div className="w-[65%] h-[65%] rounded-full border border-[#d4a13a]/40 flex items-center justify-center relative">
-                <div className="absolute w-[2px] h-[85%] bg-gradient-to-b from-[#d4a13a] via-[#f0e4c8] to-transparent transform rotate-45" />
-                <div className="absolute w-[2px] h-[85%] bg-gradient-to-b from-[#d4a13a] via-[#f0e4c8] to-transparent transform -rotate-45" />
-                <div className="w-12 h-12 rounded-full bg-[#0a1628] border-2 border-[#d4a13a] z-10 flex items-center justify-center shadow-[0_0_15px_rgba(212,161,58,0.5)]">
-                  <div className="w-3 h-3 rounded-full bg-[#f0e4c8] animate-pulse" />
-                </div>
-              </div>
+              {/* Porthole glass rim + bolts */}
+              <div className="absolute inset-0 rounded-full border-2 border-[#d4a13a]/30 pointer-events-none" />
+              <div className="absolute inset-[10px] rounded-full border border-[#f0e4c8]/10 pointer-events-none" />
+              {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+                <span
+                  key={deg}
+                  className="absolute w-1.5 h-1.5 rounded-full bg-[#d4a13a]/70 shadow-[0_0_4px_rgba(212,161,58,0.6)]"
+                  style={{
+                    top: `${50 - 47 * Math.cos((deg * Math.PI) / 180)}%`,
+                    left: `${50 + 47 * Math.sin((deg * Math.PI) / 180)}%`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                />
+              ))}
 
-              {/* Card Bottom Label */}
-              <div className="absolute bottom-16 text-center bg-[#0a1628]/80 px-4 py-1 border border-[#d4a13a]/20 rounded backdrop-blur-sm">
+              {/* Name Label */}
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center bg-[#0d0b08]/80 px-4 py-1 border border-[#d4a13a]/20 rounded backdrop-blur-sm z-10 pointer-events-none">
                 <p className="text-[#f0e4c8] font-headings text-sm tracking-widest uppercase">Mohd Wasif</p>
                 <p className="text-[#d4a13a] text-[9px] tracking-[0.2em] uppercase font-body mt-1">{bio.location}</p>
               </div>

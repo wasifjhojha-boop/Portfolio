@@ -4,7 +4,7 @@ import { certificates } from '../../content/certificates'
 
 export default function Certificates() {
   return (
-    <section id="certificates" className="relative w-full py-24 bg-[#0e3b4f] border-t border-[#d4a13a]/10 overflow-hidden ambient-ocean">
+    <section id="certificates" className="relative w-full py-24 bg-[#1a1512] border-t border-[#d4a13a]/10 overflow-hidden ambient-ocean">
       {/* Decorative texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')]" />
 
@@ -35,10 +35,10 @@ export default function Certificates() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
-                className="card-lift p-8 rounded-sm flex flex-col relative overflow-hidden group shadow-lg bg-[#0a1628] border border-[#d4a13a]/10"
+                className="card-lift p-8 rounded-sm flex flex-col relative overflow-hidden group shadow-lg bg-[#0d0b08] border border-[#d4a13a]/10"
               >
                 {cert.image ? (
-                  <div className="w-full aspect-[4/3] mb-6 rounded-sm overflow-hidden border border-[#d4a13a]/20 bg-[#0e3b4f]">
+                  <div className="w-full aspect-[4/3] mb-6 rounded-sm overflow-hidden border border-[#d4a13a]/20 bg-[#1a1512]">
                     <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
                   </div>
                 ) : (

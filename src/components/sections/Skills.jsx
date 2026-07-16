@@ -40,7 +40,7 @@ const SKILL_ICONS = {
 const TOOL_LEVEL_STYLE = {
   'Core Skill': 'bg-[#d4a13a]/15 text-[#d4a13a] border-[#d4a13a]/40',
   Advanced: 'bg-[#f0e4c8]/10 text-[#f0e4c8]/80 border-[#f0e4c8]/20',
-  'Currently Learning': 'bg-[#0e3b4f]/60 text-[#f0e4c8]/50 border-[#f0e4c8]/10',
+  'Currently Learning': 'bg-[#1a1512]/60 text-[#f0e4c8]/50 border-[#f0e4c8]/10',
 }
 
 const LEVEL_PERCENT = { Expert: 100, Advanced: 80, Intermediate: 60 }
@@ -80,7 +80,7 @@ function SkillCard({ skill }) {
       variants={itemVariants}
       whileHover={{ y: -6, scale: 1.03 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="p-6 rounded-sm relative overflow-hidden group shadow-lg bg-[#0e3b4f] border border-[#d4a13a]/10 hover:border-[#d4a13a]/40 hover:shadow-[0_10px_40px_rgba(212,161,58,0.15)] transition-colors duration-300"
+      className="p-6 rounded-sm relative overflow-hidden group shadow-lg bg-[#1a1512] border border-[#d4a13a]/10 hover:border-[#d4a13a]/40 hover:shadow-[0_10px_40px_rgba(212,161,58,0.15)] transition-colors duration-300"
     >
       {/* Top sheen on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-[linear-gradient(120deg,transparent_30%,rgba(212,161,58,0.08)_50%,transparent_70%)]" />
@@ -129,7 +129,7 @@ export default function Skills() {
   const skills = activeTab === 'engineering' ? developmentSkills : marketingSkills
 
   return (
-    <section id="skills" className="relative w-full py-24 bg-[#0a1628] overflow-hidden">
+    <section id="skills" className="relative w-full py-24 bg-[#0d0b08] overflow-hidden">
       {/* Ambient background textures */}
       <div className="absolute inset-0 opacity-[0.045] pointer-events-none bg-repeat bg-[size:220px] bg-[image:url('data:image/svg+xml,%3Csvg_viewBox=%220_0_300_300%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(0,0,0,0.65)_100%)]" />
@@ -233,7 +233,7 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: (gi % 2) * 0.08 }}
-                className="card-lift p-6 bg-[#0e3b4f]/40 border border-[#d4a13a]/10 rounded-sm"
+                className="card-lift p-6 bg-[#1a1512]/40 border border-[#d4a13a]/10 rounded-sm"
               >
                 <h4 className="font-headings text-xs font-bold tracking-[0.2em] uppercase text-[#f0e4c8] mb-4">
                   {group.category}

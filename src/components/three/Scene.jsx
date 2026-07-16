@@ -43,19 +43,19 @@ function CameraController() {
 
 export default function Scene() {
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none bg-[#0a1628]">
+    <div className="absolute inset-0 w-full h-full pointer-events-none bg-[#0d0b08]">
       <Canvas
         shadows
         camera={{ position: [0, 1.5, 9], fov: 42 }}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         onCreated={({ gl, scene }) => {
           // Dark ambient atmospheric fog to blend the ocean/sky into darkness
-          scene.fog = new THREE.FogExp2('#0a1628', 0.025)
-          gl.setClearColor('#0a1628')
+          scene.fog = new THREE.FogExp2('#0d0b08', 0.025)
+          gl.setClearColor('#0d0b08')
         }}
       >
         {/* Lights */}
-        <ambientLight intensity={0.45} color="#1f1a10" />
+        <ambientLight intensity={0.6} color="#3a2f1a" />
 
         {/* Directional Key Light (representing the low sun/sunrise) */}
         <directionalLight
@@ -72,8 +72,13 @@ export default function Scene() {
         <hemisphereLight
           intensity={0.8}
           color="#d4a13a"
-          groundColor="#0a1628"
+          groundColor="#0d0b08"
         />
+
+        {/* Front fill light — the sun above is purely backlighting the ship
+            from behind, so without this the camera-facing hull reads as a
+            near-black silhouette against the dark fog and looks invisible. */}
+        <pointLight position={[0, 4, 8]} intensity={1.4} color="#f0e4c8" distance={22} decay={2} />
 
         {/* 3D Scene Components */}
         <Ocean />

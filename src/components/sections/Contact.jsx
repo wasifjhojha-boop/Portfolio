@@ -3,6 +3,13 @@ import { motion } from 'framer-motion'
 import { FaFeatherAlt, FaEnvelope, FaWhatsapp, FaLinkedin, FaGithub } from 'react-icons/fa'
 import { contact } from '../../content/contact'
 
+const CHANNELS = [
+  { icon: FaEnvelope, label: 'Email', value: contact.email, href: `mailto:${contact.email}` },
+  { icon: FaWhatsapp, label: 'WhatsApp', value: contact.whatsappDisplay, href: `https://wa.me/${contact.whatsapp}`, external: true },
+  { icon: FaLinkedin, label: 'LinkedIn', value: 'mohd-wasif1', href: contact.linkedin, external: true },
+  { icon: FaGithub, label: 'GitHub', value: 'wasifjhojha-boop', href: contact.github, external: true },
+]
+
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
 
@@ -18,7 +25,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="relative w-full py-24 bg-[#0a1628] overflow-hidden border-t border-[#d4a13a]/10 ambient-ocean">
+    <section id="contact" className="relative w-full py-24 bg-[#0d0b08] overflow-hidden border-t border-[#d4a13a]/10 ambient-ocean">
       {/* Decorative texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')]" />
 
@@ -56,78 +63,35 @@ export default function Contact() {
                 Have a project in mind — SEO, paid ads, a new website, or all three? Reach out directly or use the form.
               </p>
 
-              {/* Direct coordinates grid */}
-              <div className="space-y-6">
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="flex items-center gap-4 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-sm border border-[#d4a13a]/20 bg-[#0e3b4f] flex items-center justify-center text-[#8a8070] group-hover:text-[#d4a13a] group-hover:border-[#d4a13a]/50 transition-all duration-300">
-                    <FaEnvelope size={14} />
-                  </div>
-                  <div>
-                    <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase">Email</p>
-                    <p className="text-[#f0e4c8] font-body text-sm font-semibold tracking-wide group-hover:text-[#d4a13a] transition-colors duration-300">
-                      {contact.email}
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href={`https://wa.me/${contact.whatsapp}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-4 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-sm border border-[#d4a13a]/20 bg-[#0e3b4f] flex items-center justify-center text-[#8a8070] group-hover:text-[#d4a13a] group-hover:border-[#d4a13a]/50 transition-all duration-300">
-                    <FaWhatsapp size={14} />
-                  </div>
-                  <div>
-                    <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase">WhatsApp</p>
-                    <p className="text-[#f0e4c8] font-body text-sm font-semibold tracking-wide group-hover:text-[#d4a13a] transition-colors duration-300">
-                      {contact.whatsappDisplay}
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href={contact.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-4 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-sm border border-[#d4a13a]/20 bg-[#0e3b4f] flex items-center justify-center text-[#8a8070] group-hover:text-[#d4a13a] group-hover:border-[#d4a13a]/50 transition-all duration-300">
-                    <FaLinkedin size={14} />
-                  </div>
-                  <div>
-                    <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase">LinkedIn</p>
-                    <p className="text-[#f0e4c8] font-body text-sm font-semibold tracking-wide group-hover:text-[#d4a13a] transition-colors duration-300">
-                      linkedin.com/in/mohd-wasif1
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href={contact.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-4 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-sm border border-[#d4a13a]/20 bg-[#0e3b4f] flex items-center justify-center text-[#8a8070] group-hover:text-[#d4a13a] group-hover:border-[#d4a13a]/50 transition-all duration-300">
-                    <FaGithub size={14} />
-                  </div>
-                  <div>
-                    <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase">GitHub</p>
-                    <p className="text-[#f0e4c8] font-body text-sm font-semibold tracking-wide group-hover:text-[#d4a13a] transition-colors duration-300">
-                      github.com/wasifjhojha-boop
-                    </p>
-                  </div>
-                </a>
+              {/* Contact cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {CHANNELS.map((channel) => {
+                  const Icon = channel.icon
+                  return (
+                    <a
+                      key={channel.label}
+                      href={channel.href}
+                      target={channel.external ? '_blank' : undefined}
+                      rel={channel.external ? 'noreferrer' : undefined}
+                      className="card-lift group flex flex-col gap-3 p-5 rounded-sm bg-[#1a1512] border border-[#d4a13a]/10"
+                    >
+                      <div className="w-11 h-11 rounded-sm border border-[#d4a13a]/25 bg-[#0d0b08] flex items-center justify-center text-[#d4a13a] group-hover:scale-110 transition-transform duration-300">
+                        <Icon size={16} />
+                      </div>
+                      <div>
+                        <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase">{channel.label}</p>
+                        <p className="text-[#f0e4c8] font-body text-sm font-semibold tracking-wide break-all group-hover:text-[#d4a13a] transition-colors duration-300">
+                          {channel.value}
+                        </p>
+                      </div>
+                    </a>
+                  )
+                })}
               </div>
             </div>
 
             {/* Location */}
-            <div className="mt-12 p-4 rounded-sm bg-[#0e3b4f] border border-[#d4a13a]/10 flex items-center justify-between text-xs text-[#8a8070]">
+            <div className="mt-8 p-4 rounded-sm bg-[#1a1512] border border-[#d4a13a]/10 flex items-center justify-between text-xs text-[#8a8070]">
               <span>Based in: Delhi, India</span>
               <span className="text-[#d4a13a]">✦</span>
               <span>GMT+5:30</span>
@@ -142,7 +106,7 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-7"
           >
-            <div className="bg-[#0a1628] border border-[#d4a13a]/20 p-8 md:p-10 rounded-sm shadow-[0_0_40px_rgba(212,161,58,0.03)]">
+            <div className="bg-[#0d0b08] border border-[#d4a13a]/20 p-8 md:p-10 rounded-sm shadow-[0_0_40px_rgba(212,161,58,0.03)]">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Grid Inputs */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -158,7 +122,7 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Jane Doe"
-                      className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#0e3b4f] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#0e3b4f]/80 transition-all duration-300"
+                      className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300"
                     />
                   </div>
 
@@ -174,7 +138,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="you@company.com"
-                      className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#0e3b4f] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#0e3b4f]/80 transition-all duration-300"
+                      className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -192,7 +156,7 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder="New project inquiry"
-                    className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#0e3b4f] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#0e3b4f]/80 transition-all duration-300"
+                    className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300"
                   />
                 </div>
 
@@ -209,14 +173,14 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell me about your project..."
-                    className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#0e3b4f] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#0e3b4f]/80 transition-all duration-300 resize-none"
+                    className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300 resize-none"
                   />
                 </div>
 
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-sm font-headings font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 flex items-center justify-center gap-3 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0a1628] hover:shadow-[0_0_20px_rgba(212,161,58,0.3)] hover:-translate-y-0.5 border border-[#d4a13a]"
+                  className="w-full py-4 rounded-sm font-headings font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 flex items-center justify-center gap-3 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] hover:shadow-[0_0_20px_rgba(212,161,58,0.3)] hover:-translate-y-0.5 border border-[#d4a13a]"
                 >
                   <FaFeatherAlt size={14} />
                   <span>Send Message</span>

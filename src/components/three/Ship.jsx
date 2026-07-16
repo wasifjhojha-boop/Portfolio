@@ -79,25 +79,25 @@ export default function Ship() {
       {/* Keel/Lower Hull */}
       <mesh castShadow receiveShadow position={[0, 0, 0]}>
         <boxGeometry args={[1.5, 0.8, 4]} />
-        <meshStandardMaterial color="#3a2312" roughness={0.9} metalness={0.1} />
+        <meshStandardMaterial color="#6b4a2f" roughness={0.9} metalness={0.1} />
       </mesh>
       
       {/* Raised Stern (Rear Castle) */}
       <mesh castShadow receiveShadow position={[0, 0.5, -1.6]}>
         <boxGeometry args={[1.5, 0.6, 1.2]} />
-        <meshStandardMaterial color="#4a311c" roughness={0.95} />
+        <meshStandardMaterial color="#7a5638" roughness={0.95} />
       </mesh>
       
       {/* Raised Bow (Front Deck) */}
       <mesh castShadow receiveShadow position={[0, 0.4, 1.6]}>
         <boxGeometry args={[1.4, 0.4, 1]} />
-        <meshStandardMaterial color="#4a311c" roughness={0.95} />
+        <meshStandardMaterial color="#7a5638" roughness={0.95} />
       </mesh>
 
       {/* Pointy Bow nose */}
       <mesh castShadow receiveShadow position={[0, 0.2, 2.3]} rotation={[Math.PI / 6, 0, 0]}>
         <coneGeometry args={[0.5, 1.2, 4]} />
-        <meshStandardMaterial color="#2d1a0d" roughness={0.9} />
+        <meshStandardMaterial color="#4a3220" roughness={0.9} />
       </mesh>
       
       {/* Gold Trim along Hull */}
@@ -114,19 +114,19 @@ export default function Ship() {
       {/* Main Mast (Center) */}
       <mesh castShadow position={[0, 2, 0]}>
         <cylinderGeometry args={[0.08, 0.12, 4]} />
-        <meshStandardMaterial color="#5C4033" roughness={0.8} />
+        <meshStandardMaterial color="#8a6244" roughness={0.8} />
       </mesh>
 
       {/* Foremast (Front) */}
       <mesh castShadow position={[0, 1.7, 1.2]}>
         <cylinderGeometry args={[0.07, 0.1, 3.4]} />
-        <meshStandardMaterial color="#5C4033" roughness={0.8} />
+        <meshStandardMaterial color="#8a6244" roughness={0.8} />
       </mesh>
 
       {/* Bowsprit (Nose Mast) */}
       <mesh castShadow position={[0, 0.4, 2.8]} rotation={[Math.PI / 4, 0, 0]}>
         <cylinderGeometry args={[0.05, 0.07, 1.8]} />
-        <meshStandardMaterial color="#5C4033" roughness={0.8} />
+        <meshStandardMaterial color="#8a6244" roughness={0.8} />
       </mesh>
 
       {/* ── SAILS ── */}

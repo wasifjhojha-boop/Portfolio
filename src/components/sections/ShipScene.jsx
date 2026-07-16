@@ -21,15 +21,15 @@ export default function ShipScene() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-[130vh] bg-[#0a1628] overflow-hidden">
+    <section ref={sectionRef} className="relative w-full min-h-[130vh] bg-[#0d0b08] overflow-hidden">
       {/* 3D Canvas Background */}
       <div className="absolute inset-0 z-0">
         <Scene />
       </div>
 
       {/* Top & Bottom fade gradients to blend into the rest of the site */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0a1628] to-transparent pointer-events-none z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a1628] to-transparent pointer-events-none z-10" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0d0b08] to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0d0b08] to-transparent pointer-events-none z-10" />
 
       {/* Decorative Border Line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-[1px] bg-gradient-to-r from-transparent via-[#d4a13a]/30 to-transparent z-10" />
@@ -69,7 +69,7 @@ export default function ShipScene() {
           <div className="mt-10 pointer-events-auto">
             <a
               href="/contact"
-              className="inline-block px-8 py-3 border border-[#d4a13a]/40 bg-[#0a1628]/40 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-widest uppercase hover:bg-[#d4a13a]/10 hover:border-[#d4a13a] transition-all duration-300 backdrop-blur-sm"
+              className="inline-block px-8 py-3 border border-[#d4a13a]/40 bg-[#0d0b08]/40 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-widest uppercase hover:bg-[#d4a13a]/10 hover:border-[#d4a13a] transition-all duration-300 backdrop-blur-sm"
             >
               Set Sail
             </a>
@@ -79,7 +79,7 @@ export default function ShipScene() {
 
       {/* Bottom wave divider into the footer */}
       <svg
-        className="absolute bottom-0 left-0 w-full h-16 text-[#0a1628] z-10"
+        className="absolute bottom-0 left-0 w-full h-16 text-[#0d0b08] z-10"
         viewBox="0 0 1440 80"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"

@@ -5,7 +5,7 @@ import * as THREE from 'three'
 const OceanShader = {
   uniforms: {
     uTime: { value: 0 },
-    uColorDark: { value: new THREE.Color('#0a1628') },
+    uColorDark: { value: new THREE.Color('#0d0b08') },
     uColorLight: { value: new THREE.Color('#2b2515') },
     uColorFoam: { value: new THREE.Color('#d4a13a') },
   },

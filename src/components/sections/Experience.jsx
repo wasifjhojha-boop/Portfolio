@@ -21,7 +21,7 @@ const TIMELINE = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative w-full py-24 bg-[#0e3b4f] overflow-hidden border-t border-[#d4a13a]/10 ambient-ocean">
+    <section id="experience" className="relative w-full py-24 bg-[#1a1512] overflow-hidden border-t border-[#d4a13a]/10 ambient-ocean">
       {/* Decorative texture */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_0%,rgba(212,161,58,0.03)_0%,transparent_100%)]" />
 
@@ -74,7 +74,7 @@ export default function Experience() {
             return (
               <div key={idx} className="relative md:grid md:grid-cols-2 md:gap-12 items-center mb-12">
                 {/* Node Marker */}
-                <div className="absolute -left-[37px] md:left-1/2 top-4 md:-translate-x-1/2 w-8 h-8 rounded-sm border border-[#d4a13a] bg-[#0a1628] z-10 flex items-center justify-center text-[#d4a13a] shadow-[0_0_10px_rgba(212,161,58,0.3)] transform rotate-45">
+                <div className="absolute -left-[37px] md:left-1/2 top-4 md:-translate-x-1/2 w-8 h-8 rounded-sm border border-[#d4a13a] bg-[#0d0b08] z-10 flex items-center justify-center text-[#d4a13a] shadow-[0_0_10px_rgba(212,161,58,0.3)] transform rotate-45">
                   <Icon size={12} className="-rotate-45" />
                 </div>
 
