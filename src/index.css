@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-headings: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-buttons: 'Poppins', sans-serif;
+}
+
+/* Base style resets and scroll behavior */
+html {
+  scroll-behavior: auto; /* Handled by Lenis smooth scroll */
+  background-color: #0a1628;
+  color: #f0e4c8;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar matching the One Piece theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a1628;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4a13a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f0e4c8;
+}
+
+/* Custom utility classes */
+.glass-panel {
+  background: rgba(14, 59, 79, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 161, 58, 0.15);
+}
+
+.glass-panel-hover {
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(14, 59, 79, 0.7);
+  border-color: rgba(212, 161, 58, 0.45);
+  box-shadow: 0 10px 30px -10px rgba(212, 161, 58, 0.15);
+}
+
+.gold-glow {
+  box-shadow: 0 0 15px rgba(212, 161, 58, 0.25);
+}
+
+.gold-glow-hover:hover {
+  box-shadow: 0 0 25px rgba(212, 161, 58, 0.45);
+}
+
+/* Premium parchment-to-gold text fill for large display headings. */
+.text-gold-gradient {
+  background: linear-gradient(180deg, #f7ecd4 0%, #f0e4c8 42%, #d4a13a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Soft gold rule used under section eyebrows. */
+.rule-gold {
+  background: linear-gradient(90deg, transparent, rgba(212, 161, 58, 0.5), transparent);
+}
+
+/* Card lift: consistent depth + gold edge on hover across all card grids. */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-color 0.4s ease;
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 161, 58, 0.45);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7), 0 0 24px -6px rgba(212, 161, 58, 0.25);
+}
+
+.animate-spin-slow {
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Shared ambient ocean backdrop for inner pages so every section feels like
+   part of the same world instead of a flat color fill. */
+.ambient-ocean::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212, 161, 58, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(14, 59, 79, 0.4), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(14, 59, 79, 0.3), transparent 70%);
+}
+
+.ambient-ocean::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image:
+    linear-gradient(to right, #d4a13a 1px, transparent 1px),
+    linear-gradient(to bottom, #d4a13a 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+.animate-scroll-dot {
+  animation: scrollDot 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(10px); opacity: 0; }
+  61% { transform: translateY(0); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Utility to hide scrollbars during smooth scroll setups */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

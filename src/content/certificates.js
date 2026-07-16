@@ -1,0 +1,60 @@
+export const certificates = [
+  {
+    title: "Google Ads Search Certification",
+    issuer: "Skillshop",
+    date: "Issued May 8, 2025 · Expires May 8, 2026",
+    credentialId: "142499755",
+    image: "/certificates/google-ads-search.jpg",
+  },
+  {
+    title: "Google Ads Video Certification",
+    issuer: "Skillshop",
+    date: "Issued May 16, 2025 · Expires May 16, 2026",
+    credentialId: "143473585",
+    image: "/certificates/google-ads-video.jpeg",
+  },
+  {
+    title: "Google Ads Apps Certification",
+    issuer: "Skillshop",
+    date: "Issued May 19, 2025 · Expires May 19, 2026",
+    credentialId: "143631454",
+    image: "/certificates/google-ads-apps.jpg",
+  },
+  {
+    title: "AI-Powered Shopping Ads Certification",
+    issuer: "Skillshop",
+    date: "Issued May 20, 2025 · Expires May 20, 2026",
+    credentialId: "143781810",
+    image: "/certificates/ai-shopping-ads.jpg",
+  },
+  {
+    title: "Foundations of Digital Marketing and E-commerce",
+    issuer: "Google, via Coursera",
+    date: "December 4, 2024",
+    verifyUrl: "https://coursera.org/verify/AQIY9Q0HLSEU",
+    file: "/certificates/coursera-foundations-digital-marketing.pdf",
+  },
+  {
+    title: "Attract and Engage Customers with Digital Marketing",
+    issuer: "Google, via Coursera",
+    date: "December 5, 2024",
+    verifyUrl: "https://coursera.org/verify/X601NS19M0PV",
+    file: "/certificates/coursera-attract-engage-customers.pdf",
+  },
+  {
+    title: "Introduction to MS Excel",
+    issuer: "Microsoft, via Simplilearn SkillUp",
+    date: "September 29, 2025",
+    image: "/certificates/ms-excel.png",
+  },
+  {
+    title: "Meta Ads",
+    issuer: "Skill Nation",
+    date: null,
+  },
+  {
+    title: "SEO",
+    issuer: "HubSpot Academy",
+    date: null,
+  },
+];
