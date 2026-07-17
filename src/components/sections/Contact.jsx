@@ -6,8 +6,8 @@ import { contact } from '../../content/contact'
 const CHANNELS = [
   { icon: FaEnvelope, label: 'Email', value: contact.email, href: `mailto:${contact.email}` },
   { icon: FaWhatsapp, label: 'WhatsApp', value: contact.whatsappDisplay, href: `https://wa.me/${contact.whatsapp}`, external: true },
-  { icon: FaLinkedin, label: 'LinkedIn', value: 'mohd-wasif1', href: contact.linkedin, external: true },
-  { icon: FaGithub, label: 'GitHub', value: 'wasifjhojha-boop', href: contact.github, external: true },
+  { icon: FaLinkedin, label: 'LinkedIn', href: contact.linkedin, external: true, iconOnly: true },
+  { icon: FaGithub, label: 'GitHub', href: contact.github, external: true, iconOnly: true },
 ]
 
 export default function Contact() {
@@ -111,17 +111,21 @@ export default function Contact() {
                       href={channel.href}
                       target={channel.external ? '_blank' : undefined}
                       rel={channel.external ? 'noreferrer' : undefined}
+                      aria-label={channel.label}
+                      title={channel.label}
                       className="group flex items-center gap-3.5"
                     >
                       <span className="w-8 h-8 rounded-full border border-[#a07d33]/40 flex items-center justify-center text-[#a07d33] shrink-0 group-hover:bg-[#a07d33] group-hover:text-[#f6efdf] transition-colors duration-300">
                         <Icon size={12} />
                       </span>
-                      <span
-                        style={{ fontFamily: "'Jost', sans-serif" }}
-                        className="text-[#3f3a2e] text-sm tracking-wide break-all group-hover:text-[#a07d33] transition-colors duration-300"
-                      >
-                        {channel.value}
-                      </span>
+                      {!channel.iconOnly && (
+                        <span
+                          style={{ fontFamily: "'Jost', sans-serif" }}
+                          className="text-[#3f3a2e] text-sm tracking-wide break-all group-hover:text-[#a07d33] transition-colors duration-300"
+                        >
+                          {channel.value}
+                        </span>
+                      )}
                     </a>
                   )
                 })}

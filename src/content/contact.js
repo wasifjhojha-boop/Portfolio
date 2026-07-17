@@ -1,5 +1,5 @@
 export const contact = {
-  email: "wasifkhan987@gmail.com",
+  email: "hello@wasif.world",
   whatsapp: "917834823577",
   whatsappDisplay: "+91 78348 23577",
   linkedin: "https://www.linkedin.com/in/mohd-wasif1/",
