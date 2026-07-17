@@ -43,42 +43,40 @@ function CameraController() {
 
 export default function Scene() {
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none bg-[#0d0b08]">
+    <div className="absolute inset-0 w-full h-full pointer-events-none bg-[#bcd6ea]">
       <Canvas
         shadows
         camera={{ position: [0, 1.5, 9], fov: 42 }}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         onCreated={({ gl, scene }) => {
-          // Dark ambient atmospheric fog to blend the ocean/sky into darkness
-          scene.fog = new THREE.FogExp2('#0d0b08', 0.025)
-          gl.setClearColor('#0d0b08')
+          // Bright daytime sky-blue atmospheric haze
+          scene.fog = new THREE.FogExp2('#bcd6ea', 0.014)
+          gl.setClearColor('#bcd6ea')
         }}
       >
         {/* Lights */}
-        <ambientLight intensity={0.6} color="#3a2f1a" />
+        <ambientLight intensity={1.1} color="#eaf2ff" />
 
-        {/* Directional Key Light (representing the low sun/sunrise) */}
+        {/* Directional Key Light — high midday sun */}
         <directionalLight
           castShadow
-          position={[0, 8, -40]}
-          intensity={2.8}
-          color="#d4a13a"
+          position={[12, 22, 8]}
+          intensity={2.6}
+          color="#fff6e0"
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
           shadow-bias={-0.001}
         />
 
-        {/* Hemisphere ambient sky lighting */}
+        {/* Hemisphere sky/water bounce lighting */}
         <hemisphereLight
-          intensity={0.8}
-          color="#d4a13a"
-          groundColor="#0d0b08"
+          intensity={1.0}
+          color="#cfe6fa"
+          groundColor="#5a8ba6"
         />
 
-        {/* Front fill light — the sun above is purely backlighting the ship
-            from behind, so without this the camera-facing hull reads as a
-            near-black silhouette against the dark fog and looks invisible. */}
-        <pointLight position={[0, 4, 8]} intensity={1.4} color="#f0e4c8" distance={22} decay={2} />
+        {/* Soft front fill so the camera-facing hull stays bright */}
+        <pointLight position={[0, 4, 8]} intensity={0.9} color="#ffffff" distance={22} decay={2} />
 
         {/* 3D Scene Components */}
         <Ocean />

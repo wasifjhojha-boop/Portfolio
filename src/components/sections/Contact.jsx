@@ -45,26 +45,64 @@ export default function Contact() {
           </h2>
         </div>
 
-        {/* Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Left Column: Direct Coordinates & Channels */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-5 flex flex-col justify-between"
+        {/* Business-card panel — the whole content styled like Wasif's card */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+          className="relative max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#f6efdf] ring-1 ring-[#a07d33]/30 shadow-[0_30px_90px_-30px_rgba(0,0,0,0.85)]"
+        >
+          {/* Warm paper highlight */}
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_left,rgba(255,252,244,0.7),transparent_60%)]" />
+
+          {/* Gold swirl ornament (top-right) */}
+          <svg
+            viewBox="0 0 120 120"
+            className="absolute -top-5 -right-5 w-44 h-44 text-[#c49a44] opacity-40 pointer-events-none"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
           >
-            <div>
-              <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-[#d4a13a] mb-6">
-                CONTACT CHANNELS
+            <path d="M110 20 C70 10 40 40 55 70 C64 88 92 86 96 66 C99 51 82 44 74 55 C69 62 76 71 84 67" strokeLinecap="round" />
+            <path d="M104 12 C112 30 110 50 96 62" strokeLinecap="round" opacity="0.6" />
+          </svg>
+
+          {/* Botanical line-art (bottom-left) */}
+          <svg
+            viewBox="0 0 120 120"
+            className="absolute -bottom-4 -left-4 w-40 h-40 text-[#c49a44] opacity-30 pointer-events-none"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path d="M10 118 C22 92 20 60 40 44" strokeLinecap="round" />
+            <path d="M28 78 C18 74 12 66 12 56" strokeLinecap="round" />
+            <path d="M30 64 C42 62 50 54 50 44" strokeLinecap="round" />
+            <path d="M26 92 C16 90 10 82 10 72" strokeLinecap="round" />
+          </svg>
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2">
+            {/* Left: Identity + channels */}
+            <div className="p-8 md:p-12 lg:border-r border-[#a07d33]/20">
+              {/* Monogram */}
+              <div className="w-12 h-12 rounded-full border border-[#a07d33] flex items-center justify-center mb-7">
+                <span style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-[#a07d33] text-2xl font-semibold">W</span>
+              </div>
+
+              <h3 style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-3xl md:text-4xl font-semibold text-[#2e2a20] tracking-[0.12em] leading-none mb-4">
+                MOHD WASIF
               </h3>
-              <p className="font-body text-[#8a8070] text-sm md:text-base leading-relaxed tracking-wide mb-8">
-                Have a project in mind — SEO, paid ads, a new website, or all three? Reach out directly or use the form.
+              <div className="w-12 h-[2px] bg-[#a07d33] mb-4" />
+              <p style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#6b6350] text-[10px] tracking-[0.32em] uppercase mb-1.5">
+                Performance Marketing Specialist
+              </p>
+              <p style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#9a8f74] text-[9px] tracking-[0.28em] uppercase mb-8">
+                SEO &middot; Google Ads &middot; Web Dev
               </p>
 
-              {/* Contact cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Contact rows */}
+              <div className="space-y-3.5 border-t border-[#a07d33]/25 pt-6">
                 {CHANNELS.map((channel) => {
                   const Icon = channel.icon
                   return (
@@ -73,79 +111,64 @@ export default function Contact() {
                       href={channel.href}
                       target={channel.external ? '_blank' : undefined}
                       rel={channel.external ? 'noreferrer' : undefined}
-                      className="card-lift group flex flex-col gap-3 p-5 rounded-sm bg-[#1a1512] border border-[#d4a13a]/10"
+                      className="group flex items-center gap-3.5"
                     >
-                      <div className="w-11 h-11 rounded-sm border border-[#d4a13a]/25 bg-[#0d0b08] flex items-center justify-center text-[#d4a13a] group-hover:scale-110 transition-transform duration-300">
-                        <Icon size={16} />
-                      </div>
-                      <div>
-                        <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase">{channel.label}</p>
-                        <p className="text-[#f0e4c8] font-body text-sm font-semibold tracking-wide break-all group-hover:text-[#d4a13a] transition-colors duration-300">
-                          {channel.value}
-                        </p>
-                      </div>
+                      <span className="w-8 h-8 rounded-full border border-[#a07d33]/40 flex items-center justify-center text-[#a07d33] shrink-0 group-hover:bg-[#a07d33] group-hover:text-[#f6efdf] transition-colors duration-300">
+                        <Icon size={12} />
+                      </span>
+                      <span
+                        style={{ fontFamily: "'Jost', sans-serif" }}
+                        className="text-[#3f3a2e] text-sm tracking-wide break-all group-hover:text-[#a07d33] transition-colors duration-300"
+                      >
+                        {channel.value}
+                      </span>
                     </a>
                   )
                 })}
               </div>
+
+              <div className="mt-8 pt-4 border-t border-[#a07d33]/20 flex items-center justify-between">
+                <span style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#9a8f74] text-[9px] tracking-[0.25em] uppercase">
+                  Delhi, India
+                </span>
+                <span style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#9a8f74] text-[9px] tracking-[0.25em] uppercase">
+                  Crafted Performance
+                </span>
+              </div>
             </div>
 
-            {/* Location */}
-            <div className="mt-8 p-4 rounded-sm bg-[#1a1512] border border-[#d4a13a]/10 flex items-center justify-between text-xs text-[#8a8070]">
-              <span>Based in: Delhi, India</span>
-              <span className="text-[#d4a13a]">✦</span>
-              <span>GMT+5:30</span>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-7"
-          >
-            <div className="bg-[#0d0b08] border border-[#d4a13a]/20 p-8 md:p-10 rounded-sm shadow-[0_0_40px_rgba(212,161,58,0.03)]">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Grid Inputs */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col">
-                    <label htmlFor="name" className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase mb-2">
-                      Your Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Jane Doe"
-                      className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="email" className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="you@company.com"
-                      className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300"
-                    />
-                  </div>
+            {/* Right: Message form (paper-styled) */}
+            <div className="p-8 md:p-12 border-t lg:border-t-0 border-[#a07d33]/20">
+              <p style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#6b6350] text-[10px] tracking-[0.32em] uppercase mb-6">
+                Send a Message
+              </p>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {[
+                    { id: 'name', type: 'text', label: 'Your Name', placeholder: 'Jane Doe' },
+                    { id: 'email', type: 'email', label: 'Email Address', placeholder: 'you@company.com' },
+                  ].map((f) => (
+                    <div key={f.id} className="flex flex-col">
+                      <label htmlFor={f.id} style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#8a7f64] text-[9px] tracking-[0.2em] uppercase mb-2">
+                        {f.label}
+                      </label>
+                      <input
+                        type={f.type}
+                        id={f.id}
+                        name={f.id}
+                        required
+                        value={formData[f.id]}
+                        onChange={handleChange}
+                        placeholder={f.placeholder}
+                        style={{ fontFamily: "'Jost', sans-serif" }}
+                        className="px-4 py-3 rounded-sm border border-[#a07d33]/25 bg-[#efe5cf] text-sm text-[#3f3a2e] placeholder-[#9a8f74]/70 focus:outline-none focus:border-[#a07d33] focus:bg-[#f3ead6] transition-all duration-300"
+                      />
+                    </div>
+                  ))}
                 </div>
 
-                {/* Subject */}
                 <div className="flex flex-col">
-                  <label htmlFor="subject" className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase mb-2">
+                  <label htmlFor="subject" style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#8a7f64] text-[9px] tracking-[0.2em] uppercase mb-2">
                     Subject
                   </label>
                   <input
@@ -156,42 +179,43 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder="New project inquiry"
-                    className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300"
+                    style={{ fontFamily: "'Jost', sans-serif" }}
+                    className="px-4 py-3 rounded-sm border border-[#a07d33]/25 bg-[#efe5cf] text-sm text-[#3f3a2e] placeholder-[#9a8f74]/70 focus:outline-none focus:border-[#a07d33] focus:bg-[#f3ead6] transition-all duration-300"
                   />
                 </div>
 
-                {/* Message */}
                 <div className="flex flex-col">
-                  <label htmlFor="message" className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase mb-2">
+                  <label htmlFor="message" style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#8a7f64] text-[9px] tracking-[0.2em] uppercase mb-2">
                     Your Message
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     required
-                    rows={5}
+                    rows={4}
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell me about your project..."
-                    className="px-4 py-3 rounded-sm border border-[#d4a13a]/10 bg-[#1a1512] font-body text-sm text-[#f0e4c8] placeholder-[#8a8070]/50 focus:outline-none focus:border-[#d4a13a]/50 focus:bg-[#1a1512]/80 transition-all duration-300 resize-none"
+                    style={{ fontFamily: "'Jost', sans-serif" }}
+                    className="px-4 py-3 rounded-sm border border-[#a07d33]/25 bg-[#efe5cf] text-sm text-[#3f3a2e] placeholder-[#9a8f74]/70 focus:outline-none focus:border-[#a07d33] focus:bg-[#f3ead6] transition-all duration-300 resize-none"
                   />
                 </div>
 
-                {/* Submit button */}
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-sm font-headings font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 flex items-center justify-center gap-3 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] hover:shadow-[0_0_20px_rgba(212,161,58,0.3)] hover:-translate-y-0.5 border border-[#d4a13a]"
+                  style={{ fontFamily: "'Jost', sans-serif" }}
+                  className="w-full py-3.5 rounded-sm font-semibold text-xs tracking-[0.25em] uppercase transition-all duration-300 flex items-center justify-center gap-3 bg-[#a07d33] text-[#f6efdf] hover:bg-[#8c6a28] hover:-translate-y-0.5 shadow-[0_8px_20px_-8px_rgba(160,125,51,0.6)]"
                 >
-                  <FaFeatherAlt size={14} />
+                  <FaFeatherAlt size={13} />
                   <span>Send Message</span>
                 </button>
-                <p className="text-[#8a8070]/60 text-[10px] font-body text-center -mt-2">
+                <p style={{ fontFamily: "'Jost', sans-serif" }} className="text-[#9a8f74] text-[10px] text-center">
                   Opens your email app with this message pre-filled.
                 </p>
               </form>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

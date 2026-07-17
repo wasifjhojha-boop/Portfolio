@@ -63,7 +63,6 @@ export default function Hero() {
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
   const bodyRef = useRef(null)
-  const sigilRef = useRef(null)
   const progressRef = useRef(null)
   const vignetteRef = useRef(null)
   const chapterLabelRef = useRef(null)
@@ -85,7 +84,7 @@ export default function Hero() {
     const tl = gsap.timeline()
 
     // Fade out old text
-    tl.to([titleRef.current, subtitleRef.current, bodyRef.current, sigilRef.current], {
+    tl.to([titleRef.current, subtitleRef.current, bodyRef.current], {
       y: -16,
       opacity: 0,
       duration: 0.25,
@@ -97,11 +96,10 @@ export default function Hero() {
       if (titleRef.current) titleRef.current.textContent = ch.title
       if (subtitleRef.current) subtitleRef.current.textContent = ch.subtitle
       if (bodyRef.current) bodyRef.current.textContent = ch.body
-      if (sigilRef.current) sigilRef.current.textContent = ch.sigil
     })
     // Fade in new text
     .fromTo(
-      [sigilRef.current, subtitleRef.current, titleRef.current, bodyRef.current],
+      [subtitleRef.current, titleRef.current, bodyRef.current],
       { y: 24, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.45, ease: 'power3.out', stagger: 0.05 }
     )
@@ -125,7 +123,6 @@ export default function Hero() {
     if (titleRef.current) titleRef.current.textContent = ch0.title
     if (subtitleRef.current) subtitleRef.current.textContent = ch0.subtitle
     if (bodyRef.current) bodyRef.current.textContent = ch0.body
-    if (sigilRef.current) sigilRef.current.textContent = ch0.sigil
 
     const t = setTimeout(() => setReady(true), 700)
     return () => clearTimeout(t)
@@ -185,7 +182,7 @@ export default function Hero() {
 
     // Staggered entrance
     gsap.fromTo(
-      [sigilRef.current, subtitleRef.current, titleRef.current, bodyRef.current],
+      [subtitleRef.current, titleRef.current, bodyRef.current],
       { y: 40, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.08, delay: 0.2 }
     )
@@ -284,53 +281,43 @@ export default function Hero() {
           </div>
 
           {/* Content Overlay */}
-          <div className="absolute bottom-14 md:bottom-20 left-6 right-6 md:left-16 md:right-16 max-w-2xl z-20 select-text">
-            {/* Sigil Symbol */}
-            <span
-              ref={sigilRef}
-              className="font-headings text-2xl md:text-3xl text-[#d4a13a] drop-shadow-[0_0_12px_rgba(212,161,58,0.6)] mb-4 block"
-            />
-
-            {/* Gold Divider */}
-            <div className="flex items-center gap-3 mb-5">
-              <div className="h-[1px] bg-gradient-to-r from-transparent to-[#d4a13a]/40 w-12" />
-              <div className="w-1.5 h-1.5 bg-[#d4a13a] rotate-45 shadow-[0_0_5px_#d4a13a]" />
-              <div className="h-[1px] bg-gradient-to-l from-transparent to-[#d4a13a]/40 w-12" />
+          <div className="absolute bottom-16 md:bottom-24 left-6 right-6 md:left-16 md:right-16 max-w-3xl z-20 select-text">
+            {/* Eyebrow subtitle with accent rule */}
+            <div className="flex items-center gap-4 mb-6">
+              <span className="h-[2px] w-10 bg-[#d4a13a] shrink-0 shadow-[0_0_8px_rgba(212,161,58,0.6)]" />
+              <span
+                ref={subtitleRef}
+                className="font-headings text-[10px] md:text-xs tracking-[0.45em] text-[#d4a13a] uppercase block"
+              />
             </div>
-
-            {/* Subtitle */}
-            <span
-              ref={subtitleRef}
-              className="font-headings text-[10px] md:text-xs tracking-[0.4em] text-[#d4a13a] uppercase mb-4 block"
-            />
 
             {/* Title */}
             <h1
               ref={titleRef}
-              className="font-headings text-4xl md:text-7xl font-black text-gold-gradient leading-[1.05] uppercase mb-5 tracking-wide"
+              className="font-headings text-5xl md:text-8xl font-black text-gold-gradient leading-[0.95] uppercase mb-6 tracking-tight drop-shadow-[0_6px_30px_rgba(0,0,0,0.55)]"
             />
 
             {/* Description */}
             <p
               ref={bodyRef}
-              className="font-body text-sm md:text-base text-[#c9b997] max-w-lg leading-relaxed italic"
+              className="font-body text-base md:text-lg text-[#e6dcc4] max-w-xl leading-relaxed"
             />
-          </div>
 
-          {/* Centre CTAs over the scene, independent from the bottom text panel */}
-          <div className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 whitespace-nowrap sm:flex-row">
-            <a
-              href="/projects"
-              className="px-7 py-3.5 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-headings font-bold text-[10px] tracking-[0.2em] uppercase shadow-[0_6px_20px_-6px_rgba(212,161,58,0.6)] hover:shadow-[0_10px_28px_-6px_rgba(212,161,58,0.7)] hover:-translate-y-0.5 transition-all duration-300"
-            >
-              View Projects
-            </a>
-            <a
-              href="/contact"
-              className="px-7 py-3.5 rounded-sm border border-[#d4a13a]/40 bg-[#0d0b08]/50 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-[0.2em] uppercase hover:border-[#d4a13a] hover:bg-[#d4a13a]/10 hover:text-[#d4a13a] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
-            >
-              Get In Touch
-            </a>
+            {/* CTAs directly under the headline */}
+            <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
+              <a
+                href="/projects"
+                className="px-7 py-3.5 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-headings font-bold text-[10px] tracking-[0.2em] uppercase shadow-[0_6px_20px_-6px_rgba(212,161,58,0.6)] hover:shadow-[0_10px_28px_-6px_rgba(212,161,58,0.7)] hover:-translate-y-0.5 transition-all duration-300"
+              >
+                View Projects
+              </a>
+              <a
+                href="/contact"
+                className="px-7 py-3.5 rounded-sm border border-[#d4a13a]/40 bg-[#0d0b08]/50 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-[0.2em] uppercase hover:border-[#d4a13a] hover:bg-[#d4a13a]/10 hover:text-[#d4a13a] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
+              >
+                Get In Touch
+              </a>
+            </div>
           </div>
 
           {/* Right Indicator Panel */}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaBookOpen } from 'react-icons/fa'
 import { bio, journey } from '../../content/profile'
+import PhotoDither from '../three/PhotoDither'
 
 // Helper for counting up numbers when visible
 function Counter({ value, suffix = '', duration = 2 }) {
@@ -40,10 +41,10 @@ function Counter({ value, suffix = '', duration = 2 }) {
 }
 
 const STATS = [
-  { label: 'Years of Experience', value: '1', suffix: '+' },
-  { label: 'Certifications Earned', value: '7', suffix: '+' },
-  { label: 'Client Testimonials', value: '7', suffix: '' },
-  { label: 'Websites Delivered', value: '8', suffix: '+' },
+  { label: 'Years of Experience', value: '5', suffix: '+' },
+  { label: 'Certifications Earned', value: '10', suffix: '+' },
+  { label: 'Client Testimonials', value: '25', suffix: '+' },
+  { label: 'Websites Delivered', value: '20', suffix: '+' },
 ]
 
 export default function About() {
@@ -78,13 +79,9 @@ export default function About() {
               transition={{ duration: 0.4 }}
               className="relative w-full max-w-sm aspect-square rounded-full border-[6px] border-[#1a1512] shadow-[0_0_0_2px_rgba(212,161,58,0.4),0_0_50px_rgba(212,161,58,0.1)] overflow-hidden group"
             >
-              {/* Portrait photo, clipped into the porthole */}
-              <img
-                src="/wasif-photo.jpg"
-                alt="Mohd Wasif"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b08]/70 via-transparent to-transparent" />
+              {/* Portrait with mouse-following halftone dither effect */}
+              <PhotoDither src="/wasif-portrait.png" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b08]/70 via-transparent to-transparent pointer-events-none" />
 
               {/* Porthole glass rim + bolts */}
               <div className="absolute inset-0 rounded-full border-2 border-[#d4a13a]/30 pointer-events-none" />

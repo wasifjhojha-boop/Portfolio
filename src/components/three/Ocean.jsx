@@ -5,9 +5,9 @@ import * as THREE from 'three'
 const OceanShader = {
   uniforms: {
     uTime: { value: 0 },
-    uColorDark: { value: new THREE.Color('#0d0b08') },
-    uColorLight: { value: new THREE.Color('#2b2515') },
-    uColorFoam: { value: new THREE.Color('#d4a13a') },
+    uColorDark: { value: new THREE.Color('#15597a') },
+    uColorLight: { value: new THREE.Color('#4fa3c7') },
+    uColorFoam: { value: new THREE.Color('#eaf6fb') },
   },
   vertexShader: `
     uniform float uTime;
@@ -33,15 +33,17 @@ const OceanShader = {
     void main() {
       vUv = uv;
       vec3 pos = position;
-      
+
       // Multi-layered sine wave displacements
       float wave1 = sin(pos.x * 0.15 + uTime * 1.5) * cos(pos.y * 0.15 + uTime * 1.2) * 0.6;
       float wave2 = sin(pos.x * 0.4 - uTime * 2.2) * sin(pos.y * 0.35 + uTime * 1.8) * 0.22;
       float wave3 = noise(pos.xy * 0.85 + uTime * 0.8) * 0.1;
-      
-      pos.z += wave1 + wave2 + wave3;
+      // Fine chop ripples for surface texture
+      float wave4 = noise(pos.xy * 2.4 - uTime * 1.4) * 0.05;
+
+      pos.z += wave1 + wave2 + wave3 + wave4;
       vHeight = pos.z;
-      
+
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }
   `,
@@ -56,18 +58,18 @@ const OceanShader = {
       // Normalize height to 0..1 range
       float h = (vHeight + 0.9) / 1.8;
       h = clamp(h, 0.0, 1.0);
-      
+
       // Blend between dark deep ocean and lighter turquoise/blue
       vec3 color = mix(uColorDark, uColorLight, h);
-      
-      // Foam factor at the peaks of waves
-      float foam = smoothstep(0.68, 0.95, h);
-      vec3 finalColor = mix(color, uColorFoam, foam * 0.35);
-      
+
+      // Foam factor at the peaks of waves (smooth, no grid cells)
+      float foam = smoothstep(0.66, 0.96, h);
+      vec3 finalColor = mix(color, uColorFoam, foam * 0.5);
+
       // Soft ambient brightness on wave caps
-      finalColor += vec3(vHeight * 0.04);
-      
-      gl_FragColor = vec4(finalColor, 0.88);
+      finalColor += vec3(vHeight * 0.05);
+
+      gl_FragColor = vec4(finalColor, 0.92);
     }
   `
 }
