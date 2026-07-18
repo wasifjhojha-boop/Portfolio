@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="240" viewBox="0 0 260 60">
+  <g fill="none" stroke-width="1.75" stroke-linecap="square" transform="translate(5,5) scale(0.5)">
+    <path d="M18 78 V26 L38 56 L50 38" stroke="#101014"></path>
+    <path d="M82 22 V74 L62 44 L50 62" stroke="#a8863f"></path>
+  </g>
+  <text x="70" y="31" font-family="Sora, sans-serif" font-weight="700" font-size="16" letter-spacing="3" fill="#101014">MOHD WASIF</text>
+  <text x="70" y="47" font-family="Sora, sans-serif" font-weight="400" font-size="8" letter-spacing="4.5" fill="#6b6b72">PORTFOLIO</text>
+</svg>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiMenu, HiX } from 'react-icons/hi'
-import { FaAnchor } from 'react-icons/fa'
 import { contact } from '../../content/contact'
 
 const NAV_ITEMS = [
@@ -49,13 +48,21 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        {/* Logo */}
-        <a
-          href="/"
-          className="flex items-center gap-2 font-headings text-2xl font-bold tracking-[0.2em] text-[#d4a13a] hover:text-[#f0e4c8] transition-colors duration-300 drop-shadow-[0_2px_5px_rgba(212,161,58,0.5)]"
-        >
-          <FaAnchor className="text-xl" />
-          <span>MW</span>
+        {/* Logo — brand lockup (MW mark + wordmark) */}
+        <a href="/" aria-label="Mohd Wasif — Home" className="group flex items-center">
+          <svg
+            viewBox="0 0 260 60"
+            role="img"
+            aria-label="Mohd Wasif Portfolio"
+            className="h-9 w-auto opacity-95 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_2px_5px_rgba(201,168,106,0.35)]"
+          >
+            <g fill="none" strokeWidth="1.75" strokeLinecap="square" transform="translate(5,5) scale(0.5)">
+              <path d="M18 78 V26 L38 56 L50 38" stroke="#e8e6e1" />
+              <path d="M82 22 V74 L62 44 L50 62" stroke="#c9a86a" />
+            </g>
+            <text x="70" y="31" fontFamily="Sora, sans-serif" fontWeight="700" fontSize="16" letterSpacing="3" fill="#e8e6e1">MOHD WASIF</text>
+            <text x="70" y="47" fontFamily="Sora, sans-serif" fontWeight="400" fontSize="8" letterSpacing="4.5" fill="#8a8a93">PORTFOLIO</text>
+          </svg>
         </a>
 
         {/* Desktop Navigation Links */}
