@@ -1,11 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap');
 
 @import "tailwindcss";
 
 @theme {
+  /* Type roles — one font per job instead of Cinzel everywhere.
+     display  → large engraved titles (hero, section H2, logo)
+     serif    → elegant names, quotes, pull-outs
+     label    → small uppercase eyebrows / nav / buttons / meta
+     body     → paragraphs */
+  --font-display: 'Cinzel', serif;
   --font-headings: 'Cinzel', serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-label: 'Jost', sans-serif;
   --font-body: 'Inter', sans-serif;
-  --font-buttons: 'Poppins', sans-serif;
 }
 
 /* Base style resets and scroll behavior */
@@ -14,6 +21,37 @@ html {
   background-color: #0d0b08;
   color: #f0e4c8;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Body copy defaults: comfortable measure + rhythm.
+   Inter reads better at 400 with slightly open line-height. */
+body {
+  font-family: var(--font-body);
+  line-height: 1.65;
+}
+
+/* Display titles (Cinzel) — engraved feel needs air between glyphs,
+   never crammed. Applied to hero + section H2s. */
+.font-display {
+  letter-spacing: 0.06em;
+}
+
+/* Elegant serif for names, quotes, and pull-outs. */
+.font-serif-accent {
+  font-family: var(--font-serif);
+}
+
+/* Small uppercase labels (Jost) read best a touch larger than the
+   Cinzel labels they replace, with slightly tighter tracking. */
+.eyebrow {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
 }
 
 /* Custom scrollbar matching the One Piece theme */

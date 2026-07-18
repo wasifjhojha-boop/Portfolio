@@ -92,7 +92,7 @@ function ProjectCard({ project }) {
           {/* Impact Stats Overlay */}
           <div className="absolute inset-x-4 bottom-4 p-3 bg-[#1a1512]/90 backdrop-blur-sm border border-[#d4a13a]/20 flex items-center gap-3">
             <FaScroll className="text-[#d4a13a] text-xs shrink-0" />
-            <span className="text-[10px] font-headings tracking-widest text-[#f0e4c8] leading-tight">
+            <span className="text-[10px] font-label tracking-widest text-[#f0e4c8] leading-tight">
               {impactLine(project)}
             </span>
           </div>
@@ -107,7 +107,7 @@ function ProjectCard({ project }) {
           </div>
           <div className="mb-4">
             <span
-              className="px-3 py-1 text-[8px] font-bold font-headings tracking-[0.2em] uppercase"
+              className="px-3 py-1 text-[8px] font-semibold font-label tracking-[0.2em] uppercase"
               style={{ color: style.color, border: `1px solid ${style.color}40`, backgroundColor: `${style.color}10` }}
             >
               {project.category}
@@ -131,14 +131,14 @@ function ProjectCard({ project }) {
             {isDetailed ? (
               <button
                 onClick={() => setExpanded((v) => !v)}
-                className="flex items-center gap-2 text-[#d4a13a] hover:text-[#f0e4c8] font-headings text-[10px] font-bold tracking-[0.2em] uppercase transition-colors"
+                className="flex items-center gap-2 text-[#d4a13a] hover:text-[#f0e4c8] font-label text-[10px] font-semibold tracking-[0.2em] uppercase transition-colors"
               >
                 <FaBookOpen size={11} />
                 <span>Full Case Study</span>
                 <FaChevronDown size={9} className={`transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} />
               </button>
             ) : (
-              <span className="text-[10px] font-headings tracking-[0.2em] uppercase text-[#8a8070]/50 italic">Coming Soon</span>
+              <span className="text-[10px] font-label tracking-[0.2em] uppercase text-[#8a8070]/50 italic">Coming Soon</span>
             )}
 
             <div className="flex items-center gap-5 text-[#8a8070]">
@@ -172,7 +172,7 @@ function ProjectCard({ project }) {
                 ))}
 
                 <div>
-                  <h4 className="font-headings text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Responsibilities</h4>
+                  <h4 className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Responsibilities</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.responsibilities.map((r) => (
                       <span key={r} className="text-[10px] font-body text-[#8a8070] bg-[#0d0b08] px-2 py-1 rounded-sm">{r}</span>
@@ -182,7 +182,7 @@ function ProjectCard({ project }) {
 
                 {project.seoKeywords && (
                   <div>
-                    <h4 className="font-headings text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">SEO Target Keywords</h4>
+                    <h4 className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">SEO Target Keywords</h4>
                     <div className="flex flex-wrap gap-2">
                       {project.seoKeywords.map((k) => (
                         <span key={k} className="text-[10px] font-body text-[#8a8070] bg-[#0d0b08] px-2 py-1 rounded-sm">{k}</span>
@@ -192,21 +192,21 @@ function ProjectCard({ project }) {
                 )}
 
                 <div>
-                  <h4 className="font-headings text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Challenges</h4>
+                  <h4 className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Challenges</h4>
                   <ul className="text-[#8a8070] text-xs font-body list-disc list-inside space-y-1">
                     {project.challenges.map((c) => <li key={c}>{c}</li>)}
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="font-headings text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Results</h4>
+                  <h4 className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Results</h4>
                   <ul className="text-[#f0e4c8]/80 text-xs font-body list-disc list-inside space-y-1">
                     {project.results.map((r) => <li key={r}>{r}</li>)}
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="font-headings text-[10px] font-bold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Tech Stack</h4>
+                  <h4 className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[#d4a13a] mb-2">Tech Stack</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.techStack.map((t) => (
                       <span key={t} className="text-[10px] font-body text-[#d4a13a] bg-[#d4a13a]/10 border border-[#d4a13a]/20 px-2 py-1 rounded-sm">{t}</span>
@@ -237,7 +237,7 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
+          <p className="eyebrow text-[#d4a13a] mb-4">
             THE VOYAGE LOG
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
@@ -256,7 +256,7 @@ export default function Projects() {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-6 py-2 border-y border-[#d4a13a]/20 font-headings text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300 ${
+              className={`px-6 py-2 border-y border-[#d4a13a]/20 font-label text-[10px] font-semibold tracking-[0.2em] uppercase transition-all duration-300 ${
                 filter === cat
                   ? 'bg-gradient-to-r from-transparent via-[#d4a13a]/20 to-transparent text-[#f0e4c8] border-[#d4a13a]/50'
                   : 'bg-transparent text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a]/40'

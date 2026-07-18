@@ -28,7 +28,7 @@ export default function Experience() {
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-20">
-          <p className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
+          <p className="eyebrow text-[#d4a13a] mb-4">
             THE LOG
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
@@ -52,14 +52,14 @@ export default function Experience() {
             const cardContent = (
               <>
                 <div className={`flex flex-col mb-3 ${isLeft ? 'md:items-end' : ''}`}>
-                  <span className="flex items-center gap-1.5 text-[#d4a13a] text-[10px] font-bold font-headings tracking-[0.2em] uppercase mb-1">
+                  <span className="flex items-center gap-1.5 text-[#d4a13a] text-[10px] font-semibold font-label tracking-[0.2em] uppercase mb-1">
                     <FaScroll size={10} />
                     {item.period}
                   </span>
                   <h3 className="font-headings text-xl font-bold text-[#f0e4c8] tracking-wider">
                     {item.role}
                   </h3>
-                  <p className="text-[#8a8070] text-[10px] font-headings font-bold tracking-[0.2em] uppercase mt-1">
+                  <p className="text-[#8a8070] text-[10px] font-label font-semibold tracking-[0.2em] uppercase mt-1">
                     {item.company}
                   </p>
                 </div>

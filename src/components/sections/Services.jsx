@@ -231,7 +231,7 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <header className="text-center mb-16">
-          <p ref={subRef} className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
+          <p ref={subRef} className="eyebrow text-[#d4a13a] mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             THE FLEET'S OFFERINGS
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">

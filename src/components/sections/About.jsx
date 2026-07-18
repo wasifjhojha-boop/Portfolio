@@ -57,7 +57,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-24">
-          <p className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
+          <p className="eyebrow text-[#d4a13a] mb-4">
             THE LOG BOOK
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
@@ -126,7 +126,7 @@ export default function About() {
                   <h4 className="font-headings text-3xl md:text-4xl font-extrabold text-[#d4a13a] drop-shadow-[0_2px_10px_rgba(212,161,58,0.3)]">
                     <Counter value={stat.value} suffix={stat.suffix} />
                   </h4>
-                  <p className="text-[#8a8070] text-[10px] font-headings font-bold tracking-widest mt-2 uppercase leading-snug">
+                  <p className="text-[#8a8070] text-[10px] font-label font-semibold tracking-widest mt-2 uppercase leading-snug">
                     {stat.label}
                   </p>
                 </div>

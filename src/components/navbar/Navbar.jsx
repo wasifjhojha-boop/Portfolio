@@ -65,7 +65,7 @@ export default function Navbar() {
               key={item.label}
               href={item.href}
               aria-current={currentPath === item.href ? 'page' : undefined}
-              className={`relative text-[10px] font-headings font-bold tracking-[0.2em] uppercase transition-colors duration-300 py-1 group ${
+              className={`relative text-[11px] font-label font-medium tracking-[0.22em] uppercase transition-colors duration-300 py-1 group ${
                 currentPath === item.href ? 'text-[#d4a13a]' : 'text-[#8a8070] hover:text-[#d4a13a]'
               }`}
             >
@@ -79,7 +79,7 @@ export default function Navbar() {
             href={contact.resume}
             target="_blank"
             rel="noreferrer"
-            className="px-5 py-2 border border-[#d4a13a]/40 text-[#d4a13a] font-headings text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-gradient-to-r hover:from-[#d4a13a] hover:to-[#d4a13a] hover:text-[#0d0b08] hover:border-[#d4a13a] transition-all duration-400 rounded-sm"
+            className="px-5 py-2 border border-[#d4a13a]/40 text-[#d4a13a] font-label text-[11px] font-semibold tracking-[0.22em] uppercase hover:bg-gradient-to-r hover:from-[#d4a13a] hover:to-[#d4a13a] hover:text-[#0d0b08] hover:border-[#d4a13a] transition-all duration-400 rounded-sm"
           >
             Download CV
           </a>
@@ -111,7 +111,7 @@ export default function Navbar() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 aria-current={currentPath === item.href ? 'page' : undefined}
-                className={`text-xs font-headings font-bold py-3 tracking-[0.2em] uppercase border-b border-[#d4a13a]/10 ${
+                className={`text-xs font-label font-medium py-3 tracking-[0.22em] uppercase border-b border-[#d4a13a]/10 ${
                   currentPath === item.href ? 'text-[#d4a13a]' : 'text-[#8a8070] hover:text-[#d4a13a]'
                 }`}
               >
@@ -123,7 +123,7 @@ export default function Navbar() {
               target="_blank"
               rel="noreferrer"
               onClick={() => setIsOpen(false)}
-              className="mt-4 text-center py-4 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] font-headings font-bold rounded-sm tracking-[0.2em] uppercase border border-[#d4a13a]"
+              className="mt-4 text-center py-4 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] font-label font-semibold rounded-sm tracking-[0.22em] uppercase border border-[#d4a13a]"
             >
               Download CV
             </a>

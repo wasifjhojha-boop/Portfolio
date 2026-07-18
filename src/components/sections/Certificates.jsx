@@ -11,7 +11,7 @@ export default function Certificates() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
+          <p className="eyebrow text-[#d4a13a] mb-4">
             VERIFIED CREDENTIALS
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
@@ -52,7 +52,7 @@ export default function Certificates() {
                   <h3 className="font-headings text-lg font-bold text-[#f0e4c8] tracking-wide leading-tight group-hover:text-[#d4a13a] transition-colors">
                     {cert.title}
                   </h3>
-                  <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase mt-3">
+                  <p className="text-[#8a8070] text-[9px] font-label tracking-[0.2em] uppercase mt-3">
                     {cert.issuer}{cert.date ? ` • ${cert.date}` : ''}
                   </p>
                   {cert.credentialId && (
@@ -66,7 +66,7 @@ export default function Certificates() {
                     href={link}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-auto flex items-center gap-2 text-[#8a8070] hover:text-[#f0e4c8] text-[10px] font-bold font-headings tracking-[0.2em] uppercase transition-colors"
+                    className="mt-auto flex items-center gap-2 text-[#8a8070] hover:text-[#f0e4c8] text-[10px] font-semibold font-label tracking-[0.2em] uppercase transition-colors"
                   >
                     <span>View Credential</span>
                     <FaExternalLinkAlt size={10} />

@@ -40,7 +40,7 @@ export default function ShipScene() {
           ref={overlayRef}
           className="max-w-2xl transform opacity-0 translate-y-8 transition-all duration-1000 ease-out"
         >
-          <p className="font-headings text-[10px] md:text-xs tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
+          <p className="font-label text-[10px] md:text-xs tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
             A NEW VOYAGE
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
@@ -59,7 +59,7 @@ export default function ShipScene() {
             {['SEO', 'Google Ads', 'Meta Ads', 'React', 'Three.js'].map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-[9px] font-headings tracking-[0.15em] uppercase text-[#8a8070] border border-[#d4a13a]/15 rounded-sm"
+                className="px-3 py-1 text-[9px] font-label tracking-[0.15em] uppercase text-[#8a8070] border border-[#d4a13a]/15 rounded-sm"
               >
                 {tag}
               </span>
@@ -69,7 +69,7 @@ export default function ShipScene() {
           <div className="mt-10 pointer-events-auto">
             <a
               href="/contact"
-              className="inline-block px-8 py-3 border border-[#d4a13a]/40 bg-[#0d0b08]/40 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-widest uppercase hover:bg-[#d4a13a]/10 hover:border-[#d4a13a] transition-all duration-300 backdrop-blur-sm"
+              className="inline-block px-8 py-3 border border-[#d4a13a]/40 bg-[#0d0b08]/40 text-[#f0e4c8] font-label font-semibold text-[10px] tracking-widest uppercase hover:bg-[#d4a13a]/10 hover:border-[#d4a13a] transition-all duration-300 backdrop-blur-sm"
             >
               Set Sail
             </a>

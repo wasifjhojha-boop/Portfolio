@@ -145,7 +145,7 @@ export default function Skills() {
         >
           <motion.p
             variants={headerItem}
-            className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4"
+            className="eyebrow text-[#d4a13a] mb-4"
           >
             THE TREASURY
           </motion.p>
@@ -176,7 +176,7 @@ export default function Skills() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative px-6 py-3 font-headings text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-300 border-y flex items-center gap-2 ${active
+                className={`relative px-6 py-3 font-label text-[10px] font-semibold tracking-[0.2em] uppercase transition-colors duration-300 border-y flex items-center gap-2 ${active
                   ? 'border-[#d4a13a]/50 text-[#f0e4c8]'
                   : 'border-transparent text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a]/20'
                   }`}

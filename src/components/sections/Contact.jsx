@@ -32,7 +32,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-24">
-          <p className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
+          <p className="eyebrow text-[#d4a13a] mb-4">
             DROP ANCHOR
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">

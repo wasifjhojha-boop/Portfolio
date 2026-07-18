@@ -222,7 +222,7 @@ export default function Hero() {
         <div className="font-headings text-2xl md:text-3xl text-[#d4a13a] tracking-widest uppercase animate-pulse drop-shadow-[0_0_10px_rgba(212,161,58,0.3)]">
           MOHD WASIF
         </div>
-        <div className="font-headings text-[10px] tracking-[0.3em] text-[#8a8070] uppercase">
+        <div className="font-label text-[10px] tracking-[0.3em] text-[#8a8070] uppercase">
           ASSEMBLING DIGITAL FLEET...
         </div>
         <div className="w-40 h-[1px] bg-[#d4a13a]/20 relative overflow-hidden">
@@ -287,7 +287,7 @@ export default function Hero() {
               <span className="h-[2px] w-10 bg-[#d4a13a] shrink-0 shadow-[0_0_8px_rgba(212,161,58,0.6)]" />
               <span
                 ref={subtitleRef}
-                className="font-headings text-[10px] md:text-xs tracking-[0.45em] text-[#d4a13a] uppercase block"
+                className="font-label text-[10px] md:text-xs tracking-[0.45em] text-[#d4a13a] uppercase block"
               />
             </div>
 
@@ -307,13 +307,13 @@ export default function Hero() {
             <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
               <a
                 href="/projects"
-                className="px-7 py-3.5 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-headings font-bold text-[10px] tracking-[0.2em] uppercase shadow-[0_6px_20px_-6px_rgba(212,161,58,0.6)] hover:shadow-[0_10px_28px_-6px_rgba(212,161,58,0.7)] hover:-translate-y-0.5 transition-all duration-300"
+                className="px-7 py-3.5 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-label font-semibold text-[10px] tracking-[0.2em] uppercase shadow-[0_6px_20px_-6px_rgba(212,161,58,0.6)] hover:shadow-[0_10px_28px_-6px_rgba(212,161,58,0.7)] hover:-translate-y-0.5 transition-all duration-300"
               >
                 View Projects
               </a>
               <a
                 href="/contact"
-                className="px-7 py-3.5 rounded-sm border border-[#d4a13a]/40 bg-[#0d0b08]/50 text-[#f0e4c8] font-headings font-bold text-[10px] tracking-[0.2em] uppercase hover:border-[#d4a13a] hover:bg-[#d4a13a]/10 hover:text-[#d4a13a] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
+                className="px-7 py-3.5 rounded-sm border border-[#d4a13a]/40 bg-[#0d0b08]/50 text-[#f0e4c8] font-label font-semibold text-[10px] tracking-[0.2em] uppercase hover:border-[#d4a13a] hover:bg-[#d4a13a]/10 hover:text-[#d4a13a] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
               >
                 Get In Touch
               </a>
@@ -322,7 +322,7 @@ export default function Hero() {
 
           {/* Right Indicator Panel */}
           <div className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 hidden sm:flex flex-col items-center gap-6">
-            <div ref={chapterLabelRef} className="font-headings text-[10px] tracking-[0.2em] text-[#d4a13a]/50 writing-vertical select-none">
+            <div ref={chapterLabelRef} className="font-label text-[10px] tracking-[0.2em] text-[#d4a13a]/50 writing-vertical select-none">
               01 / 06
             </div>
             <div className="w-[1px] h-16 bg-gradient-to-b from-[#d4a13a]/40 to-transparent" />
@@ -352,7 +352,7 @@ export default function Hero() {
             <div className="w-6 h-10 rounded-full border-2 border-[#d4a13a]/50 flex justify-center pt-2">
               <div className="w-1 h-2 rounded-full bg-[#d4a13a] animate-scroll-dot" />
             </div>
-            <span className="font-headings text-[9px] tracking-[0.3em] text-[#d4a13a]/60 uppercase">Scroll</span>
+            <span className="font-label text-[9px] tracking-[0.3em] text-[#d4a13a]/60 uppercase">Scroll</span>
           </div>
         </div>
       </div>

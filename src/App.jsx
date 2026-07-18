@@ -79,9 +79,9 @@ const PAGE_METADATA = {
 function NotFoundPage() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-[#0d0b08]">
-      <p className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4">Lost at Sea</p>
+      <p className="eyebrow text-[#d4a13a] mb-4">Lost at Sea</p>
       <h1 className="font-headings text-4xl md:text-6xl font-bold text-[#f0e4c8] uppercase mb-6">Page Not Found</h1>
-      <a href="/" className="px-6 py-3 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] font-headings text-[10px] font-bold tracking-[0.2em] uppercase">
+      <a href="/" className="px-6 py-3 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] font-label text-[10px] font-semibold tracking-[0.2em] uppercase">
         Return Home
       </a>
     </section>

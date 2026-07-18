@@ -26,7 +26,7 @@ export default function Testimonials() {
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="font-headings text-[10px] tracking-[0.5em] text-[#d4a13a] uppercase mb-4">
+          <p className="eyebrow text-[#d4a13a] mb-4">
             WORDS FROM THE CREW
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
@@ -53,8 +53,8 @@ export default function Testimonials() {
               className="flex-1"
             >
               {/* Quote */}
-              <p className="text-[#f0e4c8] font-body text-base md:text-lg italic leading-relaxed mb-8 tracking-wide">
-                "{current.quote}"
+              <p className="font-serif-accent text-[#f0e4c8] text-xl md:text-2xl italic leading-relaxed mb-8">
+                &ldquo;{current.quote}&rdquo;
               </p>
 
               {/* Client Info */}
@@ -62,7 +62,7 @@ export default function Testimonials() {
                 <h4 className="font-headings text-md font-bold text-[#d4a13a] tracking-widest uppercase">
                   {current.name}
                 </h4>
-                <p className="text-[#8a8070] text-[9px] font-headings tracking-[0.2em] uppercase mt-2">
+                <p className="text-[#8a8070] text-[9px] font-label tracking-[0.2em] uppercase mt-2">
                   {current.role}
                 </p>
               </div>
