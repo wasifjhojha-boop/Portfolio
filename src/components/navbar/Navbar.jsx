@@ -43,7 +43,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'py-4 bg-[#0d0b08]/90 backdrop-blur-lg border-b border-[#d4a13a]/20 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
+          ? 'py-4 bg-transparent backdrop-blur-sm'
           : 'py-6 bg-transparent'
       }`}
     >
