@@ -7,7 +7,7 @@ import CharacterScene from '../three/CharacterScene'
 import { contact } from '../../content/contact'
 
 // Developer-first ordering: engineering leads, growth work supports it.
-const ROLES = ['Full-Stack Developer', 'React & Next.js', 'Three.js & WebGL', 'Technical SEO']
+const ROLES = ['Full-Stack Developer', 'React & Next.js', 'Technical SEO', 'Google & Meta Ads']
 
 gsap.registerPlugin(ScrollTrigger)
 
