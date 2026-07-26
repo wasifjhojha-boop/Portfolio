@@ -28,7 +28,7 @@ function HomePage() {
 
 const PAGES = {
   '/': HomePage,
-  '/uncharted': ShipScene,
+  '/lab': ShipScene,
   '/about': About,
   '/skills': Skills,
   '/services': Services,
@@ -41,16 +41,16 @@ const PAGES = {
 
 const PAGE_METADATA = {
   '/': {
-    title: 'Mohd Wasif | Performance Marketing & Web Development',
-    description: 'Portfolio of Mohd Wasif: performance marketing, technical SEO, paid ads, and modern web development.',
+    title: 'Mohd Wasif | Full-Stack Web Developer',
+    description: 'Full-stack web developer in Delhi building fast, accessible React, Next.js, and WordPress sites — with technical SEO and performance marketing built in.',
   },
-  '/uncharted': {
-    title: 'Uncharted Waters | Mohd Wasif',
-    description: 'An interactive 3D voyage through the seas of digital marketing, SEO, and modern web development.',
+  '/lab': {
+    title: '3D Lab | Mohd Wasif',
+    description: 'An interactive WebGL scene built with React Three Fiber, Three.js, and custom GLSL shaders — running in real time in the browser.',
   },
   '/about': {
-    title: 'About Mohd Wasif | Digital Growth Specialist',
-    description: 'Learn about Mohd Wasif, a performance marketer and web developer focused on measurable digital growth.',
+    title: 'About | Mohd Wasif',
+    description: 'Mohd Wasif is a full-stack web developer in Delhi who came up through performance marketing, building sites that rank and convert.',
   },
   '/skills': {
     title: 'Skills | Mohd Wasif',
@@ -84,10 +84,10 @@ const PAGE_METADATA = {
 
 function NotFoundPage() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-[#0d0b08]">
-      <p className="eyebrow text-[#d4a13a] mb-4">Lost at Sea</p>
-      <h1 className="font-headings text-4xl md:text-6xl font-bold text-[#f0e4c8] uppercase mb-6">Page Not Found</h1>
-      <a href="/" className="px-6 py-3 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] font-label text-[10px] font-semibold tracking-[0.2em] uppercase">
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-[#ffffff]">
+      <p className="eyebrow text-[#a07d33] mb-4">404</p>
+      <h1 className="font-headings text-4xl md:text-6xl font-bold text-[#191712] mb-6">Page Not Found</h1>
+      <a href="/" className="px-6 py-3 bg-gradient-to-r from-[#a07d33] to-[#a07d33] text-[#ffffff] font-label text-[10px] font-semibold tracking-[0.2em] uppercase">
         Return Home
       </a>
     </section>
@@ -133,7 +133,7 @@ function App() {
   }, [currentPath])
 
   return (
-    <div className="relative text-white w-full overflow-x-hidden font-body bg-[#0d0b08]">
+    <div className="relative text-[#191712] w-full overflow-x-hidden font-body bg-[#ffffff]">
       {/* Global Navigation */}
       <Navbar />
 

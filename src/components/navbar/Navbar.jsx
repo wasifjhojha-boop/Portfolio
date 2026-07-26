@@ -5,8 +5,8 @@ import { contact } from '../../content/contact'
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
-  { label: 'Uncharted', href: '/uncharted' },
-  { label: 'Journey', href: '/about' },
+  { label: '3D Lab', href: '/lab' },
+  { label: 'About', href: '/about' },
   { label: 'Skills', href: '/skills' },
   { label: 'Services', href: '/services' },
   { label: 'Projects', href: '/projects' },
@@ -58,11 +58,11 @@ export default function Navbar() {
             className="h-9 w-auto opacity-95 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_2px_5px_rgba(201,168,106,0.35)]"
           >
             <g fill="none" strokeWidth="1.75" strokeLinecap="square" transform="translate(5,5) scale(0.5)">
-              <path d="M18 78 V26 L38 56 L50 38" stroke="#e8e6e1" />
-              <path d="M82 22 V74 L62 44 L50 62" stroke="#c9a86a" />
+              <path d="M18 78 V26 L38 56 L50 38" stroke="#191712" />
+              <path d="M82 22 V74 L62 44 L50 62" stroke="#a8863f" />
             </g>
-            <text x="70" y="31" fontFamily="Sora, sans-serif" fontWeight="700" fontSize="16" letterSpacing="3" fill="#e8e6e1">MOHD WASIF</text>
-            <text x="70" y="47" fontFamily="Sora, sans-serif" fontWeight="400" fontSize="8" letterSpacing="4.5" fill="#8a8a93">PORTFOLIO</text>
+            <text x="70" y="31" fontFamily="Sora, sans-serif" fontWeight="700" fontSize="16" letterSpacing="3" fill="#191712">MOHD WASIF</text>
+            <text x="70" y="47" fontFamily="Sora, sans-serif" fontWeight="400" fontSize="8" letterSpacing="4.5" fill="#6b6555">PORTFOLIO</text>
           </svg>
         </a>
 
@@ -74,11 +74,11 @@ export default function Navbar() {
               href={item.href}
               aria-current={currentPath === item.href ? 'page' : undefined}
               className={`relative text-[11px] font-label font-medium tracking-[0.22em] uppercase transition-colors duration-300 py-1 group ${
-                currentPath === item.href ? 'text-[#d4a13a]' : 'text-[#8a8070] hover:text-[#d4a13a]'
+                currentPath === item.href ? 'text-[#a07d33]' : 'text-[#5f594c] hover:text-[#a07d33]'
               }`}
             >
               {item.label}
-              <span className={`absolute bottom-0 left-0 h-[1px] bg-[#d4a13a] transition-all duration-300 group-hover:w-full ${
+              <span className={`absolute bottom-0 left-0 h-[1px] bg-[#a07d33] transition-all duration-300 group-hover:w-full ${
                 currentPath === item.href ? 'w-full' : 'w-0'
               }`} />
             </a>
@@ -87,7 +87,7 @@ export default function Navbar() {
             href={contact.resume}
             target="_blank"
             rel="noreferrer"
-            className="px-5 py-2 border border-[#d4a13a]/40 text-[#d4a13a] font-label text-[11px] font-semibold tracking-[0.22em] uppercase hover:bg-gradient-to-r hover:from-[#d4a13a] hover:to-[#d4a13a] hover:text-[#0d0b08] hover:border-[#d4a13a] transition-all duration-400 rounded-sm"
+            className="px-5 py-2 border border-[#a07d33]/40 text-[#a07d33] font-label text-[11px] font-semibold tracking-[0.22em] uppercase hover:bg-gradient-to-r hover:from-[#a07d33] hover:to-[#a07d33] hover:text-[#ffffff] hover:border-[#a07d33] transition-all duration-400 rounded-sm"
           >
             Download CV
           </a>
@@ -96,7 +96,7 @@ export default function Navbar() {
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden text-[#8a8070] hover:text-[#d4a13a] transition-colors duration-300 p-2"
+          className="lg:hidden text-[#5f594c] hover:text-[#a07d33] transition-colors duration-300 p-2"
           aria-label="Toggle Menu"
         >
           {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
@@ -111,7 +111,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="lg:hidden w-full bg-[#0d0b08]/98 border-b border-[#d4a13a]/20 px-6 py-6 flex flex-col gap-4 shadow-xl backdrop-blur-lg"
+            className="lg:hidden w-full bg-[#ffffff]/98 border-b border-[#a07d33]/20 px-6 py-6 flex flex-col gap-4 shadow-xl backdrop-blur-lg"
           >
             {NAV_ITEMS.map((item) => (
               <a
@@ -119,8 +119,8 @@ export default function Navbar() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 aria-current={currentPath === item.href ? 'page' : undefined}
-                className={`text-xs font-label font-medium py-3 tracking-[0.22em] uppercase border-b border-[#d4a13a]/10 ${
-                  currentPath === item.href ? 'text-[#d4a13a]' : 'text-[#8a8070] hover:text-[#d4a13a]'
+                className={`text-xs font-label font-medium py-3 tracking-[0.22em] uppercase border-b border-[#a07d33]/10 ${
+                  currentPath === item.href ? 'text-[#a07d33]' : 'text-[#5f594c] hover:text-[#a07d33]'
                 }`}
               >
                 {item.label}
@@ -131,7 +131,7 @@ export default function Navbar() {
               target="_blank"
               rel="noreferrer"
               onClick={() => setIsOpen(false)}
-              className="mt-4 text-center py-4 bg-gradient-to-r from-[#d4a13a] to-[#d4a13a] text-[#0d0b08] font-label font-semibold rounded-sm tracking-[0.22em] uppercase border border-[#d4a13a]"
+              className="mt-4 text-center py-4 bg-gradient-to-r from-[#a07d33] to-[#a07d33] text-[#ffffff] font-label font-semibold rounded-sm tracking-[0.22em] uppercase border border-[#a07d33]"
             >
               Download CV
             </a>

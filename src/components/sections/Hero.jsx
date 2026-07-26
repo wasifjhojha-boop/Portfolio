@@ -6,7 +6,8 @@ import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import CharacterScene from '../three/CharacterScene'
 import { contact } from '../../content/contact'
 
-const ROLES = ['Performance Marketer', 'SEO Specialist', 'Google Ads Expert', 'Creative Developer']
+// Developer-first ordering: engineering leads, growth work supports it.
+const ROLES = ['Full-Stack Developer', 'React & Next.js', 'Three.js & WebGL', 'Technical SEO']
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -143,7 +144,7 @@ export default function Hero() {
       <div className="absolute inset-0 pointer-events-none">
         {/* Soft white gradients */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_28%_18%,rgba(255,255,255,0.95),transparent_65%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_78%_82%,rgba(212,161,58,0.14),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_78%_82%,rgba(160,125,51,0.14),transparent_65%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_85%_15%,rgba(220,232,245,0.55),transparent_70%)]" />
 
         {/* Floating light blobs */}
@@ -193,13 +194,13 @@ export default function Hero() {
           className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#1c1710] opacity-[0.055] whitespace-nowrap"
           style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
         >
-          Digital
+          Web
         </span>
         <span
           className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#1c1710] opacity-[0.055] whitespace-nowrap"
           style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
         >
-          Marketer
+          Developer
         </span>
       </div>
 
@@ -208,7 +209,7 @@ export default function Hero() {
         {/* Left: intro */}
         <div ref={introRef} className="max-w-xl order-2 lg:order-1">
           <p data-reveal className="eyebrow text-[#a07d33] mb-5 opacity-0">
-            Digital Marketer
+            Web Developer
           </p>
 
           <h1
@@ -216,7 +217,7 @@ export default function Hero() {
             className="font-headings font-black text-[#1c1710] leading-[1.02] mb-5 opacity-0"
             style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.6rem)' }}
           >
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#b8862a] via-[#d4a13a] to-[#a07d33]">Wasif</span>.
+            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#b8862a] via-[#a07d33] to-[#a07d33]">Wasif</span>.
           </h1>
 
           {/* Roles */}
@@ -224,15 +225,15 @@ export default function Hero() {
             {ROLES.map((role, i) => (
               <span key={role}>
                 {role}
-                {i < ROLES.length - 1 && <span className="text-[#d4a13a] mx-2.5">·</span>}
+                {i < ROLES.length - 1 && <span className="text-[#a07d33] mx-2.5">·</span>}
               </span>
             ))}
           </p>
 
           <p data-reveal className="font-body text-base md:text-lg text-[#4a4335] leading-relaxed mb-9 opacity-0">
-            I build high-performing digital experiences — pairing data-driven marketing and SEO
-            with modern web engineering, AI, and creative technology that turns attention into
-            measurable growth.
+            I build fast, accessible web applications with React, Next.js, and WordPress —
+            and because I came up through performance marketing, I build them to rank and
+            convert, not just to render.
           </p>
 
           {/* CTAs — glass, magnetic */}
@@ -240,7 +241,7 @@ export default function Hero() {
             <MagneticLink
               href="/projects"
               reducedMotion={reducedMotion}
-              className="px-8 py-4 rounded-full bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_10px_30px_-8px_rgba(180,134,42,0.55)] hover:shadow-[0_16px_40px_-8px_rgba(180,134,42,0.65)] hover:-translate-y-0.5 duration-300"
+              className="px-8 py-4 rounded-full bg-gradient-to-br from-[#e8c97a] via-[#a07d33] to-[#b8862a] text-[#ffffff] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_10px_30px_-8px_rgba(180,134,42,0.55)] hover:shadow-[0_16px_40px_-8px_rgba(180,134,42,0.65)] hover:-translate-y-0.5 duration-300"
             >
               Explore My Work
             </MagneticLink>

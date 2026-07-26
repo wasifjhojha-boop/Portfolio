@@ -1,102 +1,115 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&family=Sora:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&family=Sora:wght@400;600;700;800&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  /* Type roles — one font per job instead of Cinzel everywhere.
-     display  → large engraved titles (hero, section H2, logo)
-     serif    → elegant names, quotes, pull-outs
-     label    → small uppercase eyebrows / nav / buttons / meta
-     body     → paragraphs */
-  --font-display: 'Cinzel', serif;
-  --font-headings: 'Cinzel', serif;
-  --font-serif: 'Cormorant Garamond', serif;
+  /* Type roles. Headings use Sora — the same face as the MW logo, so the
+     wordmark and the site speak with one voice. Cinzel (an inscriptional
+     serif built for fantasy branding) was the single biggest reason the
+     site read as themed rather than as a developer's portfolio.
+       headings → section titles, hero, card titles
+       label    → small uppercase eyebrows / nav / buttons / meta
+       body     → paragraphs
+       serif    → reserved for the business-card contact panel */
+  --font-headings: 'Sora', sans-serif;
+  --font-display: 'Sora', sans-serif;
   --font-label: 'Jost', sans-serif;
   --font-body: 'Inter', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+
+  /* Light palette. Gold is kept because it is the logo colour, but demoted
+     to an accent on a neutral base instead of coating every surface. */
+  --color-ink: #191712;        /* primary text */
+  --color-ink-soft: #5f594c;   /* secondary text */
+  --color-ink-faint: #8c8577;  /* meta text */
+  --color-paper: #ffffff;      /* base surface */
+  --color-paper-warm: #f7f5f0; /* alternating section surface */
+  --color-line: #e4e0d6;       /* hairlines and borders */
+  --color-accent: #a07d33;     /* gold, contrast-safe on light */
+  --color-accent-soft: #c9a86a;
 }
 
 /* Base style resets and scroll behavior */
 html {
   scroll-behavior: auto; /* Handled by Lenis smooth scroll */
-  background-color: #0d0b08;
-  color: #f0e4c8;
+  background-color: #ffffff;
+  color: #191712;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* Body copy defaults: comfortable measure + rhythm.
-   Inter reads better at 400 with slightly open line-height. */
+/* Body copy defaults: comfortable measure + rhythm. */
 body {
   font-family: var(--font-body);
   line-height: 1.65;
 }
 
-/* Display titles (Cinzel) — engraved feel needs air between glyphs,
-   never crammed. Applied to hero + section H2s. */
-.font-display {
-  letter-spacing: 0.06em;
+/* Display titles: modern sans wants tight tracking, not the airy spacing
+   an engraved serif needed. */
+.font-display,
+.font-headings {
+  letter-spacing: -0.015em;
 }
 
-/* Elegant serif for names, quotes, and pull-outs. */
+/* Serif accent, reserved for the contact card. */
 .font-serif-accent {
   font-family: var(--font-serif);
 }
 
-/* Small uppercase labels (Jost) read best a touch larger than the
-   Cinzel labels they replace, with slightly tighter tracking. */
+/* Small uppercase labels. */
 .eyebrow {
   font-family: var(--font-label);
   font-weight: 500;
   font-size: 11px;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
 }
 
-/* Custom scrollbar matching the One Piece theme */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0d0b08;
+  background: #f2efe8;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d4a13a;
+  background: #c3bcac;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #f0e4c8;
+  background: #a07d33;
 }
 
-/* Custom utility classes */
+/* Surface panel. On a light theme this is a clean card with a hairline
+   border and soft shadow rather than dark frosted glass. */
 .glass-panel {
-  background: rgba(26, 21, 18, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 161, 58, 0.15);
+  background: #ffffff;
+  border: 1px solid #e4e0d6;
+  box-shadow: 0 1px 2px rgba(25, 23, 18, 0.04);
 }
 
 .glass-panel-hover {
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .glass-panel-hover:hover {
-  background: rgba(26, 21, 18, 0.7);
-  border-color: rgba(212, 161, 58, 0.45);
-  box-shadow: 0 10px 30px -10px rgba(212, 161, 58, 0.15);
+  border-color: rgba(160, 125, 51, 0.45);
+  box-shadow: 0 10px 30px -10px rgba(25, 23, 18, 0.12);
 }
 
 .gold-glow {
-  box-shadow: 0 0 15px rgba(212, 161, 58, 0.25);
+  box-shadow: 0 0 15px rgba(160, 125, 51, 0.18);
 }
 
 .gold-glow-hover:hover {
-  box-shadow: 0 0 25px rgba(212, 161, 58, 0.45);
+  box-shadow: 0 0 25px rgba(160, 125, 51, 0.28);
 }
 
-/* Premium parchment-to-gold text fill for large display headings. */
+/* Display heading fill. Near-black with a subtle warm shift — the old
+   parchment-to-gold gradient was illegible on a light background. */
 .text-gold-gradient {
-  background: linear-gradient(180deg, #f7ecd4 0%, #f0e4c8 42%, #d4a13a 100%);
+  background: linear-gradient(180deg, #191712 0%, #2b261c 70%, #4a4134 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -105,10 +118,10 @@ body {
 
 /* Soft gold rule used under section eyebrows. */
 .rule-gold {
-  background: linear-gradient(90deg, transparent, rgba(212, 161, 58, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(160, 125, 51, 0.5), transparent);
 }
 
-/* Card lift: consistent depth + gold edge on hover across all card grids. */
+/* Card lift: consistent depth + accent edge on hover across all card grids. */
 .card-lift {
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
     box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
@@ -116,8 +129,8 @@ body {
 }
 .card-lift:hover {
   transform: translateY(-6px);
-  border-color: rgba(212, 161, 58, 0.45);
-  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7), 0 0 24px -6px rgba(212, 161, 58, 0.25);
+  border-color: rgba(160, 125, 51, 0.45);
+  box-shadow: 0 18px 40px -18px rgba(25, 23, 18, 0.18);
 }
 
 .animate-spin-slow {
@@ -129,17 +142,17 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Shared ambient ocean backdrop for inner pages so every section feels like
-   part of the same world instead of a flat color fill. */
+/* Shared ambient backdrop so sections feel related rather than flat.
+   Kept the class name since it is referenced across every section; the
+   treatment is now a light warm wash instead of a dark ocean. */
 .ambient-ocean::before {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212, 161, 58, 0.05), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(26, 21, 18, 0.4), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(26, 21, 18, 0.3), transparent 70%);
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(160, 125, 51, 0.05), transparent 62%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(160, 125, 51, 0.04), transparent 70%);
 }
 
 .ambient-ocean::after {
@@ -147,11 +160,12 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.5;
   background-image:
-    linear-gradient(to right, #d4a13a 1px, transparent 1px),
-    linear-gradient(to bottom, #d4a13a 1px, transparent 1px);
+    linear-gradient(to right, #ece8dd 1px, transparent 1px),
+    linear-gradient(to bottom, #ece8dd 1px, transparent 1px);
   background-size: 4rem 4rem;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
 }
 
 /* Animated film grain for the bright hero. SVG turbulence noise tiled and

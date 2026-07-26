@@ -17,22 +17,22 @@ export default function Testimonials() {
   const current = testimonials[index]
 
   return (
-    <section id="testimonials" className="relative w-full py-24 bg-[#0d0b08] border-t border-[#d4a13a]/10 overflow-hidden ambient-ocean">
+    <section id="testimonials" className="relative w-full py-24 bg-[#ffffff] border-t border-[#a07d33]/10 overflow-hidden ambient-ocean">
       {/* Background graphic */}
-      <div className="absolute top-10 left-10 text-[#d4a13a] opacity-[0.02] pointer-events-none select-none">
+      <div className="absolute top-10 left-10 text-[#a07d33] opacity-[0.02] pointer-events-none select-none">
         <FaQuoteLeft size={240} />
       </div>
 
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="eyebrow text-[#d4a13a] mb-4">
-            WORDS FROM THE CREW
+          <p className="eyebrow text-[#a07d33] mb-4">
+            CLIENT FEEDBACK
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#d4a13a]/50" />
-            <span className="text-[#d4a13a] filter drop-shadow-[0_0_8px_rgba(212,161,58,0.7)] text-sm">✦</span>
-            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#d4a13a]/50" />
+            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
+            <span className="w-1 h-1 rounded-full bg-[#a07d33]/60" />
+            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
           </div>
           <h2 className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase">
             Testimonials
@@ -40,8 +40,8 @@ export default function Testimonials() {
         </div>
 
         {/* Carousel Container */}
-        <div className="relative bg-[#0d0b08] border border-[#d4a13a]/20 p-8 md:p-12 shadow-[0_0_30px_rgba(212,161,58,0.05)] overflow-hidden min-h-[300px] flex flex-col justify-between rounded-sm">
-          <FaQuoteLeft className="text-[#d4a13a] text-3xl opacity-30 mb-6" />
+        <div className="relative bg-[#ffffff] border border-[#a07d33]/20 p-8 md:p-12 shadow-[0_0_30px_rgba(160,125,51,0.05)] overflow-hidden min-h-[300px] flex flex-col justify-between rounded-sm">
+          <FaQuoteLeft className="text-[#a07d33] text-3xl opacity-30 mb-6" />
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -53,16 +53,16 @@ export default function Testimonials() {
               className="flex-1"
             >
               {/* Quote */}
-              <p className="font-serif-accent text-[#f0e4c8] text-xl md:text-2xl italic leading-relaxed mb-8">
+              <p className="font-serif-accent text-[#191712] text-xl md:text-2xl italic leading-relaxed mb-8">
                 &ldquo;{current.quote}&rdquo;
               </p>
 
               {/* Client Info */}
               <div>
-                <h4 className="font-headings text-md font-bold text-[#d4a13a] tracking-widest uppercase">
+                <h4 className="font-headings text-md font-bold text-[#a07d33] tracking-widest uppercase">
                   {current.name}
                 </h4>
-                <p className="text-[#8a8070] text-[9px] font-label tracking-[0.2em] uppercase mt-2">
+                <p className="text-[#5f594c] text-[9px] font-label tracking-[0.2em] uppercase mt-2">
                   {current.role}
                 </p>
               </div>
@@ -70,7 +70,7 @@ export default function Testimonials() {
           </AnimatePresence>
 
           {/* Slider controls */}
-          <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#d4a13a]/10">
+          <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#a07d33]/10">
             {/* Dots */}
             <div className="flex items-center gap-2 flex-wrap">
               {testimonials.map((_, i) => (
@@ -78,7 +78,7 @@ export default function Testimonials() {
                   key={i}
                   onClick={() => setIndex(i)}
                   className={`w-2 h-2 rounded-sm transform rotate-45 transition-all duration-300 ${
-                    i === index ? 'bg-[#d4a13a] scale-125' : 'bg-[#d4a13a]/20 hover:bg-[#d4a13a]/50'
+                    i === index ? 'bg-[#a07d33] scale-125' : 'bg-[#a07d33]/20 hover:bg-[#a07d33]/50'
                   }`}
                   aria-label={`Slide ${i + 1}`}
                 />
@@ -89,14 +89,14 @@ export default function Testimonials() {
             <div className="flex items-center gap-4">
               <button
                 onClick={handlePrev}
-                className="w-10 h-10 border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a]/50 transition-colors rounded-sm"
+                className="w-10 h-10 border border-[#a07d33]/20 flex items-center justify-center text-[#5f594c] hover:text-[#a07d33] hover:border-[#a07d33]/50 transition-colors rounded-sm"
                 aria-label="Previous Review"
               >
                 <FaChevronLeft size={12} />
               </button>
               <button
                 onClick={handleNext}
-                className="w-10 h-10 border border-[#d4a13a]/20 flex items-center justify-center text-[#8a8070] hover:text-[#d4a13a] hover:border-[#d4a13a]/50 transition-colors rounded-sm"
+                className="w-10 h-10 border border-[#a07d33]/20 flex items-center justify-center text-[#5f594c] hover:text-[#a07d33] hover:border-[#a07d33]/50 transition-colors rounded-sm"
                 aria-label="Next Review"
               >
                 <FaChevronRight size={12} />

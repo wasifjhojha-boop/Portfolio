@@ -24,7 +24,7 @@ const SERVICES = [
     words: '"Search. Strike. Convert."',
     region: 'Paid Acquisition',
     sigil: 'Intent-Driven Ad Campaigns',
-    colors: ['#d4a13a', '#e8c97a'],
+    colors: ['#a07d33', '#e8c97a'],
     accent: '#d4a84b',
     description:
       'Search campaigns, Display, and Shopping setups built around maximum conversion. A/B landing copy and negative keyword targeting with surgical precision.',
@@ -54,8 +54,8 @@ const SERVICES = [
     words: '"Built For Speed."',
     region: 'Frontend Engineering',
     sigil: 'High-Performance Clean Code',
-    colors: ['#e8c97a', '#f0e4c8'],
-    accent: '#d4a13a',
+    colors: ['#e8c97a', '#191712'],
+    accent: '#a07d33',
     description:
       'Fast, modern, and SEO-compliant websites. Custom themes, Gutenberg blocks, and Single Page Apps built for rapid loads and clean architecture.',
     sigil_url: '/images/four.webp',
@@ -69,7 +69,7 @@ const SERVICES = [
     words: '"Every Click Counts."',
     region: 'Growth Strategy',
     sigil: 'Cross-Network Data Attribution',
-    colors: ['#d4a13a', '#8b8b6b'],
+    colors: ['#a07d33', '#8b8b6b'],
     accent: '#b8a040',
     description:
       'Multi-channel growth strategies syncing Paid Ads, Technical SEO, and conversion trackers into a single, high-performing lead generation engine.',
@@ -223,7 +223,7 @@ export default function Services() {
   }, [])
 
   return (
-    <section id="services" ref={sectionRef} className="relative w-full py-24 bg-[#0d0b08] overflow-hidden">
+    <section id="services" ref={sectionRef} className="relative w-full py-24 bg-[#ffffff] overflow-hidden">
       {/* Ambient background textures */}
       <div className="absolute inset-0 opacity-[0.045] pointer-events-none bg-repeat bg-[size:220px] bg-[image:url('data:image/svg+xml,%3Csvg_viewBox=%220_0_300_300%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(0,0,0,0.65)_100%)]" />
@@ -231,18 +231,18 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <header className="text-center mb-16">
-          <p ref={subRef} className="eyebrow text-[#d4a13a] mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
+          <p ref={subRef} className="eyebrow text-[#a07d33] mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             THE FLEET'S OFFERINGS
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-20 h-[1px] bg-gradient-to-r from-transparent to-[#d4a13a]/50" />
-            <span className="text-[#d4a13a] filter drop-shadow-[0_0_8px_rgba(212,161,58,0.7)] text-sm">✦</span>
-            <span className="w-20 h-[1px] bg-gradient-to-l from-transparent to-[#d4a13a]/50" />
+            <span className="w-20 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
+            <span className="w-1 h-1 rounded-full bg-[#a07d33]/60" />
+            <span className="w-20 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
           </div>
           <h2 ref={headingRef} className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             Services <em>Rendered</em>
           </h2>
-          <p className="font-body text-xs md:text-sm text-[#8a8070] italic tracking-wide max-w-md mx-auto mt-4">
+          <p className="font-body text-xs md:text-sm text-[#5f594c] italic tracking-wide max-w-md mx-auto mt-4">
             Six distinct specialties. Built for conversions, scaled for reach, and optimized for search.
           </p>
         </header>
@@ -256,9 +256,9 @@ export default function Services() {
 
         {/* Section Footer Ornament */}
         <div className="flex items-center justify-center gap-6 mt-20">
-          <span className="w-32 h-[1px] bg-gradient-to-r from-transparent to-[#d4a13a]/30" />
-          <span className="text-[#d4a13a]/40 text-lg">⚓</span>
-          <span className="w-32 h-[1px] bg-gradient-to-l from-transparent to-[#d4a13a]/30" />
+          <span className="w-32 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/30" />
+          <span className="w-1 h-1 rounded-full bg-[#a07d33]/40 inline-block" />
+          <span className="w-32 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/30" />
         </div>
       </div>
     </section>

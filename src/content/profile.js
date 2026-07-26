@@ -3,7 +3,7 @@ export const bio = {
   title: "Digital Marketing Executive & Full-Stack Web Developer",
   location: "Delhi, India",
   tagline:
-    "Performance marketing, technical SEO, and full-stack web development — one crew, one ship.",
+    "Performance marketing, technical SEO, and full-stack web development — build it, then grow it.",
   summary: [
     "I'm Mohd Wasif, based in Delhi, India — a detail-oriented digital marketing professional with hands-on experience in Google Ads, Meta Ads, SEO, and website optimization.",
     "My work spans executing paid ad campaigns, keyword research, CPC/CTR optimization, and analytics tracking, alongside full-stack development with React, Next.js, and WordPress — plus a growing focus on 3D web experiences with Three.js and React Three Fiber, and AI-assisted workflows.",

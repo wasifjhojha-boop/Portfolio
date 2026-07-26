@@ -25,20 +25,20 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="relative w-full py-24 bg-[#0d0b08] overflow-hidden border-t border-[#d4a13a]/10 ambient-ocean">
+    <section id="contact" className="relative w-full py-24 bg-[#ffffff] overflow-hidden border-t border-[#a07d33]/10 ambient-ocean">
       {/* Decorative texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-24">
-          <p className="eyebrow text-[#d4a13a] mb-4">
-            DROP ANCHOR
+          <p className="eyebrow text-[#a07d33] mb-4">
+            GET IN TOUCH
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#d4a13a]/50" />
-            <span className="text-[#d4a13a] filter drop-shadow-[0_0_8px_rgba(212,161,58,0.7)] text-sm">✦</span>
-            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#d4a13a]/50" />
+            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
+            <span className="w-1 h-1 rounded-full bg-[#a07d33]/60" />
+            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
           </div>
           <h2 className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase">
             Get In Touch
