@@ -302,7 +302,7 @@ export default function Hero() {
                     src={src}
                     alt=""
                     loading="lazy"
-                    className="max-h-full w-auto max-w-full rounded-3xl object-cover ring-1 ring-[#a07d33]/25 shadow-[0_30px_80px_-25px_rgba(28,23,16,0.45)]"
+                    className="max-h-full w-auto max-w-full rounded-3xl object-contain object-top ring-1 ring-[#a07d33]/25 shadow-[0_30px_80px_-25px_rgba(28,23,16,0.45)]"
                   />
                 </div>
               )

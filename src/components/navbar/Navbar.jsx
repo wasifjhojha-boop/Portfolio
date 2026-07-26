@@ -5,6 +5,7 @@ import { contact } from '../../content/contact'
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
+  { label: 'Uncharted', href: '/uncharted' },
   { label: 'Journey', href: '/about' },
   { label: 'Skills', href: '/skills' },
   { label: 'Services', href: '/services' },

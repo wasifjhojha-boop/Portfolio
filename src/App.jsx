@@ -17,16 +17,12 @@ import Contact from './components/sections/Contact'
 import Footer from './components/sections/Footer'
 
 function HomePage() {
-  return (
-    <>
-      <Hero />
-      <ShipScene />
-    </>
-  )
+  return <Hero />
 }
 
 const PAGES = {
   '/': HomePage,
+  '/uncharted': ShipScene,
   '/about': About,
   '/skills': Skills,
   '/services': Services,
@@ -41,6 +37,10 @@ const PAGE_METADATA = {
   '/': {
     title: 'Mohd Wasif | Performance Marketing & Web Development',
     description: 'Portfolio of Mohd Wasif: performance marketing, technical SEO, paid ads, and modern web development.',
+  },
+  '/uncharted': {
+    title: 'Uncharted Waters | Mohd Wasif',
+    description: 'An interactive 3D voyage — navigating paid ads, SEO, and modern web development.',
   },
   '/about': {
     title: 'About Mohd Wasif | Digital Growth Specialist',
