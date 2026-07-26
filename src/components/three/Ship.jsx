@@ -12,6 +12,12 @@ function Captain() {
     if (child.isMesh) {
       child.castShadow = true
       child.receiveShadow = true
+      // The Draco-compressed mesh ships with a stale bounding volume, so
+      // Three.js frustum-culls it the moment the ship rocks. Rebuild the
+      // bounds and skip culling for this small mesh entirely.
+      child.geometry.computeBoundingBox()
+      child.geometry.computeBoundingSphere()
+      child.frustumCulled = false
     }
   })
 
