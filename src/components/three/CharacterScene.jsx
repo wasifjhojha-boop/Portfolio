@@ -1,4 +1,4 @@
-import { Suspense, useRef } from 'react'
+import { Suspense, useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, Float, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
@@ -9,15 +9,22 @@ function Character({ mouse, reducedMotion }) {
   const group = useRef()
   const { scene } = useGLTF('/models/captain.glb')
 
-  scene.traverse((child) => {
-    if (child.isMesh) {
-      child.castShadow = true
-      // Draco output ships stale bounds; rebuild + skip culling (small mesh).
-      child.geometry.computeBoundingBox()
-      child.geometry.computeBoundingSphere()
-      child.frustumCulled = false
-    }
-  })
+  // The GLTF cache returns one shared object; the ship's captain uses the
+  // same URL, and a THREE object can only live in one scene at a time —
+  // without a clone, whichever canvas mounts last steals the model.
+  const model = useMemo(() => {
+    const clone = scene.clone(true)
+    clone.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true
+        // Draco output ships stale bounds; rebuild + skip culling.
+        child.geometry.computeBoundingBox()
+        child.geometry.computeBoundingSphere()
+        child.frustumCulled = false
+      }
+    })
+    return clone
+  }, [scene])
 
   useFrame((state) => {
     const g = group.current
@@ -32,8 +39,9 @@ function Character({ mouse, reducedMotion }) {
 
   return (
     <group ref={group}>
-      {/* Model is ~0.98 units tall, feet at y=0 */}
-      <primitive object={scene} position={[0, 0, 0]} />
+      {/* Model is ~0.98 units tall, feet at y=0; authored facing -z, so
+          rotate 180° to face the camera. */}
+      <primitive object={model} position={[0, 0, 0]} rotation={[0, Math.PI, 0]} />
     </group>
   )
 }

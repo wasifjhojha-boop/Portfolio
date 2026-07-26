@@ -1,4 +1,4 @@
-import React, { useRef, Suspense } from 'react'
+import React, { useMemo, useRef, Suspense } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
@@ -8,27 +8,36 @@ import * as THREE from 'three'
 function Captain() {
   const { scene } = useGLTF('/models/captain.glb')
 
-  scene.traverse((child) => {
-    if (child.isMesh) {
-      child.castShadow = true
-      child.receiveShadow = true
-      // The Draco-compressed mesh ships with a stale bounding volume, so
-      // Three.js frustum-culls it the moment the ship rocks. Rebuild the
-      // bounds and skip culling for this small mesh entirely.
-      child.geometry.computeBoundingBox()
-      child.geometry.computeBoundingSphere()
-      child.frustumCulled = false
-    }
-  })
+  // Clone the cached GLTF: the hero's CharacterScene loads the same URL,
+  // and a THREE object can only live in one scene at a time — without a
+  // clone, whichever canvas mounts last steals the model.
+  const model = useMemo(() => {
+    const clone = scene.clone(true)
+    clone.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true
+        child.receiveShadow = true
+        // The Draco-compressed mesh ships with a stale bounding volume, so
+        // Three.js frustum-culls it the moment the ship rocks. Rebuild the
+        // bounds and skip culling for this small mesh entirely.
+        child.geometry.computeBoundingBox()
+        child.geometry.computeBoundingSphere()
+        child.frustumCulled = false
+      }
+    })
+    return clone
+  }, [scene])
 
   // Model is ~0.98 units tall with its feet at y=0.
   // Bow deck: box 0.4 tall centered at y=0.4 → deck surface at y=0.6.
   // Placed on the bow so nothing (sails/masts) sits between him and the
-  // camera, which looks at the ship from +z.
+  // camera, which looks at the ship from +z. Authored facing -z, so
+  // rotate 180° to face the camera.
   return (
     <primitive
-      object={scene}
+      object={model}
       position={[0, 0.6, 1.55]}
+      rotation={[0, Math.PI, 0]}
       scale={[1.6, 1.6, 1.6]}
     />
   )
