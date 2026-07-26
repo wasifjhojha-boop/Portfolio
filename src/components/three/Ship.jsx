@@ -1,6 +1,32 @@
-import React, { useRef } from 'react'
+import React, { useRef, Suspense } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
+
+// Captain figure standing on the stern deck; lives inside the ship group
+// so it inherits the wave float and rocking motion.
+function Captain() {
+  const { scene } = useGLTF('/models/captain.glb')
+
+  scene.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true
+      child.receiveShadow = true
+    }
+  })
+
+  // Model is ~0.98 units tall with its feet at y=0.
+  // Stern castle: box 0.6 tall centered at y=0.5 → deck surface at y=0.8.
+  return (
+    <primitive
+      object={scene}
+      position={[0, 0.8, -1.6]}
+      scale={[1.1, 1.1, 1.1]}
+    />
+  )
+}
+
+useGLTF.preload('/models/captain.glb')
 
 // Simple shader for wind-blown sails
 const SailShader = {
@@ -179,6 +205,12 @@ export default function Ship() {
           </mesh>
         </React.Fragment>
       ))}
+
+      {/* ── CAPTAIN (GLB figure on the stern deck) ──
+          Suspense keeps the rest of the ship visible while the model loads. */}
+      <Suspense fallback={null}>
+        <Captain />
+      </Suspense>
     </group>
   )
 }
