@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from './components/navbar/Navbar'
 import Hero from './components/sections/Hero'
+import HomeHighlights from './components/sections/HomeHighlights'
 import ShipScene from './components/sections/ShipScene'
 import About from './components/sections/About'
 import Skills from './components/sections/Skills'
@@ -17,7 +18,12 @@ import Contact from './components/sections/Contact'
 import Footer from './components/sections/Footer'
 
 function HomePage() {
-  return <Hero />
+  return (
+    <>
+      <Hero />
+      <HomeHighlights />
+    </>
+  )
 }
 
 const PAGES = {
