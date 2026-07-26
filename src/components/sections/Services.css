@@ -38,11 +38,11 @@
 }
 
 .house-card:hover {
-  border-color: var(--accent, #d4a13a);
+  border-color: var(--accent, #a07d33);
   box-shadow:
-    0 0 0 1px var(--accent, #d4a13a) inset,
+    0 0 0 1px var(--accent, #a07d33) inset,
     0 0 40px rgba(0,0,0,0.8),
-    0 0 60px color-mix(in srgb, var(--accent, #d4a13a) 12%, transparent);
+    0 0 60px color-mix(in srgb, var(--accent, #a07d33) 12%, transparent);
   z-index: 3;
 }
 
@@ -62,7 +62,7 @@
 .corner::after {
   content: '';
   position: absolute;
-  background: var(--accent, #d4a13a);
+  background: var(--accent, #a07d33);
 }
 .corner::before { width: 100%; height: 1px; top: 0; left: 0; }
 .corner::after  { width: 1px; height: 100%; top: 0; left: 0; }
@@ -122,10 +122,10 @@
 }
 
 .house-sigil-fallback {
-  font-family: 'Cinzel Decorative', serif;
+  font-family: var(--font-headings);
   font-size: 48px;
-  color: var(--accent, #d4a13a);
-  text-shadow: 0 0 30px var(--accent, #d4a13a);
+  color: var(--accent, #a07d33);
+  text-shadow: 0 0 30px var(--accent, #a07d33);
 }
 
 .sigil-ring {
@@ -157,10 +157,10 @@
 }
 
 .house-region {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-headings);
   font-size: 8px;
   letter-spacing: 0.5em;
-  color: var(--accent, #d4a13a);
+  color: var(--accent, #a07d33);
   text-transform: uppercase;
   margin-bottom: 12px;
   opacity: 0.75;
@@ -188,15 +188,15 @@
   display: block;
   width: 5px;
   height: 5px;
-  background: var(--accent, #d4a13a);
+  background: var(--accent, #a07d33);
   transform: rotate(45deg);
 }
 
 .house-name {
-  font-family: 'Cinzel Decorative', serif;
+  font-family: var(--font-headings);
   font-size: clamp(14px, 1.8vw, 18px);
   font-weight: 700;
-  color: #f0e4c8;
+  color: #191712;
   line-height: 1.3;
   letter-spacing: 0.05em;
   margin-bottom: 10px;
@@ -204,7 +204,7 @@
 }
 
 .house-seat {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-headings);
   font-size: 9px;
   letter-spacing: 0.3em;
   color: #6a6050;
@@ -246,10 +246,10 @@
 }
 
 .hover-words {
-  font-family: 'Cinzel Decorative', serif;
+  font-family: var(--font-headings);
   font-size: clamp(14px, 1.8vw, 18px);
   font-weight: 700;
-  color: var(--accent, #d4a13a);
+  color: var(--accent, #a07d33);
   text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 60%, transparent);
   margin-bottom: 16px;
   letter-spacing: 0.05em;
@@ -266,7 +266,7 @@
 }
 
 .hover-name {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-headings);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.45em;
@@ -291,7 +291,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--accent, #d4a13a);
+  background: var(--accent, #a07d33);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);

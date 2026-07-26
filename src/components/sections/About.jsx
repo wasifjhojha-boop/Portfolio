@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaBookOpen } from 'react-icons/fa'
 import { bio, journey } from '../../content/profile'
-import PhotoDither from '../three/PhotoDither'
+import ElectricCard from '../ui/ElectricCard'
 
 // Helper for counting up numbers when visible
 function Counter({ value, suffix = '', duration = 2 }) {
@@ -72,38 +72,9 @@ export default function About() {
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Portrait in a gold porthole frame */}
+          {/* Left Column: electric-border portrait card */}
           <div className="lg:col-span-5 flex justify-center">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.4 }}
-              className="relative w-full max-w-sm aspect-square rounded-full border-[6px] border-[#f7f5f0] shadow-[0_0_0_2px_rgba(160,125,51,0.4),0_0_50px_rgba(160,125,51,0.1)] overflow-hidden group"
-            >
-              {/* Portrait with mouse-following halftone dither effect */}
-              <PhotoDither src="/wasif-portrait.png" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#ffffff]/70 via-transparent to-transparent pointer-events-none" />
-
-              {/* Porthole glass rim + bolts */}
-              <div className="absolute inset-0 rounded-full border-2 border-[#a07d33]/30 pointer-events-none" />
-              <div className="absolute inset-[10px] rounded-full border border-[#191712]/10 pointer-events-none" />
-              {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-                <span
-                  key={deg}
-                  className="absolute w-1.5 h-1.5 rounded-full bg-[#a07d33]/70 shadow-[0_0_4px_rgba(160,125,51,0.6)]"
-                  style={{
-                    top: `${50 - 47 * Math.cos((deg * Math.PI) / 180)}%`,
-                    left: `${50 + 47 * Math.sin((deg * Math.PI) / 180)}%`,
-                    transform: 'translate(-50%, -50%)',
-                  }}
-                />
-              ))}
-
-              {/* Name Label */}
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center bg-[#ffffff]/80 px-4 py-1 border border-[#a07d33]/20 rounded backdrop-blur-sm z-10 pointer-events-none">
-                <p className="text-[#191712] font-headings text-sm tracking-widest uppercase">Mohd Wasif</p>
-                <p className="text-[#a07d33] text-[9px] tracking-[0.2em] uppercase font-body mt-1">{bio.location}</p>
-              </div>
-            </motion.div>
+            <ElectricCard alt={`${bio.name} — ${bio.location}`} />
           </div>
 
           {/* Right Column: Story & Chronology */}

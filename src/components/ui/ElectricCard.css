@@ -1,0 +1,135 @@
+/* Electric-border portrait card.
+   Ported from the standalone prototype, with the text overlay, scrim and
+   scroll stage removed so the card reads as a plain visual.
+   oklch() relative-colour syntax from the prototype is resolved to literal
+   values here for wider browser support. */
+
+.ecard {
+  --electric-border-color: #dd8448;
+  --electric-light-color: #f0a866;
+  --gradient-color: rgba(120, 62, 26, 0.4);
+  --card-surface: #1c1c1c;
+  --ecard-radius: 24px;
+
+  padding: 2px;
+  border-radius: var(--ecard-radius);
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  background:
+    linear-gradient(-30deg, var(--gradient-color), transparent, var(--gradient-color)),
+    linear-gradient(to bottom, var(--card-surface), var(--card-surface));
+}
+
+.ecard__inner {
+  position: relative;
+}
+
+.ecard__border-outer {
+  border: 2px solid rgba(221, 132, 72, 0.5);
+  border-radius: var(--ecard-radius);
+  padding-right: 4px;
+  padding-bottom: 4px;
+}
+
+/* The turbulence filter warps only this element, never the photo. */
+.ecard__surface {
+  width: 100%;
+  aspect-ratio: 350 / 500;
+  border-radius: var(--ecard-radius);
+  border: 2px solid var(--electric-border-color);
+  margin-top: -4px;
+  margin-left: -4px;
+  filter: url(#ecard-turbulent-displace);
+}
+
+.ecard__glow-1,
+.ecard__glow-2,
+.ecard__overlay-1,
+.ecard__overlay-2,
+.ecard__bg-glow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--ecard-radius);
+  pointer-events: none;
+}
+
+.ecard__glow-1 {
+  border: 2px solid rgba(221, 132, 72, 0.6);
+  filter: blur(1px);
+}
+.ecard__glow-2 {
+  border: 2px solid var(--electric-light-color);
+  filter: blur(4px);
+}
+
+.ecard__overlay-1,
+.ecard__overlay-2 {
+  mix-blend-mode: overlay;
+  transform: scale(1.1);
+  filter: blur(16px);
+  background: linear-gradient(-30deg, #fff, transparent 30%, transparent 70%, #fff);
+}
+.ecard__overlay-1 { opacity: 1; }
+.ecard__overlay-2 { opacity: 0.5; }
+
+.ecard__bg-glow {
+  filter: blur(32px);
+  transform: scale(1.1);
+  opacity: 0.3;
+  z-index: -1;
+  background: linear-gradient(-30deg, var(--electric-light-color), transparent, var(--electric-border-color));
+}
+
+/* Photo stack sits above the card surface, outside the filtered element. */
+.ecard__photos {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--ecard-radius);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.ecard__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.7s ease;
+}
+
+/* Real headshot by default; the illustration takes over on hover/tap. */
+.ecard__photo--real {
+  opacity: 1;
+  filter: saturate(0.85) contrast(1.08) brightness(0.92);
+}
+.ecard__photo--art {
+  opacity: 0;
+}
+
+.ecard:hover .ecard__photo--real,
+.ecard[data-swapped='true'] .ecard__photo--real {
+  opacity: 0;
+}
+.ecard:hover .ecard__photo--art,
+.ecard[data-swapped='true'] .ecard__photo--art {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecard__photo {
+    transition: none;
+  }
+}
+
+/* The filter host must exist in the DOM but never render. */
+.ecard__filter-host {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
