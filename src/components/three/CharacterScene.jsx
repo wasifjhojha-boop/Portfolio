@@ -3,9 +3,12 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, Float, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
 
+// Height every showcased model is normalized to, in world units.
+const TARGET_HEIGHT = 0.98
+
 // One showcased GLB. Scales in when `active`, collapses to nothing when not,
 // so scrolling crossfades between models. Also floats/leans toward the mouse.
-function Model({ url, active, baseY = 0, baseScale = 1, mouse, reducedMotion }) {
+function Model({ url, active, mouse, reducedMotion }) {
   const group = useRef()
   const { scene } = useGLTF(url)
 
@@ -25,13 +28,29 @@ function Model({ url, active, baseY = 0, baseScale = 1, mouse, reducedMotion }) 
     return clone
   }, [scene])
 
+  // Auto-frame instead of hand-tuned offsets: each export bakes its own
+  // origin (gltf-transform's flatten/join moves it), so measure the real
+  // bounds, normalize height, center on x/z, and stand it on y=0. Any
+  // model dropped in from now on frames itself correctly.
+  const fit = useMemo(() => {
+    const box = new THREE.Box3().setFromObject(model)
+    const size = box.getSize(new THREE.Vector3())
+    const center = box.getCenter(new THREE.Vector3())
+    const scale = size.y > 0 ? TARGET_HEIGHT / size.y : 1
+    return {
+      scale,
+      // after scaling, shift so x/z are centered and the feet sit at y=0
+      offset: [-center.x * scale, -box.min.y * scale, -center.z * scale],
+    }
+  }, [model])
+
   useFrame((state) => {
     const g = group.current
     if (!g) return
     const t = state.clock.getElapsedTime()
 
-    // Scale in/out on slide change
-    const targetScale = active ? baseScale : 0.0001
+    // Scale in/out on slide change (fit scaling lives on the inner group)
+    const targetScale = active ? 1 : 0.0001
     const s = THREE.MathUtils.lerp(g.scale.x, targetScale, 0.09)
     g.scale.setScalar(s)
 
@@ -45,8 +64,11 @@ function Model({ url, active, baseY = 0, baseScale = 1, mouse, reducedMotion }) 
 
   return (
     <group ref={group} scale={active ? 1 : 0.0001}>
-      {/* Models are authored facing +z, which is toward the camera. */}
-      <primitive object={model} position={[0, baseY, 0]} />
+      {/* Inner group applies the measured fit; models are authored facing
+          +z, which is already toward the camera. */}
+      <group scale={fit.scale} position={fit.offset}>
+        <primitive object={model} />
+      </group>
     </group>
   )
 }
@@ -88,20 +110,16 @@ export default function CharacterScene({ mouse, slide = 0, reducedMotion = false
           floatIntensity={0.35}
           floatingRange={[-0.04, 0.04]}
         >
-          {/* Standing figure: ~0.98 tall, feet at y=0 */}
+          {/* Both models self-frame via measured bounds (see Model) */}
           <Model
             url="/models/captain.glb"
             active={slide === 0}
             mouse={mouse}
             reducedMotion={reducedMotion}
           />
-          {/* Second figure: bounds y -0.33..0.54, so lift feet to ground and
-              scale slightly to match the first model's height */}
           <Model
             url="/models/character2.glb"
             active={slide === 1}
-            baseY={0.33}
-            baseScale={1.12}
             mouse={mouse}
             reducedMotion={reducedMotion}
           />

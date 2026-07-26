@@ -40,7 +40,7 @@ const PAGE_METADATA = {
   },
   '/uncharted': {
     title: 'Uncharted Waters | Mohd Wasif',
-    description: 'An interactive 3D voyage — navigating paid ads, SEO, and modern web development.',
+    description: 'An interactive 3D voyage through the seas of digital marketing, SEO, and modern web development.',
   },
   '/about': {
     title: 'About Mohd Wasif | Digital Growth Specialist',
