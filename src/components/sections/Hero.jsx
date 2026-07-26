@@ -10,8 +10,9 @@ const ROLES = ['Performance Marketer', 'SEO Specialist', 'Google Ads Expert', 'C
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Scroll showcase: slides 0-1 are 3D models (inside the canvas), 2-3 photos.
-const PHOTOS = ['/hero/wasif-1.jpg', '/hero/wasif-2.jpg']
+// Scroll showcase: slides 0-1 are the 3D models (inside the canvas), then
+// photos. The standing portrait was dropped — model 1 already shows that pose.
+const PHOTOS = ['/hero/wasif-2.jpg']
 const SLIDE_COUNT = 2 + PHOTOS.length
 
 const SOCIALS = [
