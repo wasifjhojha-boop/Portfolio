@@ -16,12 +16,14 @@ function Captain() {
   })
 
   // Model is ~0.98 units tall with its feet at y=0.
-  // Stern castle: box 0.6 tall centered at y=0.5 → deck surface at y=0.8.
+  // Bow deck: box 0.4 tall centered at y=0.4 → deck surface at y=0.6.
+  // Placed on the bow so nothing (sails/masts) sits between him and the
+  // camera, which looks at the ship from +z.
   return (
     <primitive
       object={scene}
-      position={[0, 0.8, -1.6]}
-      scale={[1.1, 1.1, 1.1]}
+      position={[0, 0.6, 1.55]}
+      scale={[1.6, 1.6, 1.6]}
     />
   )
 }
