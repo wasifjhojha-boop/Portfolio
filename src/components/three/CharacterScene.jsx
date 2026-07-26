@@ -3,15 +3,14 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, Float, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
 
-// 3D character for the hero — floats gently, slowly rotates, and leans
-// toward the mouse. `mouse` is a ref holding normalized {x, y} in -0.5..0.5.
-function Character({ mouse, reducedMotion }) {
+// One showcased GLB. Scales in when `active`, collapses to nothing when not,
+// so scrolling crossfades between models. Also floats/leans toward the mouse.
+function Model({ url, active, baseY = 0, baseScale = 1, mouse, reducedMotion }) {
   const group = useRef()
-  const { scene } = useGLTF('/models/captain.glb')
+  const { scene } = useGLTF(url)
 
-  // The GLTF cache returns one shared object; the ship's captain uses the
-  // same URL, and a THREE object can only live in one scene at a time —
-  // without a clone, whichever canvas mounts last steals the model.
+  // Clone the cached GLTF: other canvases (ship captain) may load the same
+  // URL, and a THREE object can only live in one scene at a time.
   const model = useMemo(() => {
     const clone = scene.clone(true)
     clone.traverse((child) => {
@@ -30,6 +29,13 @@ function Character({ mouse, reducedMotion }) {
     const g = group.current
     if (!g) return
     const t = state.clock.getElapsedTime()
+
+    // Scale in/out on slide change
+    const targetScale = active ? baseScale : 0.0001
+    const s = THREE.MathUtils.lerp(g.scale.x, targetScale, 0.09)
+    g.scale.setScalar(s)
+
+    // Idle rotation + mouse lean (only meaningful while visible)
     const idleSpin = reducedMotion ? 0 : Math.sin(t * 0.35) * 0.22
     const targetY = idleSpin + mouse.current.x * 0.5
     const targetX = reducedMotion ? 0 : -mouse.current.y * 0.12
@@ -38,17 +44,19 @@ function Character({ mouse, reducedMotion }) {
   })
 
   return (
-    <group ref={group}>
-      {/* Model is ~0.98 units tall, feet at y=0; authored facing -z, so
-          rotate 180° to face the camera. */}
-      <primitive object={model} position={[0, 0, 0]} rotation={[0, Math.PI, 0]} />
+    <group ref={group} scale={active ? 1 : 0.0001}>
+      {/* Models are authored facing -z; rotate 180° to face the camera. */}
+      <primitive object={model} position={[0, baseY, 0]} rotation={[0, Math.PI, 0]} />
     </group>
   )
 }
 
 useGLTF.preload('/models/captain.glb')
+useGLTF.preload('/models/character2.glb')
 
-export default function CharacterScene({ mouse, reducedMotion = false }) {
+// slide 0 → standing model, slide 1 → second model, slide >= 2 → photos
+// (handled outside the canvas; both models collapse away).
+export default function CharacterScene({ mouse, slide = 0, reducedMotion = false }) {
   return (
     <Canvas
       shadows
@@ -80,7 +88,23 @@ export default function CharacterScene({ mouse, reducedMotion = false }) {
           floatIntensity={0.35}
           floatingRange={[-0.04, 0.04]}
         >
-          <Character mouse={mouse} reducedMotion={reducedMotion} />
+          {/* Standing figure: ~0.98 tall, feet at y=0 */}
+          <Model
+            url="/models/captain.glb"
+            active={slide === 0}
+            mouse={mouse}
+            reducedMotion={reducedMotion}
+          />
+          {/* Second figure: bounds y -0.33..0.54, so lift feet to ground and
+              scale slightly to match the first model's height */}
+          <Model
+            url="/models/character2.glb"
+            active={slide === 1}
+            baseY={0.33}
+            baseScale={1.12}
+            mouse={mouse}
+            reducedMotion={reducedMotion}
+          />
         </Float>
         <ContactShadows
           position={[0, -0.02, 0]}

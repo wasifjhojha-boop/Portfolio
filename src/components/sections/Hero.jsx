@@ -7,6 +7,10 @@ import { contact } from '../../content/contact'
 
 const ROLES = ['Performance Marketer', 'SEO Specialist', 'Google Ads Expert', 'Creative Developer']
 
+// Scroll showcase: slides 0-1 are 3D models (inside the canvas), 2-3 photos.
+const PHOTOS = ['/hero/wasif-1.jpg', '/hero/wasif-2.jpg']
+const SLIDE_COUNT = 2 + PHOTOS.length
+
 const SOCIALS = [
   { icon: FaGithub, label: 'GitHub', href: contact.github, external: true },
   { icon: FaLinkedin, label: 'LinkedIn', href: contact.linkedin, external: true },
@@ -44,12 +48,34 @@ function MagneticLink({ href, className, children, reducedMotion }) {
 
 export default function Hero() {
   const sectionRef = useRef(null)
+  const wrapRef = useRef(null)
   const introRef = useRef(null)
   const giantRef = useRef(null)
   const canvasWrapRef = useRef(null)
   // Normalized mouse position (-0.5..0.5), shared with the 3D scene
   const mouse = useRef({ x: 0, y: 0 })
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [slide, setSlide] = useState(0)
+
+  // Scroll-driven showcase: the hero stays pinned (sticky) while the outer
+  // wrapper scrolls, and progress through it picks the active slide.
+  // rAF poll because Lenis doesn't reliably fire native scroll events.
+  useEffect(() => {
+    let rafId
+    const tick = () => {
+      const el = wrapRef.current
+      if (el) {
+        const rect = el.getBoundingClientRect()
+        const span = el.offsetHeight - window.innerHeight
+        const p = span > 0 ? Math.min(1, Math.max(0, -rect.top / span)) : 0
+        const idx = Math.min(SLIDE_COUNT - 1, Math.floor(p * SLIDE_COUNT))
+        setSlide(idx)
+      }
+      rafId = requestAnimationFrame(tick)
+    }
+    rafId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafId)
+  }, [])
 
   // Respect prefers-reduced-motion
   useEffect(() => {
@@ -103,10 +129,11 @@ export default function Hero() {
   }, [reducedMotion])
 
   return (
+    <div ref={wrapRef} className="relative w-full" style={{ height: `${SLIDE_COUNT * 100}vh` }}>
     <section
       ref={sectionRef}
       aria-label="Introduction"
-      className="relative w-full min-h-screen overflow-hidden bg-[#f6f1e6]"
+      className="sticky top-0 w-full h-screen overflow-hidden bg-[#f6f1e6]"
     >
       {/* ── Bright layered background ── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -242,14 +269,53 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right: 3D character (~70% of hero height) */}
+        {/* Right: scroll showcase — 3D models, then photos (~70% hero height) */}
         <div className="relative order-1 lg:order-2 flex items-center justify-center">
           <div
             ref={canvasWrapRef}
-            className="w-full h-[52vh] sm:h-[58vh] lg:h-[70vh] will-change-transform"
+            className="relative w-full h-[52vh] sm:h-[58vh] lg:h-[70vh] will-change-transform"
             aria-hidden="true"
           >
-            <CharacterScene mouse={mouse} reducedMotion={reducedMotion} />
+            {/* 3D models (slides 0-1) */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                slide < 2 ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <CharacterScene mouse={mouse} slide={slide} reducedMotion={reducedMotion} />
+            </div>
+
+            {/* Photos (slides 2+) */}
+            {PHOTOS.map((src, i) => {
+              const active = slide === i + 2
+              return (
+                <div
+                  key={src}
+                  className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out ${
+                    active ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+                  }`}
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    className="max-h-full w-auto max-w-full rounded-3xl object-cover ring-1 ring-[#a07d33]/25 shadow-[0_30px_80px_-25px_rgba(28,23,16,0.45)]"
+                  />
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Slide dots */}
+          <div className="absolute right-0 lg:-right-6 top-1/2 -translate-y-1/2 flex flex-col gap-2.5">
+            {Array.from({ length: SLIDE_COUNT }).map((_, i) => (
+              <span
+                key={i}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                  i === slide ? 'bg-[#a07d33] scale-150' : 'bg-[#a07d33]/25'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -262,5 +328,6 @@ export default function Hero() {
         <span className="font-label text-[9px] tracking-[0.3em] text-[#6b6350] uppercase">Scroll</span>
       </div>
     </section>
+    </div>
   )
 }
