@@ -24,8 +24,15 @@ export default function Certificates() {
           </h2>
         </div>
 
-        {/* Certificates Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Horizontal snap rail. tabindex + role make the scroll region
+            reachable and operable by keyboard, which a plain overflow
+            container is not. */}
+        <div
+          tabIndex={0}
+          role="region"
+          aria-label="Certificates — horizontally scrollable list"
+          className="no-scrollbar -mx-6 md:-mx-12 flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-6 md:px-12 pb-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#a07d33]"
+        >
           {certificates.map((cert, idx) => {
             const link = cert.verifyUrl || cert.file || cert.image
             return (
@@ -35,11 +42,16 @@ export default function Certificates() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
-                className="card-lift p-8 rounded-sm flex flex-col relative overflow-hidden group shadow-lg bg-[#ffffff] border border-[#a07d33]/10"
+                className="card-lift p-8 rounded-sm flex flex-col relative overflow-hidden group shadow-lg bg-[#ffffff] border border-[#a07d33]/10 w-[78vw] sm:w-[22rem] shrink-0 snap-start"
               >
                 {cert.image ? (
                   <div className="w-full aspect-[4/3] mb-6 rounded-sm overflow-hidden border border-[#a07d33]/20 bg-[#f7f5f0]">
-                    <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      decoding="async"
+                      className="w-full h-full object-cover grayscale transition-[filter,transform] duration-700 ease-out group-hover:grayscale-0 group-hover:scale-[1.03] motion-reduce:transition-none"
+                    />
                   </div>
                 ) : (
                   <div className="w-16 h-16 rounded-full border border-[#a07d33]/40 bg-[#a07d33]/15 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ease-out">
@@ -79,6 +91,12 @@ export default function Certificates() {
             )
           })}
         </div>
+
+        {/* Affordance: a horizontal rail is easy to miss without one. */}
+        <p className="mt-6 flex items-center gap-2 font-label text-[10px] tracking-[0.28em] uppercase text-[#8c8577]">
+          <span className="h-px w-8 bg-[#a07d33]/40" />
+          Scroll for more
+        </p>
       </div>
     </section>
   )

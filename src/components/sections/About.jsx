@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FaBookOpen } from 'react-icons/fa'
 import { bio, journey } from '../../content/profile'
 import ElectricCard from '../ui/ElectricCard'
+import JourneyTimeline from '../ui/JourneyTimeline'
 
 // Helper for counting up numbers when visible
 function Counter({ value, suffix = '', duration = 2 }) {
@@ -111,25 +112,8 @@ export default function About() {
           <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-[#a07d33] mb-10 text-center uppercase">
             The Journey So Far
           </h3>
-          <div className="max-w-3xl mx-auto relative border-l border-[#a07d33]/20 pl-8 space-y-8">
-            {journey.map((stage, idx) => (
-              <motion.div
-                key={stage.id}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.4, delay: idx * 0.03 }}
-                className="relative"
-              >
-                <span className="absolute -left-[37px] top-1 w-3 h-3 rounded-full bg-[#a07d33] shadow-[0_0_10px_rgba(160,125,51,0.5)]" />
-                <h4 className="font-headings text-sm md:text-base font-bold tracking-[0.15em] text-[#191712] uppercase">
-                  {stage.label}
-                </h4>
-                <p className="text-[#5f594c] text-xs md:text-sm font-body mt-1">
-                  {stage.description}
-                </p>
-              </motion.div>
-            ))}
+          <div className="max-w-5xl mx-auto">
+            <JourneyTimeline items={journey} />
           </div>
         </div>
       </div>
