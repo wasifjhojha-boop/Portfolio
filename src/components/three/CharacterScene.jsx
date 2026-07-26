@@ -45,8 +45,8 @@ function Model({ url, active, baseY = 0, baseScale = 1, mouse, reducedMotion }) 
 
   return (
     <group ref={group} scale={active ? 1 : 0.0001}>
-      {/* Models are authored facing -z; rotate 180° to face the camera. */}
-      <primitive object={model} position={[0, baseY, 0]} rotation={[0, Math.PI, 0]} />
+      {/* Models are authored facing +z, which is toward the camera. */}
+      <primitive object={model} position={[0, baseY, 0]} />
     </group>
   )
 }

@@ -31,13 +31,11 @@ function Captain() {
   // Model is ~0.98 units tall with its feet at y=0.
   // Bow deck: box 0.4 tall centered at y=0.4 → deck surface at y=0.6.
   // Placed on the bow so nothing (sails/masts) sits between him and the
-  // camera, which looks at the ship from +z. Authored facing -z, so
-  // rotate 180° to face the camera.
+  // camera, which looks at the ship from +z — the model's native facing.
   return (
     <primitive
       object={model}
       position={[0, 0.6, 1.55]}
-      rotation={[0, Math.PI, 0]}
       scale={[1.6, 1.6, 1.6]}
     />
   )

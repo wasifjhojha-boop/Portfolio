@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import CharacterScene from '../three/CharacterScene'
 import { contact } from '../../content/contact'
 
 const ROLES = ['Performance Marketer', 'SEO Specialist', 'Google Ads Expert', 'Creative Developer']
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Scroll showcase: slides 0-1 are 3D models (inside the canvas), 2-3 photos.
 const PHOTOS = ['/hero/wasif-1.jpg', '/hero/wasif-2.jpg']
@@ -57,24 +60,24 @@ export default function Hero() {
   const [reducedMotion, setReducedMotion] = useState(false)
   const [slide, setSlide] = useState(0)
 
-  // Scroll-driven showcase: the hero stays pinned (sticky) while the outer
-  // wrapper scrolls, and progress through it picks the active slide.
-  // rAF poll because Lenis doesn't reliably fire native scroll events.
+  // Scroll-driven showcase: GSAP pins the hero while the outer wrapper
+  // scrolls, and progress picks the active slide. (position: sticky breaks
+  // under the app root's overflow-x-hidden, so ScrollTrigger pinning —
+  // already proven in this layout — is used instead.)
   useEffect(() => {
-    let rafId
-    const tick = () => {
-      const el = wrapRef.current
-      if (el) {
-        const rect = el.getBoundingClientRect()
-        const span = el.offsetHeight - window.innerHeight
-        const p = span > 0 ? Math.min(1, Math.max(0, -rect.top / span)) : 0
-        const idx = Math.min(SLIDE_COUNT - 1, Math.floor(p * SLIDE_COUNT))
-        setSlide(idx)
-      }
-      rafId = requestAnimationFrame(tick)
-    }
-    rafId = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafId)
+    const trigger = ScrollTrigger.create({
+      trigger: wrapRef.current,
+      start: 'top top',
+      end: 'bottom bottom',
+      pin: sectionRef.current,
+      pinSpacing: false,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        const idx = Math.min(SLIDE_COUNT - 1, Math.floor(self.progress * SLIDE_COUNT))
+        setSlide((s) => (s === idx ? s : idx))
+      },
+    })
+    return () => trigger.kill()
   }, [])
 
   // Respect prefers-reduced-motion
@@ -133,7 +136,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       aria-label="Introduction"
-      className="sticky top-0 w-full h-screen overflow-hidden bg-[#f6f1e6]"
+      className="relative w-full h-screen overflow-hidden bg-[#f6f1e6]"
     >
       {/* ── Bright layered background ── */}
       <div className="absolute inset-0 pointer-events-none">
