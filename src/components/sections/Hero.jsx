@@ -1,361 +1,266 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Scene from '../three/Scene'
+import { motion } from 'framer-motion'
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
+import CharacterScene from '../three/CharacterScene'
+import { contact } from '../../content/contact'
 
-gsap.registerPlugin(ScrollTrigger)
+const ROLES = ['Performance Marketer', 'SEO Specialist', 'Google Ads Expert', 'Creative Developer']
 
-const CHAPTERS = [
-  {
-    id: 'prologue',
-    progress: [0, 0.16],
-    title: 'MOHD WASIF',
-    subtitle: 'PERFORMANCE MARKETING & ENGINEERING',
-    body: 'Forging digital empires through high-performance ads, masterclass SEO, and modern engineering architecture.',
-    sigil: '✦',
-  },
-  {
-    id: 'marketing',
-    progress: [0.16, 0.32],
-    title: 'Precision Targeting',
-    subtitle: 'GOOGLE & META ADS SPECIALIST',
-    body: 'Commanding search and social landscapes. Architecting intent-driven campaigns that turn clicks into customers and scale revenue efficiently.',
-    sigil: '🎯',
-  },
-  {
-    id: 'seo',
-    progress: [0.32, 0.48],
-    title: 'Organic Dominion',
-    subtitle: 'TECHNICAL SEO EXPERT',
-    body: "Securing the top ranks. Technical audits, semantic keyword strategies, and high-authority link building to cement your digital presence.",
-    sigil: '📈',
-  },
-  {
-    id: 'development',
-    progress: [0.48, 0.64],
-    title: 'Flawless Architecture',
-    subtitle: "REACT & NEXT.JS DEVELOPER",
-    body: 'Building fast, accessible, and scalable applications. Modern tech stacks crafted for rapid load times and impeccable user experiences.',
-    sigil: '⚡',
-  },
-  {
-    id: 'wordpress',
-    progress: [0.64, 0.80],
-    title: 'Custom Frameworks',
-    subtitle: 'WORDPRESS DEVELOPER',
-    body: 'Bespoke themes, headless integrations, and robust plugin architecture. Transforming standard CMS platforms into tailored marketing engines.',
-    sigil: '⚙️',
-  },
-  {
-    id: 'cta',
-    progress: [0.80, 1.0],
-    title: 'Command Your Market',
-    subtitle: 'THE TIME TO ACT IS NOW',
-    body: 'Elevate your brand, dominate search results, and convert traffic into unwavering loyalty.',
-    sigil: '♛',
-  },
+const SOCIALS = [
+  { icon: FaGithub, label: 'GitHub', href: contact.github, external: true },
+  { icon: FaLinkedin, label: 'LinkedIn', href: contact.linkedin, external: true },
+  { icon: FaEnvelope, label: 'Email', href: `mailto:${contact.email}` },
 ]
 
-export default function Hero() {
-  const containerRef = useRef(null)
-  const stickyRef = useRef(null)
-  const overlayRef = useRef(null)
-  const titleRef = useRef(null)
-  const subtitleRef = useRef(null)
-  const bodyRef = useRef(null)
-  const progressRef = useRef(null)
-  const vignetteRef = useRef(null)
-  const chapterLabelRef = useRef(null)
-  const runeBarRef = useRef(null)
+// Button that leans toward the cursor (magnetic hover). Falls back to a
+// plain link when reduced motion is preferred.
+function MagneticLink({ href, className, children, reducedMotion }) {
+  const ref = useRef(null)
 
-  const [activeChapter, setActiveChapter] = useState(0)
-  const [ready, setReady] = useState(false)
-
-  const prevChapter = useRef(-1)
-
-  const transitionChapter = (idx) => {
-    if (prevChapter.current === idx) return
-    prevChapter.current = idx
-    setActiveChapter(idx)
-
-    const ch = CHAPTERS[idx]
-    if (!ch) return
-
-    const tl = gsap.timeline()
-
-    // Fade out old text
-    tl.to([titleRef.current, subtitleRef.current, bodyRef.current], {
-      y: -16,
-      opacity: 0,
-      duration: 0.25,
-      ease: 'power2.in',
-      stagger: 0.02,
-    })
-    // Update text content mid-fade
-    .call(() => {
-      if (titleRef.current) titleRef.current.textContent = ch.title
-      if (subtitleRef.current) subtitleRef.current.textContent = ch.subtitle
-      if (bodyRef.current) bodyRef.current.textContent = ch.body
-    })
-    // Fade in new text
-    .fromTo(
-      [subtitleRef.current, titleRef.current, bodyRef.current],
-      { y: 24, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.45, ease: 'power3.out', stagger: 0.05 }
-    )
-
-    // Chapter label transition
-    if (chapterLabelRef.current) {
-      gsap.fromTo(
-        chapterLabelRef.current,
-        { opacity: 0, x: 8 },
-        { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }
-      )
-      chapterLabelRef.current.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(
-        CHAPTERS.length
-      ).padStart(2, '0')}`
-    }
+  const onMove = (e) => {
+    if (reducedMotion || !ref.current) return
+    const r = ref.current.getBoundingClientRect()
+    const x = (e.clientX - r.left - r.width / 2) / (r.width / 2)
+    const y = (e.clientY - r.top - r.height / 2) / (r.height / 2)
+    ref.current.style.transform = `translate(${x * 5}px, ${y * 5}px)`
+  }
+  const onLeave = () => {
+    if (ref.current) ref.current.style.transform = 'translate(0, 0)'
   }
 
-  // Initialise chapter text + drop the loading veil once mounted
-  useEffect(() => {
-    const ch0 = CHAPTERS[0]
-    if (titleRef.current) titleRef.current.textContent = ch0.title
-    if (subtitleRef.current) subtitleRef.current.textContent = ch0.subtitle
-    if (bodyRef.current) bodyRef.current.textContent = ch0.body
+  return (
+    <a
+      ref={ref}
+      href={href}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={`inline-block transition-transform duration-200 ease-out will-change-transform ${className}`}
+    >
+      {children}
+    </a>
+  )
+}
 
-    const t = setTimeout(() => setReady(true), 700)
-    return () => clearTimeout(t)
+export default function Hero() {
+  const sectionRef = useRef(null)
+  const introRef = useRef(null)
+  const giantRef = useRef(null)
+  const canvasWrapRef = useRef(null)
+  // Normalized mouse position (-0.5..0.5), shared with the 3D scene
+  const mouse = useRef({ x: 0, y: 0 })
+  const [reducedMotion, setReducedMotion] = useState(false)
+
+  // Respect prefers-reduced-motion
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReducedMotion(mq.matches)
+    const onChange = (e) => setReducedMotion(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
   }, [])
 
-  // Setup GSAP ScrollTrigger — chapter storytelling driven purely by scroll
+  // Mouse-driven parallax: giant text + character drift very slightly
   useEffect(() => {
-    const scrollHeight = window.innerHeight * 6
-
-    // Pin viewport
-    const pinTrigger = ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top top',
-      end: `+=${scrollHeight}`,
-      pin: stickyRef.current,
-      pinSpacing: true,
-      anticipatePin: 1,
-    })
-
-    // Main scroll-linked timeline (chapters + progress + vignette)
-    const scrubTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: `+=${scrollHeight}`,
-        scrub: 1.0,
-        onUpdate: (self) => {
-          // Bottom progress bar width
-          if (progressRef.current) {
-            progressRef.current.style.width = `${self.progress * 100}%`
-          }
-
-          // Active chapter detection based on scroll progress
-          const p = self.progress
-          const idx = CHAPTERS.findIndex((c) => p >= c.progress[0] && p < c.progress[1])
-          transitionChapter(idx === -1 ? CHAPTERS.length - 1 : idx)
-
-          // Vignette pulse
-          const vinInt = 0.65 + Math.sin(p * Math.PI) * 0.15
-          if (vignetteRef.current) {
-            vignetteRef.current.style.opacity = String(vinInt)
-          }
-        },
-      },
-    })
-
-    // Subtle overlay color gradient shift
-    gsap.to(overlayRef.current, {
-      background: 'linear-gradient(to top, rgba(13,11,8,0.95) 0%, rgba(13,11,8,0.2) 60%)',
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: `+=${scrollHeight}`,
-        scrub: 1.5,
-      },
-    })
-
-    // Staggered entrance
-    gsap.fromTo(
-      [subtitleRef.current, titleRef.current, bodyRef.current],
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out', stagger: 0.08, delay: 0.2 }
-    )
-
-    // Rune bar tick animations
-    if (runeBarRef.current) {
-      const ticks = runeBarRef.current.querySelectorAll('.rune-tick')
-      gsap.fromTo(
-        ticks,
-        { scaleY: 0, opacity: 0 },
-        {
-          scaleY: 1,
-          opacity: 0.6,
-          stagger: 0.005,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: containerRef.current, start: 'top 80%' },
-        }
-      )
+    if (reducedMotion) return
+    let rafId
+    const onMouseMove = (e) => {
+      mouse.current.x = e.clientX / window.innerWidth - 0.5
+      mouse.current.y = e.clientY / window.innerHeight - 0.5
     }
-
+    const tick = () => {
+      const { x, y } = mouse.current
+      if (giantRef.current) {
+        giantRef.current.style.transform = `translate(${x * -22}px, ${y * -12}px)`
+      }
+      if (canvasWrapRef.current) {
+        canvasWrapRef.current.style.transform = `translate(${x * 10}px, ${y * 6}px)`
+      }
+      rafId = requestAnimationFrame(tick)
+    }
+    window.addEventListener('mousemove', onMouseMove)
+    rafId = requestAnimationFrame(tick)
     return () => {
-      scrubTl.kill()
-      pinTrigger.kill()
-      ScrollTrigger.getAll().forEach((t) => t.kill())
+      window.removeEventListener('mousemove', onMouseMove)
+      cancelAnimationFrame(rafId)
     }
-  }, [])
+  }, [reducedMotion])
+
+  // GSAP entrance: staggered reveal of the intro column
+  useEffect(() => {
+    if (!introRef.current) return
+    const items = introRef.current.querySelectorAll('[data-reveal]')
+    if (reducedMotion) {
+      gsap.set(items, { opacity: 1, y: 0 })
+      return
+    }
+    const tl = gsap.fromTo(
+      items,
+      { y: 34, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.09, delay: 0.15 }
+    )
+    return () => tl.kill()
+  }, [reducedMotion])
 
   return (
-    <>
-      {/* Loading Overlay */}
-      <div
-        className={`fixed inset-0 bg-[#0d0b08] z-[999] flex flex-col items-center justify-center gap-6 transition-all duration-1000 ${
-          ready ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        }`}
-      >
-        <div className="font-headings text-2xl md:text-3xl text-[#d4a13a] tracking-widest uppercase animate-pulse drop-shadow-[0_0_10px_rgba(212,161,58,0.3)]">
-          MOHD WASIF
-        </div>
-        <div className="font-label text-[10px] tracking-[0.3em] text-[#8a8070] uppercase">
-          ASSEMBLING DIGITAL FLEET...
-        </div>
-        <div className="w-40 h-[1px] bg-[#d4a13a]/20 relative overflow-hidden">
-          <div className="absolute inset-y-0 left-0 bg-[#d4a13a] animate-load-fill w-full" />
-        </div>
+    <section
+      ref={sectionRef}
+      aria-label="Introduction"
+      className="relative w-full min-h-screen overflow-hidden bg-[#f6f1e6]"
+    >
+      {/* ── Bright layered background ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Soft white gradients */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_28%_18%,rgba(255,255,255,0.95),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_78%_82%,rgba(212,161,58,0.14),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_85%_15%,rgba(220,232,245,0.55),transparent_70%)]" />
+
+        {/* Floating light blobs */}
+        <motion.div
+          aria-hidden="true"
+          className="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full bg-[#ffffff] opacity-60 blur-[110px]"
+          animate={reducedMotion ? {} : { y: [0, 34, 0], x: [0, 18, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="absolute bottom-[-8rem] right-[-6rem] w-[30rem] h-[30rem] rounded-full bg-[#e8c97a] opacity-25 blur-[120px]"
+          animate={reducedMotion ? {} : { y: [0, -40, 0], x: [0, -20, 0] }}
+          transition={{ duration: 17, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="absolute top-1/3 right-1/4 w-[18rem] h-[18rem] rounded-full bg-[#cfe0f2] opacity-35 blur-[90px]"
+          animate={reducedMotion ? {} : { y: [0, 26, 0] }}
+          transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Gentle floating particles */}
+        {!reducedMotion &&
+          [...Array(9)].map((_, i) => (
+            <motion.span
+              key={i}
+              aria-hidden="true"
+              className="absolute w-1 h-1 rounded-full bg-[#a07d33]/30"
+              style={{ left: `${8 + i * 10.5}%`, top: `${18 + ((i * 29) % 60)}%` }}
+              animate={{ y: [0, -22, 0], opacity: [0.15, 0.5, 0.15] }}
+              transition={{ duration: 7 + (i % 4) * 2, repeat: Infinity, ease: 'easeInOut', delay: i * 0.6 }}
+            />
+          ))}
+
+        {/* Animated grain */}
+        <div className="grain-overlay absolute inset-0 opacity-[0.05]" />
       </div>
 
-      {/* Main Scroll Container */}
+      {/* ── Giant background typography ── */}
       <div
-        ref={containerRef}
-        className="relative w-full bg-black"
-        style={{ height: `${window.innerHeight * 6 + window.innerHeight}px` }}
+        ref={giantRef}
+        aria-hidden="true"
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none will-change-transform"
       >
-        {/* Sticky Viewport Wrapper */}
-        <div ref={stickyRef} className="sticky top-0 w-full h-screen overflow-hidden bg-[#0d0b08]">
-          {/* 3D Ocean & Ship Scene (background) */}
-          <div className="absolute inset-0">
-            <Scene />
+        <span
+          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#1c1710] opacity-[0.055] whitespace-nowrap"
+          style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
+        >
+          Digital
+        </span>
+        <span
+          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#1c1710] opacity-[0.055] whitespace-nowrap"
+          style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
+        >
+          Marketer
+        </span>
+      </div>
+
+      {/* ── Content grid ── */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] items-center min-h-screen gap-6 pt-28 pb-16 lg:pt-24 lg:pb-0">
+        {/* Left: intro */}
+        <div ref={introRef} className="max-w-xl order-2 lg:order-1">
+          <p data-reveal className="eyebrow text-[#a07d33] mb-5 opacity-0">
+            Digital Marketer
+          </p>
+
+          <h1
+            data-reveal
+            className="font-headings font-black text-[#1c1710] leading-[1.02] mb-5 opacity-0"
+            style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.6rem)' }}
+          >
+            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#b8862a] via-[#d4a13a] to-[#a07d33]">Wasif</span>.
+          </h1>
+
+          {/* Roles */}
+          <p data-reveal className="font-label text-[13px] md:text-sm tracking-[0.14em] uppercase text-[#6b6350] mb-6 opacity-0">
+            {ROLES.map((role, i) => (
+              <span key={role}>
+                {role}
+                {i < ROLES.length - 1 && <span className="text-[#d4a13a] mx-2.5">·</span>}
+              </span>
+            ))}
+          </p>
+
+          <p data-reveal className="font-body text-base md:text-lg text-[#4a4335] leading-relaxed mb-9 opacity-0">
+            I build high-performing digital experiences — pairing data-driven marketing and SEO
+            with modern web engineering, AI, and creative technology that turns attention into
+            measurable growth.
+          </p>
+
+          {/* CTAs — glass, magnetic */}
+          <div data-reveal className="flex flex-col sm:flex-row items-start gap-4 mb-10 opacity-0">
+            <MagneticLink
+              href="/projects"
+              reducedMotion={reducedMotion}
+              className="px-8 py-4 rounded-full bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_10px_30px_-8px_rgba(180,134,42,0.55)] hover:shadow-[0_16px_40px_-8px_rgba(180,134,42,0.65)] hover:-translate-y-0.5 duration-300"
+            >
+              Explore My Work
+            </MagneticLink>
+            <MagneticLink
+              href="/contact"
+              reducedMotion={reducedMotion}
+              className="px-8 py-4 rounded-full border border-[#a07d33]/35 bg-white/40 backdrop-blur-md text-[#3f3a2e] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_8px_24px_-12px_rgba(28,23,16,0.25)] hover:border-[#a07d33] hover:bg-white/60 hover:text-[#a07d33] hover:-translate-y-0.5 duration-300"
+            >
+              Contact Me
+            </MagneticLink>
           </div>
 
-          {/* Vignette Layer */}
-          <div
-            ref={vignetteRef}
-            className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(13,11,8,0.9)_100%)] pointer-events-none z-10 transition-opacity duration-300"
-          />
-
-          {/* Overlay Gradient */}
-          <div
-            ref={overlayRef}
-            className="absolute inset-0 bg-gradient-to-t from-[#0d0b08]/90 via-transparent to-transparent pointer-events-none z-10"
-          />
-
-          {/* Corner Ornaments */}
-          {['top-6 left-6', 'top-6 right-6 scale-x-[-1]', 'bottom-6 left-6 scale-y-[-1]', 'bottom-6 right-6 scale-[-1]'].map(
-            (pos, idx) => (
-              <div key={idx} className={`absolute w-10 h-10 pointer-events-none z-20 ${pos}`}>
-                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-30">
-                  <path d="M2 2 L2 20 M2 2 L20 2" stroke="#d4a13a" strokeWidth="1" />
-                  <path d="M2 2 L8 8" stroke="#d4a13a" strokeWidth="0.5" />
-                  <rect x="1" y="1" width="4" height="4" fill="none" stroke="#d4a13a" strokeWidth="0.5" />
-                </svg>
-              </div>
-            )
-          )}
-
-          {/* Rune Bar */}
-          <div ref={runeBarRef} className="absolute top-24 left-6 right-6 md:left-12 md:right-12 z-20 hidden sm:flex items-center h-[1px]">
-            {Array.from({ length: 80 }).map((_, i) => (
-              <div
-                key={i}
-                className={`rune-tick flex-1 h-full bg-[#d4a13a]/20 transform-origin-bottom ${
-                  i % 3 === 0 ? 'h-[4px] bg-[#d4a13a]/50' : i % 7 === 0 ? 'h-[2px]' : ''
-                }`}
-              />
+          {/* Socials */}
+          <div data-reveal className="flex items-center gap-3 opacity-0">
+            {SOCIALS.map(({ icon: Icon, label, href, external }) => (
+              <motion.a
+                key={label}
+                href={href}
+                target={external ? '_blank' : undefined}
+                rel={external ? 'noreferrer' : undefined}
+                aria-label={label}
+                title={label}
+                whileHover={reducedMotion ? {} : { y: -4, scale: 1.08 }}
+                transition={{ type: 'spring', stiffness: 380, damping: 18 }}
+                className="w-11 h-11 rounded-full border border-[#a07d33]/30 bg-white/50 backdrop-blur-md flex items-center justify-center text-[#6b6350] hover:text-[#a07d33] hover:border-[#a07d33]/70 shadow-[0_6px_18px_-10px_rgba(28,23,16,0.3)] transition-colors duration-300"
+              >
+                <Icon size={16} />
+              </motion.a>
             ))}
           </div>
+        </div>
 
-          {/* Content Overlay */}
-          <div className="absolute bottom-16 md:bottom-24 left-6 right-6 md:left-16 md:right-16 max-w-3xl z-20 select-text">
-            {/* Eyebrow subtitle with accent rule */}
-            <div className="flex items-center gap-4 mb-6">
-              <span className="h-[2px] w-10 bg-[#d4a13a] shrink-0 shadow-[0_0_8px_rgba(212,161,58,0.6)]" />
-              <span
-                ref={subtitleRef}
-                className="font-label text-[10px] md:text-xs tracking-[0.45em] text-[#d4a13a] uppercase block"
-              />
-            </div>
-
-            {/* Title */}
-            <h1
-              ref={titleRef}
-              className="font-headings text-5xl md:text-8xl font-black text-gold-gradient leading-[0.95] uppercase mb-6 tracking-tight drop-shadow-[0_6px_30px_rgba(0,0,0,0.55)]"
-            />
-
-            {/* Description */}
-            <p
-              ref={bodyRef}
-              className="font-body text-base md:text-lg text-[#e6dcc4] max-w-xl leading-relaxed"
-            />
-
-            {/* CTAs directly under the headline */}
-            <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
-              <a
-                href="/projects"
-                className="px-7 py-3.5 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#d4a13a] to-[#b8862a] text-[#0d0b08] font-label font-semibold text-[10px] tracking-[0.2em] uppercase shadow-[0_6px_20px_-6px_rgba(212,161,58,0.6)] hover:shadow-[0_10px_28px_-6px_rgba(212,161,58,0.7)] hover:-translate-y-0.5 transition-all duration-300"
-              >
-                View Projects
-              </a>
-              <a
-                href="/contact"
-                className="px-7 py-3.5 rounded-sm border border-[#d4a13a]/40 bg-[#0d0b08]/50 text-[#f0e4c8] font-label font-semibold text-[10px] tracking-[0.2em] uppercase hover:border-[#d4a13a] hover:bg-[#d4a13a]/10 hover:text-[#d4a13a] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
-              >
-                Get In Touch
-              </a>
-            </div>
-          </div>
-
-          {/* Right Indicator Panel */}
-          <div className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 hidden sm:flex flex-col items-center gap-6">
-            <div ref={chapterLabelRef} className="font-label text-[10px] tracking-[0.2em] text-[#d4a13a]/50 writing-vertical select-none">
-              01 / 06
-            </div>
-            <div className="w-[1px] h-16 bg-gradient-to-b from-[#d4a13a]/40 to-transparent" />
-            <div className="flex flex-col gap-2.5">
-              {CHAPTERS.map((_, i) => (
-                <div
-                  key={i}
-                  className={`w-1.5 h-1.5 transform rotate-45 transition-all duration-300 ${
-                    i === activeChapter ? 'bg-[#d4a13a] scale-150 shadow-[0_0_8px_#d4a13a]' : 'bg-[#d4a13a]/20'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom Progress Bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#d4a13a]/10 z-20">
-            <div ref={progressRef} className="h-full bg-[#d4a13a] shadow-[0_0_10px_#d4a13a] w-0 transition-all duration-75" />
-          </div>
-
-          {/* Scroll Indicator */}
+        {/* Right: 3D character (~70% of hero height) */}
+        <div className="relative order-1 lg:order-2 flex items-center justify-center">
           <div
-            className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 transition-opacity duration-500 ${
-              activeChapter === 0 ? 'opacity-100' : 'opacity-0'
-            }`}
+            ref={canvasWrapRef}
+            className="w-full h-[52vh] sm:h-[58vh] lg:h-[70vh] will-change-transform"
+            aria-hidden="true"
           >
-            <div className="w-6 h-10 rounded-full border-2 border-[#d4a13a]/50 flex justify-center pt-2">
-              <div className="w-1 h-2 rounded-full bg-[#d4a13a] animate-scroll-dot" />
-            </div>
-            <span className="font-label text-[9px] tracking-[0.3em] text-[#d4a13a]/60 uppercase">Scroll</span>
+            <CharacterScene mouse={mouse} reducedMotion={reducedMotion} />
           </div>
         </div>
       </div>
-    </>
+
+      {/* ── Scroll indicator ── */}
+      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+        <div className="w-6 h-10 rounded-full border-2 border-[#a07d33]/40 flex justify-center pt-2 bg-white/30 backdrop-blur-sm">
+          <div className="w-1 h-2 rounded-full bg-[#a07d33] animate-scroll-dot" />
+        </div>
+        <span className="font-label text-[9px] tracking-[0.3em] text-[#6b6350] uppercase">Scroll</span>
+      </div>
+    </section>
   )
 }
