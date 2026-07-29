@@ -1,0 +1,174 @@
+/* Liquid-glass button.
+   Tuned for the site's light surfaces: the glass reads as a bright frosted
+   lozenge with a gold-tinted rim, rather than the dark-mode treatment this
+   effect usually ships with. */
+
+.lqbtn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-label), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #191712;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease;
+  box-shadow:
+    0 1px 1px rgba(25, 23, 18, 0.04),
+    0 8px 24px -12px rgba(25, 23, 18, 0.28);
+}
+
+.lqbtn--sm { padding: 0.6rem 1.1rem; font-size: 10px; }
+.lqbtn--md { padding: 0.9rem 1.9rem; font-size: 11px; }
+.lqbtn--icon {
+  padding: 0;
+  width: 3rem;
+  height: 3rem;
+  letter-spacing: 0;
+}
+
+/* The glass itself: blurred, saturated backdrop, then displaced so the
+   content behind the button visibly bends. */
+.lqbtn__glass {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: inherit;
+  backdrop-filter: blur(6px) saturate(1.6);
+  -webkit-backdrop-filter: blur(6px) saturate(1.6);
+  filter: url(#liquid-glass-displace);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(201, 168, 106, 0.22)
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.65),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -8px 18px -10px rgba(160, 125, 51, 0.5);
+  transition: background 0.35s ease;
+}
+
+/* Specular highlight sweeping the top edge. */
+.lqbtn__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.55) 42%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lqbtn__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+/* Gold rim that strengthens on interaction. */
+.lqbtn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(160, 125, 51, 0.35);
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.lqbtn:hover,
+.lqbtn:focus-visible {
+  transform: translateY(-2px);
+  color: #6f5520;
+  box-shadow:
+    0 2px 2px rgba(25, 23, 18, 0.05),
+    0 16px 34px -14px rgba(160, 125, 51, 0.55);
+}
+.lqbtn:hover::after,
+.lqbtn:focus-visible::after {
+  border-color: rgba(160, 125, 51, 0.75);
+}
+.lqbtn:hover .lqbtn__sheen,
+.lqbtn:focus-visible .lqbtn__sheen {
+  transform: translateX(120%);
+}
+
+.lqbtn:focus-visible {
+  outline: 2px solid #a07d33;
+  outline-offset: 3px;
+}
+
+.lqbtn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.lqbtn[disabled],
+.lqbtn[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Selected state, for tab-style usage. */
+.lqbtn[data-active='true'] {
+  color: #6f5520;
+}
+.lqbtn[data-active='true'] .lqbtn__glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(232, 201, 122, 0.45) 55%,
+    rgba(160, 125, 51, 0.35)
+  );
+}
+.lqbtn[data-active='true']::after {
+  border-color: rgba(160, 125, 51, 0.8);
+}
+
+.lqbtn__filter-host {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* backdrop-filter has nothing to sample over a flat fill, so where it is
+   unsupported fall back to an opaque-enough surface that the label stays
+   readable. */
+@supports not (backdrop-filter: blur(1px)) {
+  .lqbtn__glass {
+    background: rgba(255, 255, 255, 0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lqbtn,
+  .lqbtn__sheen {
+    transition: none;
+  }
+  .lqbtn:hover {
+    transform: none;
+  }
+}

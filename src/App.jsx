@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from './components/navbar/Navbar'
 import Hero from './components/sections/Hero'
 import HomeHighlights from './components/sections/HomeHighlights'
+import SkillsMarquee from './components/sections/SkillsMarquee'
 import ShipScene from './components/sections/ShipScene'
 import About from './components/sections/About'
 import Skills from './components/sections/Skills'
@@ -21,6 +22,7 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <SkillsMarquee />
       <HomeHighlights />
     </>
   )

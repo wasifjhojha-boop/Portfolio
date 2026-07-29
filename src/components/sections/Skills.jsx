@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { LiquidButton, LiquidGlassFilter } from '@/components/ui/liquid-glass-button'
 import {
+  FaChevronLeft,
+  FaChevronRight,
   FaScroll,
   FaReact,
   FaWordpress,
@@ -124,12 +127,114 @@ function SkillCard({ skill }) {
   )
 }
 
+// Carousel of skill cards, paged by liquid-glass controls. Pages are sized
+// to the viewport (1 / 2 / 3 cards) and the track is translated by whole
+// pages, so a page never ends mid-card.
+function SkillsCarousel({ skills }) {
+  const [page, setPage] = useState(0)
+  const [perPage, setPerPage] = useState(3)
+  const viewportRef = useRef(null)
+
+  // Measure the carousel's own container, not the window. A window-resize
+  // listener misses the initial layout settling — it left cards full-width
+  // on a 1280px viewport until something happened to fire a resize — and the
+  // container is what actually constrains the cards anyway.
+  useEffect(() => {
+    const el = viewportRef.current
+    if (!el) return
+
+    const apply = (w) => setPerPage(w < 620 ? 1 : w < 940 ? 2 : 3)
+    apply(el.clientWidth)
+
+    const ro = new ResizeObserver(([entry]) => {
+      const w = entry.contentRect.width
+      if (w > 0) apply(w)
+    })
+    ro.observe(el)
+
+    // Backup: observer callbacks are delivered on the rendering pipeline,
+    // which browsers halt in backgrounded tabs. A plain resize listener keeps
+    // the layout honest if the observer is throttled.
+    const onResize = () => apply(el.clientWidth)
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
+
+  const pages = Math.max(1, Math.ceil(skills.length / perPage))
+  // Clamp when the viewport shrinks while parked on a now-missing page.
+  const current = Math.min(page, pages - 1)
+
+  return (
+    <div>
+      <div ref={viewportRef} className="overflow-hidden">
+        <motion.div
+          className="flex"
+          animate={{ x: `-${current * 100}%` }}
+          transition={{ type: 'spring', stiffness: 260, damping: 34 }}
+        >
+          {skills.map((skill) => (
+            <div
+              key={skill.name}
+              className="shrink-0 px-3"
+              style={{ width: `${100 / perPage}%` }}
+            >
+              <SkillCard skill={skill} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Controls */}
+      <div className="mt-10 flex items-center justify-center gap-4">
+        <LiquidButton
+          size="icon"
+          aria-label="Previous skills"
+          disabled={current === 0}
+          onClick={() => setPage(Math.max(0, current - 1))}
+        >
+          <FaChevronLeft size={13} />
+        </LiquidButton>
+
+        <div className="flex items-center gap-2" role="tablist" aria-label="Skill pages">
+          {Array.from({ length: pages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i)}
+              aria-label={`Go to skills page ${i + 1}`}
+              aria-selected={i === current}
+              role="tab"
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === current ? 'w-7 bg-[#a07d33]' : 'w-1.5 bg-[#a07d33]/25 hover:bg-[#a07d33]/50'
+              }`}
+            />
+          ))}
+        </div>
+
+        <LiquidButton
+          size="icon"
+          aria-label="Next skills"
+          disabled={current >= pages - 1}
+          onClick={() => setPage(Math.min(pages - 1, current + 1))}
+        >
+          <FaChevronRight size={13} />
+        </LiquidButton>
+      </div>
+    </div>
+  )
+}
+
 export default function Skills() {
   const [activeTab, setActiveTab] = useState('engineering')
   const skills = activeTab === 'engineering' ? developmentSkills : marketingSkills
 
   return (
     <section id="skills" className="relative w-full py-24 bg-[#ffffff] overflow-hidden">
+      {/* One shared displacement filter for every liquid-glass button here */}
+      <LiquidGlassFilter />
       {/* Ambient background textures */}
       <div className="absolute inset-0 opacity-[0.045] pointer-events-none bg-repeat bg-[size:220px] bg-[image:url('data:image/svg+xml,%3Csvg_viewBox=%220_0_300_300%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(0,0,0,0.65)_100%)]" />
@@ -173,24 +278,16 @@ export default function Skills() {
           {TABS.map((tab) => {
             const active = activeTab === tab.id
             return (
-              <button
+              <LiquidButton
                 key={tab.id}
+                size="sm"
+                data-active={active}
+                aria-pressed={active}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative px-6 py-3 font-label text-[10px] font-semibold tracking-[0.2em] uppercase transition-colors duration-300 border-y flex items-center gap-2 ${active
-                  ? 'border-[#a07d33]/50 text-[#191712]'
-                  : 'border-transparent text-[#5f594c] hover:text-[#a07d33] hover:border-[#a07d33]/20'
-                  }`}
               >
-                {active && (
-                  <motion.span
-                    layoutId="skillTabBg"
-                    className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-[#a07d33]/20 to-transparent"
-                    transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                  />
-                )}
                 {tab.icon}
                 <span>{tab.label}</span>
-              </button>
+              </LiquidButton>
             )
           })}
         </div>
@@ -205,17 +302,7 @@ export default function Skills() {
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.4 }}
             >
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.15 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              >
-                {skills.map((skill) => (
-                  <SkillCard key={skill.name} skill={skill} />
-                ))}
-              </motion.div>
+              <SkillsCarousel skills={skills} />
             </motion.div>
           </AnimatePresence>
         </div>

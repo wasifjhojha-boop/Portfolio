@@ -1,0 +1,75 @@
+.marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Fade the edges so the text appears to emerge/dissolve rather than
+     clip abruptly against the section edge. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll var(--marquee-duration, 38s) linear infinite;
+  will-change: transform;
+}
+
+/* Pausing on hover/focus lets a reader stop the motion to read a phrase
+   without needing to reach for a reduced-motion setting. */
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__row {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.marquee__item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.marquee__text {
+  padding: 0 1.75rem;
+}
+
+.marquee__sep {
+  color: #a07d33;
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+  /* Without the scroll, showing both copies would visibly duplicate the
+     list, so hide the second when motion is off. */
+  .marquee__row[aria-hidden='true'] {
+    display: none;
+  }
+}
