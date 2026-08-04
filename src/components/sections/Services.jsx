@@ -1,96 +1,92 @@
 import { useEffect, useRef, useState } from 'react'
+import {
+  FaSearch,
+  FaGoogle,
+  FaFacebook,
+  FaCode,
+  FaChartLine,
+  FaBullseye,
+} from 'react-icons/fa'
 import './Services.css'
 
 const SERVICES = [
   {
-    id: 'stark',
+    id: 'seo',
+    icon: FaSearch,
     name: 'SEO MASTERY',
     seat: 'Google Search Console',
     words: '"Rank Higher. Grow Organically."',
     region: 'Organic Discovery',
     sigil: 'Technical Audits & Backlinks',
-    colors: ['#6b7a8d', '#c8d4e0'],
     accent: '#8fafc4',
     description:
-      'Audit crawl paths, schema structures, speed bottlenecks, and build semantic keyword clusters. We steer organic visitors straight to your deck.',
-    sigil_url: '/images/one.jpg',
-    bg: 'linear-gradient(135deg, #0d1117 0%, #1a2332 60%, #0d1117 100%)',
-    borderColor: '#4a6380',
+      'Audit crawl paths, schema structures, speed bottlenecks, and build semantic keyword clusters to steer organic visitors straight to your site.',
+    borderColor: '#8fafc4',
   },
   {
-    id: 'lannister',
+    id: 'google-ads',
+    icon: FaGoogle,
     name: 'GOOGLE ADS',
     seat: 'ROAS Performance Max',
     words: '"Search. Strike. Convert."',
     region: 'Paid Acquisition',
     sigil: 'Intent-Driven Ad Campaigns',
-    colors: ['#a07d33', '#e8c97a'],
     accent: '#d4a84b',
     description:
       'Search campaigns, Display, and Shopping setups built around maximum conversion. A/B landing copy and negative keyword targeting with surgical precision.',
-    sigil_url: '/images/two.jpg',
-    bg: 'linear-gradient(135deg, #1a1200 0%, #2a1f00 60%, #1a1200 100%)',
-    borderColor: '#7a6130',
+    borderColor: '#d4a84b',
   },
   {
-    id: 'targaryen',
+    id: 'meta-ads',
+    icon: FaFacebook,
     name: 'META ADS',
     seat: 'Facebook & Instagram',
     words: '"Reach. Retarget. Convert."',
     region: 'Paid Acquisition',
     sigil: 'Funnel Retargeting & Creative',
-    colors: ['#c41e3a', '#ff4466'],
-    accent: '#c0392b',
+    accent: '#4267b2',
     description:
-      'Dynamic visual setups targeting target demographics. Retargeting funnels, custom pixel telemetry, and creative strategies that scale budget into revenue.',
-    sigil_url: '/images/three.png',
-    bg: 'linear-gradient(135deg, #1a0000 0%, #2d0a0a 60%, #1a0000 100%)',
-    borderColor: '#7a1a1a',
+      'Dynamic visual setups targeting demographics with precision. Retargeting funnels, custom pixel telemetry, and creative strategies that scale budget into revenue.',
+    borderColor: '#4267b2',
   },
   {
-    id: 'baratheon',
+    id: 'web-dev',
+    icon: FaCode,
     name: 'WEB DEVELOPMENT',
     seat: 'React • Next.js • WP',
     words: '"Built For Speed."',
     region: 'Frontend Engineering',
     sigil: 'High-Performance Clean Code',
-    colors: ['#e8c97a', '#191712'],
     accent: '#a07d33',
     description:
       'Fast, modern, and SEO-compliant websites. Custom themes, Gutenberg blocks, and Single Page Apps built for rapid loads and clean architecture.',
-    sigil_url: '/images/four.webp',
-    bg: 'linear-gradient(135deg, #0a0a00 0%, #1f1c00 60%, #0a0a00 100%)',
-    borderColor: '#5a5020',
+    borderColor: '#a07d33',
   },
   {
-    id: 'greyjoy',
+    id: 'performance-marketing',
+    icon: FaChartLine,
     name: 'PERFORMANCE MARKETING',
     seat: 'Full Funnel Media Buying',
     words: '"Every Click Counts."',
     region: 'Growth Strategy',
     sigil: 'Cross-Network Data Attribution',
-    colors: ['#a07d33', '#8b8b6b'],
-    accent: '#b8a040',
+    accent: '#5a8ba0',
     description:
       'Multi-channel growth strategies syncing Paid Ads, Technical SEO, and conversion trackers into a single, high-performing lead generation engine.',
-    sigil_url: '/images/five.jpg',
-    bg: 'linear-gradient(135deg, #050810 0%, #0a1020 60%, #050810 100%)',
-    borderColor: '#3a4a5a',
+    borderColor: '#5a8ba0',
   },
   {
-    id: 'tyrell',
+    id: 'landing-pages',
+    icon: FaBullseye,
     name: 'LANDING PAGES',
     seat: 'UX & CRO Optimizations',
     words: '"Built To Convert."',
     region: 'Conversion Strategy',
     sigil: 'Wireframing & Copywriting',
-    colors: ['#4a7c3f', '#7ab648'],
     accent: '#5a9e48',
     description:
       'Highly persuasive layouts designed specifically for ad landing zones. Optimizing user flows, CTAs, and load speeds to squeeze value out of clicks.',
-    sigil_url: '/images/six.jpg',
-    bg: 'linear-gradient(135deg, #030a00 0%, #0a1800 60%, #030a00 100%)',
-    borderColor: '#2a4a20',
+    borderColor: '#5a9e48',
   },
 ]
 
@@ -98,7 +94,7 @@ const ServiceCard = ({ service, index }) => {
   const cardRef = useRef(null)
   const sigilRef = useRef(null)
   const [hovered, setHovered] = useState(false)
-  const [imgError, setImgError] = useState(false)
+  const Icon = service.icon
 
   // Staggered entrance via IntersectionObserver
   useEffect(() => {
@@ -117,7 +113,7 @@ const ServiceCard = ({ service, index }) => {
     return () => obs.disconnect()
   }, [index])
 
-  // Sigil tilt on hover
+  // Icon tilt on hover
   const handleMouseMove = (e) => {
     const rect = cardRef.current.getBoundingClientRect()
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 14
@@ -139,7 +135,6 @@ const ServiceCard = ({ service, index }) => {
       style={{
         '--accent': service.accent,
         '--border': service.borderColor,
-        background: service.bg,
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleMouseLeave}
@@ -154,18 +149,11 @@ const ServiceCard = ({ service, index }) => {
       {/* Glow pulse on hover */}
       <div className="card-glow" />
 
-      {/* Sigil Image */}
+      {/* Service icon */}
       <div ref={sigilRef} className="house-sigil-wrap">
-        {!imgError ? (
-          <img
-            className="house-sigil-img"
-            src={service.sigil_url}
-            alt={`${service.name} sigil`}
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <div className="house-sigil-fallback">{service.name[0]}</div>
-        )}
+        <div className="house-icon-circle">
+          <Icon size={38} />
+        </div>
         <div className="sigil-ring" />
       </div>
 
@@ -224,15 +212,14 @@ export default function Services() {
 
   return (
     <section id="services" ref={sectionRef} className="relative w-full py-24 bg-[#ffffff] overflow-hidden">
-      {/* Ambient background textures */}
+      {/* Ambient background texture */}
       <div className="absolute inset-0 opacity-[0.045] pointer-events-none bg-repeat bg-[size:220px] bg-[image:url('data:image/svg+xml,%3Csvg_viewBox=%220_0_300_300%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(0,0,0,0.65)_100%)]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <header className="text-center mb-16">
           <p ref={subRef} className="eyebrow text-[#a07d33] mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
-            THE FLEET'S OFFERINGS
+            WHAT I DO
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
             <span className="w-20 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
