@@ -1,12 +1,87 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaExternalLinkAlt, FaStamp } from 'react-icons/fa'
+import { FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaStamp } from 'react-icons/fa'
+import { LiquidButton, LiquidGlassFilter } from '../ui/liquid-glass-button'
 import { certificates } from '../../content/certificates'
 
 export default function Certificates() {
+  const railRef = useRef(null)
+  const cardRefs = useRef([])
+  const [active, setActive] = useState(0)
+
+  // Track which card is nearest the rail's left edge, so the dots and
+  // arrow disabled-states reflect native scroll/snap/drag — not just
+  // clicks made through the arrows themselves.
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail) return
+
+    let ticking = false
+    const update = () => {
+      ticking = false
+
+      // Trailing cards can run out of room to ever reach the rail's left
+      // edge (the rail can't scroll past its max), so a pure "closest to
+      // left edge" measurement can never select them. Once scrolled to (or
+      // within a px of) the end, the last card is the active one.
+      const maxScroll = rail.scrollWidth - rail.clientWidth
+      if (maxScroll > 0 && rail.scrollLeft >= maxScroll - 1) {
+        setActive(certificates.length - 1)
+        return
+      }
+
+      const railLeft = rail.getBoundingClientRect().left
+      let closest = 0
+      let closestDist = Infinity
+      cardRefs.current.forEach((card, i) => {
+        if (!card) return
+        const dist = Math.abs(card.getBoundingClientRect().left - railLeft)
+        if (dist < closestDist) {
+          closestDist = dist
+          closest = i
+        }
+      })
+      setActive(closest)
+    }
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
+    }
+    update()
+    rail.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      rail.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
+  const goTo = (i) => {
+    const clamped = Math.max(0, Math.min(certificates.length - 1, i))
+    if (clamped === certificates.length - 1) {
+      // Scroll to true max rather than the card's own edge: scrollIntoView
+      // stops the moment the card enters view, which can leave the rail
+      // short of its actual end and the last card never counted "active".
+      railRef.current?.scrollTo({
+        left: railRef.current.scrollWidth - railRef.current.clientWidth,
+        behavior: 'smooth',
+      })
+      return
+    }
+    cardRefs.current[clamped]?.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest',
+    })
+  }
+
   return (
     <section id="certificates" className="relative w-full py-24 bg-[#f7f5f0] border-t border-[#a07d33]/10 overflow-hidden ambient-ocean">
       {/* Decorative texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')]" />
+      <LiquidGlassFilter />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
@@ -28,6 +103,7 @@ export default function Certificates() {
             reachable and operable by keyboard, which a plain overflow
             container is not. */}
         <div
+          ref={railRef}
           tabIndex={0}
           role="region"
           aria-label="Certificates — horizontally scrollable list"
@@ -38,6 +114,7 @@ export default function Certificates() {
             return (
               <motion.div
                 key={idx}
+                ref={(el) => (cardRefs.current[idx] = el)}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
@@ -92,11 +169,42 @@ export default function Certificates() {
           })}
         </div>
 
-        {/* Affordance: a horizontal rail is easy to miss without one. */}
-        <p className="mt-6 flex items-center gap-2 font-label text-[10px] tracking-[0.28em] uppercase text-[#8c8577]">
-          <span className="h-px w-8 bg-[#a07d33]/40" />
-          Scroll for more
-        </p>
+        {/* Controls: arrows scroll one card at a time; dots jump directly
+            and reflect scroll position set by drag/keyboard/wheel too. */}
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <LiquidButton
+            size="icon"
+            aria-label="Previous certificate"
+            disabled={active === 0}
+            onClick={() => goTo(active - 1)}
+          >
+            <FaChevronLeft size={13} />
+          </LiquidButton>
+
+          <div className="flex items-center gap-2 flex-wrap justify-center max-w-xs" role="tablist" aria-label="Certificate pages">
+            {certificates.map((cert, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Go to ${cert.title}`}
+                aria-selected={i === active}
+                role="tab"
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === active ? 'w-7 bg-[#a07d33]' : 'w-1.5 bg-[#a07d33]/25 hover:bg-[#a07d33]/50'
+                }`}
+              />
+            ))}
+          </div>
+
+          <LiquidButton
+            size="icon"
+            aria-label="Next certificate"
+            disabled={active === certificates.length - 1}
+            onClick={() => goTo(active + 1)}
+          >
+            <FaChevronRight size={13} />
+          </LiquidButton>
+        </div>
       </div>
     </section>
   )
