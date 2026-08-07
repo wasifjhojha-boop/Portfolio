@@ -45,26 +45,16 @@ function ProjectCard({ project, onImageClick }) {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          {project.embed ? (
-            <div
-              onClick={() => window.open(project.embed, '_blank', 'noopener')}
-              className="absolute inset-0 cursor-zoom-in overflow-hidden"
-              title={`Open ${project.title} full preview`}
-            >
-              <iframe
-                src={project.embed}
-                title={project.title}
-                tabIndex={-1}
-                className="pointer-events-none border-0 origin-top-left"
-                style={{ width: '400%', height: '400%', transform: 'scale(0.25)' }}
-              />
-            </div>
-          ) : project.image ? (
+          {project.image ? (
             <>
               <img
                 src={project.image}
                 alt={project.title}
-                onClick={(e) => { e.stopPropagation(); onImageClick(project.image, project.title) }}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (project.embed) window.open(project.embed, '_blank', 'noopener')
+                  else onImageClick(project.image, project.title)
+                }}
                 className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 cursor-zoom-in"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#ffffff]/95 via-[#ffffff]/25 to-[#ffffff]/10" />
