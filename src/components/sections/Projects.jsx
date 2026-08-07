@@ -21,7 +21,7 @@ function impactLine(project) {
   return 'Full case study coming soon'
 }
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, onImageClick }) {
   const [hovered, setHovered] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const style = CARD_STYLE[project.id] || { color: '#a07d33', icon: FaScroll }
@@ -50,7 +50,8 @@ function ProjectCard({ project }) {
               <img
                 src={project.image}
                 alt={project.title}
-                className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                onClick={(e) => { e.stopPropagation(); onImageClick(project.image, project.title) }}
+                className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 cursor-zoom-in"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#ffffff]/95 via-[#ffffff]/25 to-[#ffffff]/10" />
             </>
@@ -224,6 +225,7 @@ function ProjectCard({ project }) {
 
 export default function Projects() {
   const [filter, setFilter] = useState('All')
+  const [lightbox, setLightbox] = useState(null)
 
   const filteredProjects = projects.filter(
     (project) => filter === 'All' || project.category === filter
@@ -271,7 +273,11 @@ export default function Projects() {
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onImageClick={(src, title) => setLightbox({ src, title })}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
@@ -301,6 +307,25 @@ export default function Projects() {
           <span className="w-32 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/30" />
         </div>
       </div>
+
+      {/* Image Lightbox */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightbox(null)}
+            className="fixed inset-0 z-[999] bg-black/90 flex items-center justify-center p-6 cursor-zoom-out"
+          >
+            <img
+              src={lightbox.src}
+              alt={lightbox.title}
+              className="max-w-full max-h-full object-contain"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
