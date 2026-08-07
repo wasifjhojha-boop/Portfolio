@@ -35,7 +35,7 @@ export const projects = [
     techStack: ["React", "FastAPI", "MongoDB", "WordPress", "Tailwind", "Vercel", "GA4", "GSC", "Schema.org"],
     github: "https://github.com/wasifjhojha-boop/jurisroots",
     demo: "https://jurisroots.vercel.app",
-    image: "/projects/jurisroots.jpg",
+    embed: "/demos/jurisroots.html",
   },
   {
     status: "detailed",

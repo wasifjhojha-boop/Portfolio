@@ -45,7 +45,21 @@ function ProjectCard({ project, onImageClick }) {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          {project.image ? (
+          {project.embed ? (
+            <div
+              onClick={() => window.open(project.embed, '_blank', 'noopener')}
+              className="absolute inset-0 cursor-zoom-in overflow-hidden"
+              title={`Open ${project.title} full preview`}
+            >
+              <iframe
+                src={project.embed}
+                title={project.title}
+                tabIndex={-1}
+                className="pointer-events-none border-0 origin-top-left"
+                style={{ width: '400%', height: '400%', transform: 'scale(0.25)' }}
+              />
+            </div>
+          ) : project.image ? (
             <>
               <img
                 src={project.image}
@@ -64,7 +78,7 @@ function ProjectCard({ project, onImageClick }) {
 
           <AnimatePresence mode="wait">
             {!hovered ? (
-              project.image ? null : (
+              project.embed || project.image ? null : (
                 <motion.div
                   key="icon"
                   initial={{ opacity: 0 }}
