@@ -21,11 +21,6 @@ const NAV_ITEMS = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  // The hero is hardcoded dark independent of the site theme, so while
-  // it's pinned under the transparent nav, links need forced light text
-  // instead of the usual (theme-following) tokens — otherwise light mode
-  // renders near-black text on a black hero.
-  const [overDarkHero, setOverDarkHero] = useState(document.body.dataset.overDarkHero === 'true')
   const currentPath = window.location.pathname.replace(/\/$/, '') || '/'
 
   useEffect(() => {
@@ -33,7 +28,6 @@ export default function Navbar() {
     // native 'scroll' events, so a rAF poll is used instead of a listener.
     let rafId
     let wasScrolled = false
-    let wasOverDarkHero = document.body.dataset.overDarkHero === 'true'
 
     const tick = () => {
       const scrolled = window.scrollY > 50
@@ -41,20 +35,12 @@ export default function Navbar() {
         wasScrolled = scrolled
         setIsScrolled(scrolled)
       }
-      const darkHero = document.body.dataset.overDarkHero === 'true'
-      if (darkHero !== wasOverDarkHero) {
-        wasOverDarkHero = darkHero
-        setOverDarkHero(darkHero)
-      }
       rafId = requestAnimationFrame(tick)
     }
     rafId = requestAnimationFrame(tick)
 
     return () => cancelAnimationFrame(rafId)
   }, [])
-
-  const linkColor = overDarkHero ? 'text-[#f2f2f0] hover:text-(--accent)' : 'text-(--muted) hover:text-(--accent)'
-  const logoColor = overDarkHero ? '#f2f2f0' : 'var(--foreground)'
 
   return (
     <nav
@@ -74,11 +60,11 @@ export default function Navbar() {
             className="h-9 w-auto opacity-95 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_2px_5px_rgba(201,168,106,0.35)]"
           >
             <g fill="none" strokeWidth="1.75" strokeLinecap="square" transform="translate(5,5) scale(0.5)">
-              <path d="M18 78 V26 L38 56 L50 38" stroke={logoColor} />
+              <path d="M18 78 V26 L38 56 L50 38" stroke="var(--foreground)" />
               <path d="M82 22 V74 L62 44 L50 62" stroke="#a8863f" />
             </g>
-            <text x="70" y="31" fontFamily="Sora, sans-serif" fontWeight="700" fontSize="16" letterSpacing="3" fill={logoColor}>MOHD WASIF</text>
-            <text x="70" y="47" fontFamily="Sora, sans-serif" fontWeight="400" fontSize="8" letterSpacing="4.5" fill={overDarkHero ? '#b5b0a8' : '#6b6555'}>PORTFOLIO</text>
+            <text x="70" y="31" fontFamily="Sora, sans-serif" fontWeight="700" fontSize="16" letterSpacing="3" fill="var(--foreground)">MOHD WASIF</text>
+            <text x="70" y="47" fontFamily="Sora, sans-serif" fontWeight="400" fontSize="8" letterSpacing="4.5" fill="var(--muted)">PORTFOLIO</text>
           </svg>
         </a>
 
@@ -90,7 +76,7 @@ export default function Navbar() {
               href={item.href}
               aria-current={currentPath === item.href ? 'page' : undefined}
               className={`relative text-[11px] font-label font-medium tracking-[0.22em] uppercase transition-colors duration-300 py-1 group ${
-                currentPath === item.href ? 'text-(--accent)' : linkColor
+                currentPath === item.href ? 'text-(--accent)' : 'text-(--muted) hover:text-(--accent)'
               }`}
             >
               {item.label}
@@ -115,7 +101,7 @@ export default function Navbar() {
           <ThemeToggle />
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`transition-colors duration-300 p-2 ${linkColor}`}
+            className={`transition-colors duration-300 p-2 text-(--muted) hover:text-(--accent)`}
             aria-label="Toggle Menu"
           >
             {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
