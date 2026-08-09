@@ -91,6 +91,7 @@ export const projects = [
     title: "Anisha Electronic — TV Repair Services",
     category: "WordPress",
     topics: ["Google Sites", "First Website Built", "LED/LCD/Smart TV Repair", "Local Business"],
+    image: "/projects/anisha-electronic.jpg",
   },
   {
     status: "pending",
