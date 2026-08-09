@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FaArrowRight } from 'react-icons/fa'
 import { projects } from '../../content/projects'
 import { contact } from '../../content/contact'
+import MorphicBackground from '../three/MorphicBackground'
 
 // Real campaign figures from the Muqeem & Brothers case study, plus career
 // totals. Hard numbers are the strongest proof a performance marketer can
@@ -131,6 +132,8 @@ export default function HomeHighlights() {
         aria-label="Results at a glance"
         className="relative w-full bg-[#ffffff] border-t border-[#a07d33]/10 py-20 md:py-24 ambient-ocean overflow-hidden"
       >
+        <MorphicBackground ballColor="#d4a13a" className="absolute inset-0 -z-0 bg-transparent" />
+
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <div className="text-center mb-14">
             <p className="eyebrow text-[#a07d33] mb-4">Proof In The Numbers</p>
