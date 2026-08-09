@@ -10,7 +10,7 @@ import {
   FaTimes,
 } from 'react-icons/fa'
 import './Services.css'
-import MorphicBackground from '../three/MorphicBackground'
+import MarqueeAlongSvgPath from '../ui/marquee-along-svg-path'
 
 const SERVICES = [
   {
@@ -298,8 +298,6 @@ export default function Services() {
 
   return (
     <section id="services" ref={sectionRef} className="relative w-full py-24 bg-[#ffffff] overflow-hidden">
-      <MorphicBackground ballColor="#d4a13a" className="absolute inset-0 -z-0 bg-transparent" />
-
       {/* Ambient background texture */}
       <div className="absolute inset-0 opacity-[0.045] pointer-events-none bg-repeat bg-[size:220px] bg-[image:url('data:image/svg+xml,%3Csvg_viewBox=%220_0_300_300%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
 
@@ -329,8 +327,31 @@ export default function Services() {
           ))}
         </div>
 
+        {/* Service icons riding a wave path — decorative rhythm between the
+            grid and the closing CTA. */}
+        <div className="mt-16 h-24 md:h-28">
+          <MarqueeAlongSvgPath
+            path="M1 60 C 150 10, 250 110, 400 60 S 650 10, 799 60"
+            viewBox="0 0 800 120"
+            baseVelocity={3}
+            slowdownOnHover
+            responsive
+            className="w-full h-full text-[#a07d33]/15"
+          >
+            {SERVICES.map((service) => (
+              <div
+                key={service.id}
+                className="w-11 h-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f7f5f0] border flex items-center justify-center shadow-[0_6px_16px_-6px_rgba(28,23,16,0.25)]"
+                style={{ borderColor: `${service.accent}55`, color: service.accent }}
+              >
+                <service.icon size={16} />
+              </div>
+            ))}
+          </MarqueeAlongSvgPath>
+        </div>
+
         {/* Closing CTA — every service card leads here if nothing else does */}
-        <div className="mt-20 text-center">
+        <div className="mt-12 text-center">
           <p className="font-body text-sm md:text-base text-[#5f594c] italic max-w-lg mx-auto mb-7">
             Not sure which service fits your goals? Let's map it out together — no obligation.
           </p>
