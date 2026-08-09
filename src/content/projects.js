@@ -87,6 +87,13 @@ export const projects = [
   },
   {
     status: "pending",
+    id: "anisha-electronic",
+    title: "Anisha Electronic — TV Repair Services",
+    category: "WordPress",
+    topics: ["Google Sites", "First Website Built", "LED/LCD/Smart TV Repair", "Local Business"],
+  },
+  {
+    status: "pending",
     id: "google-sites-business",
     title: "Business Service Websites (2 Projects)",
     category: "WordPress",
