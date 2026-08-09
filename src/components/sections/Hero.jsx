@@ -67,6 +67,12 @@ export default function Hero() {
   // under the app root's overflow-x-hidden, so ScrollTrigger pinning —
   // already proven in this layout — is used instead.)
   useEffect(() => {
+    // The hero is forced dark regardless of the site's light/dark toggle
+    // (see the hardcoded bg-[#050505] below), so the transparent Navbar
+    // needs to know when it's still pinned over the hero to force
+    // readable light text instead of its usual theme-token colors.
+    document.body.dataset.overDarkHero = 'true'
+
     const trigger = ScrollTrigger.create({
       trigger: wrapRef.current,
       start: 'top top',
@@ -78,8 +84,16 @@ export default function Hero() {
         const idx = Math.min(SLIDE_COUNT - 1, Math.floor(self.progress * SLIDE_COUNT))
         setSlide((s) => (s === idx ? s : idx))
       },
+      // Pin-boundary callbacks, not derived from progress inside onUpdate —
+      // that fired once synchronously at creation, before layout was
+      // measured, and stuck the flag on 'false' for the whole page life.
+      onLeave: () => { document.body.dataset.overDarkHero = 'false' },
+      onEnterBack: () => { document.body.dataset.overDarkHero = 'true' },
     })
-    return () => trigger.kill()
+    return () => {
+      trigger.kill()
+      delete document.body.dataset.overDarkHero
+    }
   }, [])
 
   // Respect prefers-reduced-motion
@@ -138,31 +152,31 @@ export default function Hero() {
     <section
       ref={sectionRef}
       aria-label="Introduction"
-      className="relative w-full h-screen overflow-hidden bg-[#f6f1e6]"
+      className="relative w-full h-screen overflow-hidden bg-[#050505]"
     >
-      {/* ── Bright layered background ── */}
+      {/* ── Dark cinematic background — hardcoded, not theme tokens, so the
+           hero stays black regardless of the site's light/dark toggle. ── */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Soft white gradients */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_28%_18%,rgba(255,255,255,0.95),transparent_65%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_78%_82%,rgba(160,125,51,0.14),transparent_65%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_85%_15%,rgba(220,232,245,0.55),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_28%_18%,rgba(229,9,20,0.10),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_78%_82%,rgba(229,9,20,0.08),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_40%_at_85%_15%,rgba(255,255,255,0.04),transparent_70%)]" />
 
-        {/* Floating light blobs */}
+        {/* Floating glow blobs */}
         <motion.div
           aria-hidden="true"
-          className="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full bg-(--background) opacity-60 blur-[110px]"
+          className="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full bg-[#e50914] opacity-[0.12] blur-[130px]"
           animate={reducedMotion ? {} : { y: [0, 34, 0], x: [0, 18, 0] }}
           transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           aria-hidden="true"
-          className="absolute bottom-[-8rem] right-[-6rem] w-[30rem] h-[30rem] rounded-full bg-[#e8c97a] opacity-25 blur-[120px]"
+          className="absolute bottom-[-8rem] right-[-6rem] w-[30rem] h-[30rem] rounded-full bg-[#e50914] opacity-[0.10] blur-[130px]"
           animate={reducedMotion ? {} : { y: [0, -40, 0], x: [0, -20, 0] }}
           transition={{ duration: 17, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           aria-hidden="true"
-          className="absolute top-1/3 right-1/4 w-[18rem] h-[18rem] rounded-full bg-[#cfe0f2] opacity-35 blur-[90px]"
+          className="absolute top-1/3 right-1/4 w-[18rem] h-[18rem] rounded-full bg-white opacity-[0.03] blur-[100px]"
           animate={reducedMotion ? {} : { y: [0, 26, 0] }}
           transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -191,13 +205,13 @@ export default function Hero() {
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none will-change-transform"
       >
         <span
-          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#1c1710] opacity-[0.055] whitespace-nowrap"
+          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#f2f2f0] opacity-[0.07] whitespace-nowrap"
           style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
         >
           Web
         </span>
         <span
-          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#1c1710] opacity-[0.055] whitespace-nowrap"
+          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-[#f2f2f0] opacity-[0.07] whitespace-nowrap"
           style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
         >
           Developer
@@ -214,14 +228,14 @@ export default function Hero() {
 
           <h1
             data-reveal
-            className="font-headings font-black text-[#1c1710] leading-[1.02] mb-5 opacity-0"
+            className="font-headings font-black text-[#f2f2f0] leading-[1.02] mb-5 opacity-0"
             style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.6rem)' }}
           >
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#b8862a] via-(--accent) to-(--accent)">Wasif</span>.
+            Hi, I&apos;m <span className="text-(--accent)">Wasif</span>.
           </h1>
 
           {/* Roles */}
-          <p data-reveal className="font-label text-[13px] md:text-sm tracking-[0.14em] uppercase text-[#6b6350] mb-6 opacity-0">
+          <p data-reveal className="font-label text-[13px] md:text-sm tracking-[0.14em] uppercase text-[#b5b0a8] mb-6 opacity-0">
             {ROLES.map((role, i) => (
               <span key={role}>
                 {role}
@@ -230,7 +244,7 @@ export default function Hero() {
             ))}
           </p>
 
-          <p data-reveal className="font-body text-base md:text-lg text-[#4a4335] leading-relaxed mb-9 opacity-0">
+          <p data-reveal className="font-body text-base md:text-lg text-[#c7c2b8] leading-relaxed mb-9 opacity-0">
             I build fast, accessible web applications with React, Next.js, and WordPress —
             and because I came up through performance marketing, I build them to rank and
             convert, not just to render.
@@ -241,14 +255,14 @@ export default function Hero() {
             <MagneticLink
               href="/projects"
               reducedMotion={reducedMotion}
-              className="px-8 py-4 rounded-full bg-gradient-to-br from-[#e8c97a] via-(--accent) to-[#b8862a] text-[#ffffff] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_10px_30px_-8px_rgba(180,134,42,0.55)] hover:shadow-[0_16px_40px_-8px_rgba(180,134,42,0.65)] hover:-translate-y-0.5 duration-300"
+              className="px-8 py-4 rounded-full bg-(--accent) text-[#ffffff] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_10px_30px_-8px_rgba(229,9,20,0.45)] hover:shadow-[0_16px_40px_-8px_rgba(229,9,20,0.6)] hover:-translate-y-0.5 duration-300"
             >
               Explore My Work
             </MagneticLink>
             <MagneticLink
               href="/contact"
               reducedMotion={reducedMotion}
-              className="px-8 py-4 rounded-full border border-(--accent)/35 bg-white/40 backdrop-blur-md text-[#3f3a2e] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_8px_24px_-12px_rgba(28,23,16,0.25)] hover:border-(--accent) hover:bg-white/60 hover:text-(--accent) hover:-translate-y-0.5 duration-300"
+              className="px-8 py-4 rounded-full border border-(--accent)/35 bg-white/10 backdrop-blur-md text-[#f2f2f0] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_8px_24px_-12px_rgba(0,0,0,0.4)] hover:border-(--accent) hover:bg-white/15 hover:text-(--accent) hover:-translate-y-0.5 duration-300"
             >
               Contact Me
             </MagneticLink>
@@ -266,7 +280,7 @@ export default function Hero() {
                 title={label}
                 whileHover={reducedMotion ? {} : { y: -4, scale: 1.08 }}
                 transition={{ type: 'spring', stiffness: 380, damping: 18 }}
-                className="w-11 h-11 rounded-full border border-(--accent)/30 bg-white/50 backdrop-blur-md flex items-center justify-center text-[#6b6350] hover:text-(--accent) hover:border-(--accent)/70 shadow-[0_6px_18px_-10px_rgba(28,23,16,0.3)] transition-colors duration-300"
+                className="w-11 h-11 rounded-full border border-(--accent)/30 bg-white/10 backdrop-blur-md flex items-center justify-center text-[#c7c2b8] hover:text-(--accent) hover:border-(--accent)/70 shadow-[0_6px_18px_-10px_rgba(0,0,0,0.4)] transition-colors duration-300"
               >
                 <Icon size={16} />
               </motion.a>
@@ -327,10 +341,10 @@ export default function Hero() {
 
       {/* ── Scroll indicator ── */}
       <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-        <div className="w-6 h-10 rounded-full border-2 border-(--accent)/40 flex justify-center pt-2 bg-white/30 backdrop-blur-sm">
+        <div className="w-6 h-10 rounded-full border-2 border-(--accent)/40 flex justify-center pt-2 bg-white/10 backdrop-blur-sm">
           <div className="w-1 h-2 rounded-full bg-(--accent) animate-scroll-dot" />
         </div>
-        <span className="font-label text-[9px] tracking-[0.3em] text-[#6b6350] uppercase">Scroll</span>
+        <span className="font-label text-[9px] tracking-[0.3em] text-[#b5b0a8] uppercase">Scroll</span>
       </div>
     </section>
     </div>

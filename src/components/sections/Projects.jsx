@@ -22,7 +22,6 @@ function impactLine(project) {
 }
 
 function ProjectCard({ project, onImageClick }) {
-  const [hovered, setHovered] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const style = CARD_STYLE[project.id] || { color: 'var(--accent)', icon: FaScroll }
   const Icon = style.icon
@@ -42,8 +41,6 @@ function ProjectCard({ project, onImageClick }) {
         <div
           className="w-full h-48 mb-6 bg-(--background) relative overflow-hidden flex items-center justify-center border-b border-(--accent)/10 cursor-pointer"
           style={{ borderTop: `3px solid ${style.color}` }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
         >
           {project.image ? (
             <>
@@ -69,36 +66,18 @@ function ProjectCard({ project, onImageClick }) {
             </>
           )}
 
-          {/* The story/topics blurb only makes sense as an overlay when
-              there's no real screenshot underneath it — on an image card
-              it just fought the photo for attention and read as "blur". */}
-          <AnimatePresence mode="wait">
-            {!hovered ? (
-              project.embed || project.image ? null : (
-                <motion.div
-                  key="icon"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 10 }}
-                >
-                  <Icon size={40} className="text-white/10" />
-                </motion.div>
-              )
-            ) : project.image ? null : (
-              <motion.p
-                key="desc"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25 }}
-                className="relative px-6 text-center text-(--foreground) text-xs font-body leading-relaxed"
-              >
-                {project.story ? project.story[0] : `${project.category} — ${project.topics.join(', ')}`}
-              </motion.p>
-            )}
-          </AnimatePresence>
+          {/* No hover-reveal text here anymore — it duplicated the topics
+              chips / story paragraph already shown below, and on cards
+              with a real screenshot it fought the photo for attention.
+              Deeper detail lives in the "Full Case Study" expand panel. */}
+          {!project.embed && !project.image && (
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 10 }}
+            >
+              <Icon size={40} className="text-white/10" />
+            </motion.div>
+          )}
 
           {/* Impact Stats Overlay */}
           <div className="absolute inset-x-4 bottom-4 p-3 bg-(--card)/90 backdrop-blur-sm border border-(--accent)/20 flex items-center gap-3">
