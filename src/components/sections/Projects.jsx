@@ -55,9 +55,12 @@ function ProjectCard({ project, onImageClick }) {
                   if (project.embed) window.open(project.embed, '_blank', 'noopener')
                   else onImageClick(project.image, project.title)
                 }}
-                className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 cursor-zoom-in"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-zoom-in"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#ffffff]/95 via-[#ffffff]/25 to-[#ffffff]/10" />
+              {/* Scrim only behind the impact-stats bar, not the whole
+                  image — the photo used to be washed out under a
+                  near-opaque white gradient covering it entirely. */}
+              <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-(--card)/90 to-transparent pointer-events-none" />
             </>
           ) : (
             <>
@@ -66,6 +69,9 @@ function ProjectCard({ project, onImageClick }) {
             </>
           )}
 
+          {/* The story/topics blurb only makes sense as an overlay when
+              there's no real screenshot underneath it — on an image card
+              it just fought the photo for attention and read as "blur". */}
           <AnimatePresence mode="wait">
             {!hovered ? (
               project.embed || project.image ? null : (
@@ -80,7 +86,7 @@ function ProjectCard({ project, onImageClick }) {
                   <Icon size={40} className="text-white/10" />
                 </motion.div>
               )
-            ) : (
+            ) : project.image ? null : (
               <motion.p
                 key="desc"
                 initial={{ opacity: 0, y: 8 }}
