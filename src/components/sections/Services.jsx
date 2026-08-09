@@ -6,6 +6,8 @@ import {
   FaCode,
   FaChartLine,
   FaBullseye,
+  FaArrowRight,
+  FaTimes,
 } from 'react-icons/fa'
 import './Services.css'
 import MorphicBackground from '../three/MorphicBackground'
@@ -96,6 +98,7 @@ const ServiceCard = ({ service, index }) => {
   const sigilRef = useRef(null)
   const [hovered, setHovered] = useState(false)
   const Icon = service.icon
+  const contentId = `service-detail-${service.id}`
 
   // Staggered entrance via IntersectionObserver
   useEffect(() => {
@@ -124,22 +127,52 @@ const ServiceCard = ({ service, index }) => {
     }
   }
 
-  const handleMouseLeave = () => {
+  const resetTilt = () => {
     if (sigilRef.current) sigilRef.current.style.transform = ''
+  }
+
+  // A single `hovered` state now opens via mouse hover (desktop), tap/click
+  // (touch — synthetic hover events on touch devices are unreliable), and
+  // keyboard focus (motor/screen-reader users who can't hover at all).
+  const openCard = () => setHovered(true)
+  const closeCard = () => {
     setHovered(false)
+    resetTilt()
+  }
+
+  // Only close on blur once focus has actually left the card (not when it
+  // moves from the card onto the CTA link or close button inside it).
+  const handleBlur = (e) => {
+    if (!cardRef.current?.contains(e.relatedTarget)) closeCard()
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      closeCard()
+      cardRef.current?.blur()
+    }
   }
 
   return (
     <div
+      id={service.id}
       ref={cardRef}
       className={`house-card house-card--${service.id}`}
       style={{
         '--accent': service.accent,
         '--border': service.borderColor,
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={handleMouseLeave}
+      tabIndex={0}
+      role="group"
+      aria-label={`${service.name} — ${service.sigil}`}
+      aria-expanded={hovered}
+      onMouseEnter={openCard}
+      onMouseLeave={closeCard}
       onMouseMove={handleMouseMove}
+      onFocus={openCard}
+      onBlur={handleBlur}
+      onClick={openCard}
+      onKeyDown={handleKeyDown}
     >
       {/* Corner ornaments */}
       <span className="corner corner-tl" />
@@ -151,7 +184,7 @@ const ServiceCard = ({ service, index }) => {
       <div className="card-glow" />
 
       {/* Service icon */}
-      <div ref={sigilRef} className="house-sigil-wrap">
+      <div ref={sigilRef} className="house-sigil-wrap" aria-hidden="true">
         <div className="house-icon-circle">
           <Icon size={38} />
         </div>
@@ -169,18 +202,42 @@ const ServiceCard = ({ service, index }) => {
         <h2 className="house-name">{service.name}</h2>
         <p className="house-seat">{service.seat}</p>
         <p className="house-sigil-label">{service.sigil}</p>
+        <p className="house-hint">View Details</p>
       </div>
 
-      {/* Hover Reveal Content */}
-      <div className={`house-hover-content ${hovered ? 'hover-visible' : ''}`}>
+      {/* Hover / Tap / Focus Reveal Content */}
+      <div
+        id={contentId}
+        className={`house-hover-content ${hovered ? 'hover-visible' : ''}`}
+      >
+        <button
+          type="button"
+          className="house-close-btn"
+          tabIndex={hovered ? 0 : -1}
+          aria-label={`Close ${service.name} details`}
+          onClick={(e) => {
+            e.stopPropagation()
+            closeCard()
+          }}
+        >
+          <FaTimes size={11} />
+        </button>
         <p className="hover-words">{service.words}</p>
         <div className="house-divider hover-divider">
           <span className="divider-line" />
           <span className="divider-diamond" />
           <span className="divider-line" />
         </div>
-        <h2 className="hover-name">{service.name}</h2>
+        <p className="hover-name">{service.name}</p>
         <p className="hover-desc">{service.description}</p>
+        <a
+          href={`/contact?service=${encodeURIComponent(service.name)}`}
+          className="hover-cta"
+          tabIndex={hovered ? 0 : -1}
+          onClick={(e) => e.stopPropagation()}
+        >
+          Discuss This Service <FaArrowRight size={10} />
+        </a>
       </div>
 
       {/* Bottom accent bar */}
@@ -211,6 +268,34 @@ export default function Services() {
     return () => obs.disconnect()
   }, [])
 
+  // Service structured data (schema.org). /services is a standalone route,
+  // so this is the one place on the site where an ItemList of Services
+  // belongs — it lets Google surface individual services (SEO, Google Ads,
+  // web dev, etc.) as rich results instead of one opaque page.
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: SERVICES.map((service, i) => ({
+        '@type': 'Service',
+        position: i + 1,
+        name: service.name,
+        description: service.description,
+        url: `https://www.wasif.world/services#${service.id}`,
+        provider: {
+          '@type': 'Person',
+          name: 'Mohd Wasif',
+          url: 'https://www.wasif.world',
+        },
+        areaServed: 'Worldwide',
+      })),
+    })
+    document.head.appendChild(script)
+    return () => document.head.removeChild(script)
+  }, [])
+
   return (
     <section id="services" ref={sectionRef} className="relative w-full py-24 bg-[#ffffff] overflow-hidden">
       <MorphicBackground ballColor="#d4a13a" className="absolute inset-0 -z-0 bg-transparent" />
@@ -229,9 +314,9 @@ export default function Services() {
             <span className="w-1 h-1 rounded-full bg-[#a07d33]/60" />
             <span className="w-20 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
           </div>
-          <h2 ref={headingRef} className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
+          <h1 ref={headingRef} className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             Services <em>Rendered</em>
-          </h2>
+          </h1>
           <p className="font-body text-xs md:text-sm text-[#5f594c] italic tracking-wide max-w-md mx-auto mt-4">
             Six distinct specialties. Built for conversions, scaled for reach, and optimized for search.
           </p>
@@ -244,8 +329,22 @@ export default function Services() {
           ))}
         </div>
 
+        {/* Closing CTA — every service card leads here if nothing else does */}
+        <div className="mt-20 text-center">
+          <p className="font-body text-sm md:text-base text-[#5f594c] italic max-w-lg mx-auto mb-7">
+            Not sure which service fits your goals? Let's map it out together — no obligation.
+          </p>
+          <a
+            href="/contact"
+            className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#a07d33] text-[#ffffff] font-label text-[11px] font-semibold tracking-[0.25em] uppercase rounded-sm hover:bg-[#8c6a28] hover:-translate-y-0.5 transition-all duration-300 shadow-[0_8px_20px_-8px_rgba(160,125,51,0.5)]"
+          >
+            Book A Free Consultation
+            <FaArrowRight size={11} />
+          </a>
+        </div>
+
         {/* Section Footer Ornament */}
-        <div className="flex items-center justify-center gap-6 mt-20">
+        <div className="flex items-center justify-center gap-6 mt-16">
           <span className="w-32 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/30" />
           <span className="w-1 h-1 rounded-full bg-[#a07d33]/40 inline-block" />
           <span className="w-32 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/30" />

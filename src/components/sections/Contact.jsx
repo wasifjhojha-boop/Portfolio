@@ -11,7 +11,14 @@ const CHANNELS = [
 ]
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
+  // Service cards on /services link here as /contact?service=SEO+Mastery —
+  // prefill the subject from that param so the enquiry arrives pre-labeled
+  // instead of dropping the visitor into a blank form that's lost the
+  // context of which service they clicked through from.
+  const [formData, setFormData] = useState(() => {
+    const service = new URLSearchParams(window.location.search).get('service')
+    return { name: '', email: '', subject: service ? `Enquiry: ${service}` : '', message: '' }
+  })
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
