@@ -19,12 +19,12 @@ export default function SkillsMarquee() {
   return (
     <section
       aria-label="Skills"
-      className="relative w-full bg-[#f6f1e6] py-8 md:py-10 border-y border-[#a07d33]/15"
+      className="relative w-full bg-[#f6f1e6] py-8 md:py-10 border-y border-(--accent)/15"
     >
       <Marquee
         items={WORDS}
         speed={42}
-        className="font-headings text-2xl md:text-4xl font-bold uppercase tracking-tight text-[#191712]/85"
+        className="font-headings text-2xl md:text-4xl font-bold uppercase tracking-tight text-(--foreground)/85"
       />
     </section>
   )

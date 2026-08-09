@@ -50,21 +50,21 @@ const STATS = [
 
 export default function About() {
   return (
-    <section id="about" className="relative w-full py-24 md:py-32 bg-[#ffffff] overflow-hidden">
+    <section id="about" className="relative w-full py-24 md:py-32 bg-(--background) overflow-hidden">
       {/* Decorative background grid & ambient light */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#a07d33_1px,transparent_1px),linear-gradient(to_bottom,#a07d33_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,var(--accent)_1px,transparent_1px),linear-gradient(to_bottom,var(--accent)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,transparent_20%,#ffffff_100%)]" />
       
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-24">
-          <p className="eyebrow text-[#a07d33] mb-4">
+          <p className="eyebrow text-(--accent) mb-4">
             ABOUT ME
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
-            <span className="w-1 h-1 rounded-full bg-[#a07d33]/60" />
-            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
+            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-(--accent)/50" />
+            <span className="w-1 h-1 rounded-full bg-(--accent)/60" />
+            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-(--accent)/50" />
           </div>
           <h2 className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase">
             {bio.title}
@@ -80,25 +80,25 @@ export default function About() {
 
           {/* Right Column: Story & Chronology */}
           <div className="lg:col-span-7 text-white">
-            <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-[#a07d33] mb-6 flex items-center gap-3">
-              <FaBookOpen className="text-lg text-[#191712]" />
+            <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-(--accent) mb-6 flex items-center gap-3">
+              <FaBookOpen className="text-lg text-(--foreground)" />
               <span>THE STORY SO FAR</span>
             </h3>
 
-            <div className="space-y-6 font-body text-[#5f594c] text-sm md:text-base leading-relaxed tracking-wide">
+            <div className="space-y-6 font-body text-(--muted) text-sm md:text-base leading-relaxed tracking-wide">
               {bio.summary.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
 
             {/* Achievements Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-8 border-t border-[#a07d33]/20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-8 border-t border-(--accent)/20">
               {STATS.map((stat, idx) => (
                 <div key={idx} className="text-center md:text-left">
-                  <h4 className="font-headings text-3xl md:text-4xl font-extrabold text-[#a07d33] drop-shadow-[0_2px_10px_rgba(160,125,51,0.3)]">
+                  <h4 className="font-headings text-3xl md:text-4xl font-extrabold text-(--accent) drop-shadow-[0_2px_10px_rgba(160,125,51,0.3)]">
                     <Counter value={stat.value} suffix={stat.suffix} />
                   </h4>
-                  <p className="text-[#5f594c] text-[10px] font-label font-semibold tracking-widest mt-2 uppercase leading-snug">
+                  <p className="text-(--muted) text-[10px] font-label font-semibold tracking-widest mt-2 uppercase leading-snug">
                     {stat.label}
                   </p>
                 </div>
@@ -109,7 +109,7 @@ export default function About() {
 
         {/* Journey Timeline */}
         <div className="mt-24 md:mt-32">
-          <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-[#a07d33] mb-10 text-center uppercase">
+          <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-(--accent) mb-10 text-center uppercase">
             The Journey So Far
           </h3>
           <div className="max-w-5xl mx-auto">

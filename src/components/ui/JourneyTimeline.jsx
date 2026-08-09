@@ -57,7 +57,7 @@ export default function JourneyTimeline({ items = [] }) {
       >
         <div
           ref={fillRef}
-          className="h-full w-px origin-top bg-gradient-to-b from-[#a07d33] to-[#c9a86a]"
+          className="h-full w-px origin-top bg-gradient-to-b from-(--accent) to-[#c9a86a]"
         />
       </div>
 
@@ -73,7 +73,7 @@ export default function JourneyTimeline({ items = [] }) {
                 aria-hidden="true"
                 className="absolute left-[7px] top-[6px] z-10 flex h-3.5 w-3.5 -translate-x-1/2 items-center justify-center rounded-full border border-[#d8d2c4] bg-white lg:left-1/2"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#a07d33]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-(--accent)" />
               </span>
 
               <div
@@ -83,14 +83,14 @@ export default function JourneyTimeline({ items = [] }) {
                     : 'lg:col-start-1 lg:row-start-1 lg:pr-4 lg:text-right'
                 }
               >
-                <span className="font-label text-[10px] tracking-[0.28em] text-[#a07d33]/70">
+                <span className="font-label text-[10px] tracking-[0.28em] text-(--accent)/70">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h4 className="font-headings mt-2.5 text-base sm:text-lg font-semibold tracking-tight text-[#191712]">
+                <h4 className="font-headings mt-2.5 text-base sm:text-lg font-semibold tracking-tight text-(--foreground)">
                   {stage.label}
                 </h4>
                 <p
-                  className={`font-body mt-2 max-w-[52ch] text-sm leading-relaxed text-[#5f594c] ${
+                  className={`font-body mt-2 max-w-[52ch] text-sm leading-relaxed text-(--muted) ${
                     rightSide ? '' : 'lg:ml-auto'
                   }`}
                 >

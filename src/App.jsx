@@ -86,10 +86,10 @@ const PAGE_METADATA = {
 
 function NotFoundPage() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-[#ffffff]">
-      <p className="eyebrow text-[#a07d33] mb-4">404</p>
-      <h1 className="font-headings text-4xl md:text-6xl font-bold text-[#191712] mb-6">Page Not Found</h1>
-      <a href="/" className="px-6 py-3 bg-gradient-to-r from-[#a07d33] to-[#a07d33] text-[#ffffff] font-label text-[10px] font-semibold tracking-[0.2em] uppercase">
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-(--background)">
+      <p className="eyebrow text-(--accent) mb-4">404</p>
+      <h1 className="font-headings text-4xl md:text-6xl font-bold text-(--foreground) mb-6">Page Not Found</h1>
+      <a href="/" className="px-6 py-3 bg-gradient-to-r from-(--accent) to-(--accent) text-[#ffffff] font-label text-[10px] font-semibold tracking-[0.2em] uppercase">
         Return Home
       </a>
     </section>
@@ -135,7 +135,7 @@ function App() {
   }, [currentPath])
 
   return (
-    <div className="relative text-[#191712] w-full overflow-x-hidden font-body bg-[#ffffff]">
+    <div className="relative text-(--foreground) w-full overflow-x-hidden font-body bg-(--background)">
       {/* Global Navigation */}
       <Navbar />
 

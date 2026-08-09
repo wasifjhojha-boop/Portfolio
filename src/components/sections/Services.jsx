@@ -60,10 +60,10 @@ const SERVICES = [
     words: '"Built For Speed."',
     region: 'Frontend Engineering',
     sigil: 'High-Performance Clean Code',
-    accent: '#a07d33',
+    accent: 'var(--accent)',
     description:
       'Fast, modern, and SEO-compliant websites. Custom themes, Gutenberg blocks, and Single Page Apps built for rapid loads and clean architecture.',
-    borderColor: '#a07d33',
+    borderColor: 'var(--accent)',
   },
   {
     id: 'performance-marketing',
@@ -297,25 +297,25 @@ export default function Services() {
   }, [])
 
   return (
-    <section id="services" ref={sectionRef} className="relative w-full py-24 bg-[#ffffff] overflow-hidden">
+    <section id="services" ref={sectionRef} className="relative w-full py-24 bg-(--background) overflow-hidden">
       {/* Ambient background texture */}
       <div className="absolute inset-0 opacity-[0.045] pointer-events-none bg-repeat bg-[size:220px] bg-[image:url('data:image/svg+xml,%3Csvg_viewBox=%220_0_300_300%22_xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter_id=%22n%22%3E%3CfeTurbulence_type=%22fractalNoise%22_baseFrequency=%220.65%22_numOctaves=%223%22_stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect_width=%22100%25%22_height=%22100%25%22_filter=%22url(%23n)%22/%3E%3C/svg%3E')]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <header className="text-center mb-16">
-          <p ref={subRef} className="eyebrow text-[#a07d33] mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
+          <p ref={subRef} className="eyebrow text-(--accent) mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             WHAT I DO
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-20 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
-            <span className="w-1 h-1 rounded-full bg-[#a07d33]/60" />
-            <span className="w-20 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
+            <span className="w-20 h-[1px] bg-gradient-to-r from-transparent to-(--accent)/50" />
+            <span className="w-1 h-1 rounded-full bg-(--accent)/60" />
+            <span className="w-20 h-[1px] bg-gradient-to-l from-transparent to-(--accent)/50" />
           </div>
           <h1 ref={headingRef} className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase mb-4 opacity-0 translate-y-7 transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             Services <em>Rendered</em>
           </h1>
-          <p className="font-body text-xs md:text-sm text-[#5f594c] italic tracking-wide max-w-md mx-auto mt-4">
+          <p className="font-body text-xs md:text-sm text-(--muted) italic tracking-wide max-w-md mx-auto mt-4">
             Six distinct specialties. Built for conversions, scaled for reach, and optimized for search.
           </p>
         </header>
@@ -336,12 +336,12 @@ export default function Services() {
             baseVelocity={3}
             slowdownOnHover
             responsive
-            className="w-full h-full text-[#a07d33]/15"
+            className="w-full h-full text-(--accent)/15"
           >
             {SERVICES.map((service) => (
               <div
                 key={service.id}
-                className="w-11 h-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f7f5f0] border flex items-center justify-center shadow-[0_6px_16px_-6px_rgba(28,23,16,0.25)]"
+                className="w-11 h-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--card) border flex items-center justify-center shadow-[0_6px_16px_-6px_rgba(28,23,16,0.25)]"
                 style={{ borderColor: `${service.accent}55`, color: service.accent }}
               >
                 <service.icon size={16} />
@@ -352,12 +352,12 @@ export default function Services() {
 
         {/* Closing CTA — every service card leads here if nothing else does */}
         <div className="mt-12 text-center">
-          <p className="font-body text-sm md:text-base text-[#5f594c] italic max-w-lg mx-auto mb-7">
+          <p className="font-body text-sm md:text-base text-(--muted) italic max-w-lg mx-auto mb-7">
             Not sure which service fits your goals? Let's map it out together — no obligation.
           </p>
           <a
             href="/contact"
-            className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#a07d33] text-[#ffffff] font-label text-[11px] font-semibold tracking-[0.25em] uppercase rounded-sm hover:bg-[#8c6a28] hover:-translate-y-0.5 transition-all duration-300 shadow-[0_8px_20px_-8px_rgba(160,125,51,0.5)]"
+            className="inline-flex items-center gap-3 px-8 py-3.5 bg-(--accent) text-[#ffffff] font-label text-[11px] font-semibold tracking-[0.25em] uppercase rounded-sm hover:bg-[#8c6a28] hover:-translate-y-0.5 transition-all duration-300 shadow-[0_8px_20px_-8px_rgba(160,125,51,0.5)]"
           >
             Book A Free Consultation
             <FaArrowRight size={11} />
@@ -366,9 +366,9 @@ export default function Services() {
 
         {/* Section Footer Ornament */}
         <div className="flex items-center justify-center gap-6 mt-16">
-          <span className="w-32 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/30" />
-          <span className="w-1 h-1 rounded-full bg-[#a07d33]/40 inline-block" />
-          <span className="w-32 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/30" />
+          <span className="w-32 h-[1px] bg-gradient-to-r from-transparent to-(--accent)/30" />
+          <span className="w-1 h-1 rounded-full bg-(--accent)/40 inline-block" />
+          <span className="w-32 h-[1px] bg-gradient-to-l from-transparent to-(--accent)/30" />
         </div>
       </div>
     </section>

@@ -150,7 +150,7 @@ export default function Hero() {
         {/* Floating light blobs */}
         <motion.div
           aria-hidden="true"
-          className="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full bg-[#ffffff] opacity-60 blur-[110px]"
+          className="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full bg-(--background) opacity-60 blur-[110px]"
           animate={reducedMotion ? {} : { y: [0, 34, 0], x: [0, 18, 0] }}
           transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -173,7 +173,7 @@ export default function Hero() {
             <motion.span
               key={i}
               aria-hidden="true"
-              className="absolute w-1 h-1 rounded-full bg-[#a07d33]/30"
+              className="absolute w-1 h-1 rounded-full bg-(--accent)/30"
               style={{ left: `${8 + i * 10.5}%`, top: `${18 + ((i * 29) % 60)}%` }}
               animate={{ y: [0, -22, 0], opacity: [0.15, 0.5, 0.15] }}
               transition={{ duration: 7 + (i % 4) * 2, repeat: Infinity, ease: 'easeInOut', delay: i * 0.6 }}
@@ -208,7 +208,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] items-center min-h-screen gap-6 pt-28 pb-16 lg:pt-24 lg:pb-0">
         {/* Left: intro */}
         <div ref={introRef} className="max-w-xl order-2 lg:order-1">
-          <p data-reveal className="eyebrow text-[#a07d33] mb-5 opacity-0">
+          <p data-reveal className="eyebrow text-(--accent) mb-5 opacity-0">
             Web Developer
           </p>
 
@@ -217,7 +217,7 @@ export default function Hero() {
             className="font-headings font-black text-[#1c1710] leading-[1.02] mb-5 opacity-0"
             style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.6rem)' }}
           >
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#b8862a] via-[#a07d33] to-[#a07d33]">Wasif</span>.
+            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#b8862a] via-(--accent) to-(--accent)">Wasif</span>.
           </h1>
 
           {/* Roles */}
@@ -225,7 +225,7 @@ export default function Hero() {
             {ROLES.map((role, i) => (
               <span key={role}>
                 {role}
-                {i < ROLES.length - 1 && <span className="text-[#a07d33] mx-2.5">·</span>}
+                {i < ROLES.length - 1 && <span className="text-(--accent) mx-2.5">·</span>}
               </span>
             ))}
           </p>
@@ -241,14 +241,14 @@ export default function Hero() {
             <MagneticLink
               href="/projects"
               reducedMotion={reducedMotion}
-              className="px-8 py-4 rounded-full bg-gradient-to-br from-[#e8c97a] via-[#a07d33] to-[#b8862a] text-[#ffffff] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_10px_30px_-8px_rgba(180,134,42,0.55)] hover:shadow-[0_16px_40px_-8px_rgba(180,134,42,0.65)] hover:-translate-y-0.5 duration-300"
+              className="px-8 py-4 rounded-full bg-gradient-to-br from-[#e8c97a] via-(--accent) to-[#b8862a] text-[#ffffff] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_10px_30px_-8px_rgba(180,134,42,0.55)] hover:shadow-[0_16px_40px_-8px_rgba(180,134,42,0.65)] hover:-translate-y-0.5 duration-300"
             >
               Explore My Work
             </MagneticLink>
             <MagneticLink
               href="/contact"
               reducedMotion={reducedMotion}
-              className="px-8 py-4 rounded-full border border-[#a07d33]/35 bg-white/40 backdrop-blur-md text-[#3f3a2e] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_8px_24px_-12px_rgba(28,23,16,0.25)] hover:border-[#a07d33] hover:bg-white/60 hover:text-[#a07d33] hover:-translate-y-0.5 duration-300"
+              className="px-8 py-4 rounded-full border border-(--accent)/35 bg-white/40 backdrop-blur-md text-[#3f3a2e] font-label font-semibold text-[11px] tracking-[0.22em] uppercase shadow-[0_8px_24px_-12px_rgba(28,23,16,0.25)] hover:border-(--accent) hover:bg-white/60 hover:text-(--accent) hover:-translate-y-0.5 duration-300"
             >
               Contact Me
             </MagneticLink>
@@ -266,7 +266,7 @@ export default function Hero() {
                 title={label}
                 whileHover={reducedMotion ? {} : { y: -4, scale: 1.08 }}
                 transition={{ type: 'spring', stiffness: 380, damping: 18 }}
-                className="w-11 h-11 rounded-full border border-[#a07d33]/30 bg-white/50 backdrop-blur-md flex items-center justify-center text-[#6b6350] hover:text-[#a07d33] hover:border-[#a07d33]/70 shadow-[0_6px_18px_-10px_rgba(28,23,16,0.3)] transition-colors duration-300"
+                className="w-11 h-11 rounded-full border border-(--accent)/30 bg-white/50 backdrop-blur-md flex items-center justify-center text-[#6b6350] hover:text-(--accent) hover:border-(--accent)/70 shadow-[0_6px_18px_-10px_rgba(28,23,16,0.3)] transition-colors duration-300"
               >
                 <Icon size={16} />
               </motion.a>
@@ -304,7 +304,7 @@ export default function Hero() {
                     src={src}
                     alt=""
                     decoding="async"
-                    className="max-h-full w-auto max-w-full rounded-3xl object-contain object-top ring-1 ring-[#a07d33]/25 shadow-[0_30px_80px_-25px_rgba(28,23,16,0.45)]"
+                    className="max-h-full w-auto max-w-full rounded-3xl object-contain object-top ring-1 ring-(--accent)/25 shadow-[0_30px_80px_-25px_rgba(28,23,16,0.45)]"
                   />
                 </div>
               )
@@ -317,7 +317,7 @@ export default function Hero() {
               <span
                 key={i}
                 className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                  i === slide ? 'bg-[#a07d33] scale-150' : 'bg-[#a07d33]/25'
+                  i === slide ? 'bg-(--accent) scale-150' : 'bg-(--accent)/25'
                 }`}
               />
             ))}
@@ -327,8 +327,8 @@ export default function Hero() {
 
       {/* ── Scroll indicator ── */}
       <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-        <div className="w-6 h-10 rounded-full border-2 border-[#a07d33]/40 flex justify-center pt-2 bg-white/30 backdrop-blur-sm">
-          <div className="w-1 h-2 rounded-full bg-[#a07d33] animate-scroll-dot" />
+        <div className="w-6 h-10 rounded-full border-2 border-(--accent)/40 flex justify-center pt-2 bg-white/30 backdrop-blur-sm">
+          <div className="w-1 h-2 rounded-full bg-(--accent) animate-scroll-dot" />
         </div>
         <span className="font-label text-[9px] tracking-[0.3em] text-[#6b6350] uppercase">Scroll</span>
       </div>

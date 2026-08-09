@@ -41,9 +41,9 @@ const SKILL_ICONS = {
 }
 
 const TOOL_LEVEL_STYLE = {
-  'Core Skill': 'bg-[#a07d33]/15 text-[#a07d33] border-[#a07d33]/40',
-  Advanced: 'bg-[#191712]/10 text-[#191712]/80 border-[#191712]/20',
-  'Currently Learning': 'bg-[#f7f5f0]/60 text-[#191712]/50 border-[#191712]/10',
+  'Core Skill': 'bg-(--accent)/15 text-(--accent) border-(--accent)/40',
+  Advanced: 'bg-(--foreground)/10 text-(--foreground)/80 border-(--foreground)/20',
+  'Currently Learning': 'bg-(--card)/60 text-(--foreground)/50 border-(--foreground)/10',
 }
 
 const LEVEL_PERCENT = { Expert: 100, Advanced: 80, Intermediate: 60 }
@@ -83,37 +83,37 @@ function SkillCard({ skill }) {
       variants={itemVariants}
       whileHover={{ y: -6, scale: 1.03 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="p-6 rounded-sm relative overflow-hidden group shadow-lg bg-[#f7f5f0] border border-[#a07d33]/10 hover:border-[#a07d33]/40 hover:shadow-[0_10px_40px_rgba(160,125,51,0.15)] transition-colors duration-300"
+      className="p-6 rounded-sm relative overflow-hidden group shadow-lg bg-(--card) border border-(--accent)/10 hover:border-(--accent)/40 hover:shadow-[0_10px_40px_rgba(160,125,51,0.15)] transition-colors duration-300"
     >
       {/* Top sheen on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-[linear-gradient(120deg,transparent_30%,rgba(160,125,51,0.08)_50%,transparent_70%)]" />
 
       {/* Corner ornament on hover */}
-      <span className="absolute top-2 right-2 w-4 h-4 border-t border-r border-[#a07d33]/0 group-hover:border-[#a07d33]/50 transition-colors duration-500" />
+      <span className="absolute top-2 right-2 w-4 h-4 border-t border-r border-(--accent)/0 group-hover:border-(--accent)/50 transition-colors duration-500" />
 
       {/* Header row: icon + name + level badge */}
       <div className="flex items-center justify-between mb-4 relative z-10">
         <div className="flex items-center gap-3">
-          <span className="text-[#a07d33] text-lg filter drop-shadow-[0_0_8px_rgba(160,125,51,0.4)] group-hover:scale-110 transition-transform duration-300">
+          <span className="text-(--accent) text-lg filter drop-shadow-[0_0_8px_rgba(160,125,51,0.4)] group-hover:scale-110 transition-transform duration-300">
             <Icon />
           </span>
-          <h4 className="font-headings text-lg font-bold text-[#191712] group-hover:text-[#a07d33] transition-colors duration-300">
+          <h4 className="font-headings text-lg font-bold text-(--foreground) group-hover:text-(--accent) transition-colors duration-300">
             {skill.name}
           </h4>
         </div>
-        <span className="px-3 py-1 rounded-sm bg-[#a07d33]/10 text-[#a07d33] text-[9px] font-bold tracking-[0.1em] uppercase border border-[#a07d33]/20 shrink-0">
+        <span className="px-3 py-1 rounded-sm bg-(--accent)/10 text-(--accent) text-[9px] font-bold tracking-[0.1em] uppercase border border-(--accent)/20 shrink-0">
           {skill.level}
         </span>
       </div>
 
-      <p className="text-[#5f594c] text-xs font-body tracking-wide leading-relaxed relative z-10">
+      <p className="text-(--muted) text-xs font-body tracking-wide leading-relaxed relative z-10">
         {skill.desc}
       </p>
 
       {/* Proficiency bar */}
-      <div className="mt-5 h-[3px] w-full bg-[#a07d33]/10 rounded-full overflow-hidden relative z-10">
+      <div className="mt-5 h-[3px] w-full bg-(--accent)/10 rounded-full overflow-hidden relative z-10">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#a07d33] to-[#191712] rounded-full"
+          className="h-full bg-gradient-to-r from-(--accent) to-(--foreground) rounded-full"
           initial={{ width: 0 }}
           whileInView={{ width: `${percent}%` }}
           viewport={{ once: true }}
@@ -122,7 +122,7 @@ function SkillCard({ skill }) {
       </div>
 
       {/* Bottom accent line grows on hover */}
-      <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#a07d33] to-[#191712] group-hover:w-full transition-all duration-500 ease-out" />
+      <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-(--accent) to-(--foreground) group-hover:w-full transition-all duration-500 ease-out" />
     </motion.div>
   )
 }
@@ -208,7 +208,7 @@ function SkillsCarousel({ skills }) {
               aria-selected={i === current}
               role="tab"
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === current ? 'w-7 bg-[#a07d33]' : 'w-1.5 bg-[#a07d33]/25 hover:bg-[#a07d33]/50'
+                i === current ? 'w-7 bg-(--accent)' : 'w-1.5 bg-(--accent)/25 hover:bg-(--accent)/50'
               }`}
             />
           ))}
@@ -232,7 +232,7 @@ export default function Skills() {
   const skills = activeTab === 'engineering' ? developmentSkills : marketingSkills
 
   return (
-    <section id="skills" className="relative w-full py-24 bg-[#ffffff] overflow-hidden">
+    <section id="skills" className="relative w-full py-24 bg-(--background) overflow-hidden">
       {/* One shared displacement filter for every liquid-glass button here */}
       <LiquidGlassFilter />
       {/* Ambient background textures */}
@@ -250,20 +250,20 @@ export default function Skills() {
         >
           <motion.p
             variants={headerItem}
-            className="eyebrow text-[#a07d33] mb-4"
+            className="eyebrow text-(--accent) mb-4"
           >
             THE TREASURY
           </motion.p>
           <motion.div variants={headerItem} className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
+            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-(--accent)/50" />
             <motion.span
-              className="text-[#a07d33] filter drop-shadow-[0_0_8px_rgba(160,125,51,0.7)] text-sm"
+              className="text-(--accent) filter drop-shadow-[0_0_8px_rgba(160,125,51,0.7)] text-sm"
               animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.15, 1] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             >
               &middot;
             </motion.span>
-            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
+            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-(--accent)/50" />
           </motion.div>
           <motion.h2
             variants={headerItem}
@@ -309,7 +309,7 @@ export default function Skills() {
 
         {/* AI & Automation Toolkit */}
         <div className="mt-24">
-          <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-[#a07d33] mb-10 text-center uppercase">
+          <h3 className="font-headings text-xl md:text-2xl font-bold tracking-widest text-(--accent) mb-10 text-center uppercase">
             AI &amp; Automation Toolkit
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -320,9 +320,9 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: (gi % 2) * 0.08 }}
-                className="card-lift p-6 bg-[#f7f5f0]/40 border border-[#a07d33]/10 rounded-sm"
+                className="card-lift p-6 bg-(--card)/40 border border-(--accent)/10 rounded-sm"
               >
-                <h4 className="font-headings text-xs font-bold tracking-[0.2em] uppercase text-[#191712] mb-4">
+                <h4 className="font-headings text-xs font-bold tracking-[0.2em] uppercase text-(--foreground) mb-4">
                   {group.category}
                 </h4>
                 <div className="flex flex-wrap gap-2">

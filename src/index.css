@@ -17,27 +17,54 @@
   --font-body: 'Inter', sans-serif;
   --font-serif: 'Cormorant Garamond', serif;
 
-  /* Light palette. Gold is kept because it is the logo colour, but demoted
-     to an accent on a neutral base instead of coating every surface. */
-  --color-ink: #191712;        /* primary text */
-  --color-ink-soft: #5f594c;   /* secondary text */
-  --color-ink-faint: #8c8577;  /* meta text */
-  --color-paper: #ffffff;      /* base surface */
-  --color-paper-warm: #f7f5f0; /* alternating section surface */
-  --color-line: #e4e0d6;       /* hairlines and borders */
-  --color-accent: #a07d33;     /* gold, contrast-safe on light */
-  --color-accent-soft: #c9a86a;
+  /* Light palette (default). Deep red accent on warm ivory. Values are
+     real CSS custom properties (Tailwind v4 @theme), so every bg-paper /
+     text-ink / border-accent utility below re-themes for free when
+     [data-theme="dark"] overrides them further down this file — no
+     component changes needed beyond swapping raw hex for these classes. */
+  --color-ink: #191712;         /* primary text: near-black */
+  --color-ink-soft: #5f594c;    /* secondary text: muted gray */
+  --color-ink-faint: #8c8577;   /* meta text */
+  --color-paper: #f7f5f2;       /* base surface: warm ivory */
+  --color-paper-warm: #f1ece3;  /* alternating section surface */
+  --color-line: #e4dcd2;        /* hairlines and borders */
+  --color-accent: #a6192e;      /* deep red */
+  --color-accent-soft: #c9576a;
+  --color-accent-foreground: #ffffff; /* text/icons on a solid accent fill */
+}
+
+/* Dark palette. Toggled via [data-theme="dark"] on <html> (see
+   ThemeToggle.jsx / the inline anti-FOUC script in index.html). Same
+   token names, same @theme block does the swap, so nothing outside this
+   file needs to know a second theme exists. */
+:root[data-theme='dark'] {
+  --color-ink: #f2f2f0;          /* primary text: off-white */
+  --color-ink-soft: #9a968e;     /* secondary text: muted gray */
+  --color-ink-faint: #6f6b63;
+  --color-paper: #050505;        /* near-black */
+  --color-paper-warm: #0d0d0d;   /* card / alternating surface */
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-accent: #e50914;       /* cinematic deep red */
+  --color-accent-soft: #ff4550;
+  --color-accent-foreground: #ffffff;
 }
 
 /* Base style resets and scroll behavior */
 html {
   scroll-behavior: auto; /* Handled by Lenis smooth scroll */
-  background-color: #ffffff;
-  color: #191712;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    transition: none;
+  }
 }
 
 /* Body copy defaults: comfortable measure + rhythm. */
@@ -72,53 +99,53 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f2efe8;
+  background: var(--color-paper-warm);
 }
 ::-webkit-scrollbar-thumb {
-  background: #c3bcac;
+  background: color-mix(in srgb, var(--color-accent) 55%, var(--color-paper));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a07d33;
+  background: var(--color-accent);
 }
 
 /* Surface panel. On a light theme this is a clean card with a hairline
    border and soft shadow rather than dark frosted glass. */
 .glass-panel {
-  background: #ffffff;
-  border: 1px solid #e4e0d6;
-  box-shadow: 0 1px 2px rgba(25, 23, 18, 0.04);
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-ink) 4%, transparent);
 }
 
 .glass-panel-hover {
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .glass-panel-hover:hover {
-  border-color: rgba(160, 125, 51, 0.45);
-  box-shadow: 0 10px 30px -10px rgba(25, 23, 18, 0.12);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--color-ink) 12%, transparent);
 }
 
 .gold-glow {
-  box-shadow: 0 0 15px rgba(160, 125, 51, 0.18);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--color-accent) 18%, transparent);
 }
 
 .gold-glow-hover:hover {
-  box-shadow: 0 0 25px rgba(160, 125, 51, 0.28);
+  box-shadow: 0 0 25px color-mix(in srgb, var(--color-accent) 28%, transparent);
 }
 
-/* Display heading fill. Near-black with a subtle warm shift — the old
-   parchment-to-gold gradient was illegible on a light background. */
+/* Display heading fill. Near-black with a subtle warm shift in light mode,
+   off-white with a red-tinted lift in dark mode. */
 .text-gold-gradient {
-  background: linear-gradient(180deg, #191712 0%, #2b261c 70%, #4a4134 100%);
+  background: linear-gradient(180deg, var(--color-ink) 0%, color-mix(in srgb, var(--color-ink) 80%, var(--color-accent)) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
 
-/* Soft gold rule used under section eyebrows. */
+/* Soft accent rule used under section eyebrows. */
 .rule-gold {
-  background: linear-gradient(90deg, transparent, rgba(160, 125, 51, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 50%, transparent), transparent);
 }
 
 /* Card lift: consistent depth + accent edge on hover across all card grids. */
@@ -129,8 +156,8 @@ body {
 }
 .card-lift:hover {
   transform: translateY(-6px);
-  border-color: rgba(160, 125, 51, 0.45);
-  box-shadow: 0 18px 40px -18px rgba(25, 23, 18, 0.18);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--color-ink) 18%, transparent);
 }
 
 .animate-spin-slow {
@@ -151,8 +178,8 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(160, 125, 51, 0.05), transparent 62%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(160, 125, 51, 0.04), transparent 70%);
+    radial-gradient(ellipse 70% 50% at 50% 0%, color-mix(in srgb, var(--color-accent) 5%, transparent), transparent 62%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, color-mix(in srgb, var(--color-accent) 4%, transparent), transparent 70%);
 }
 
 .ambient-ocean::after {
@@ -162,8 +189,8 @@ body {
   pointer-events: none;
   opacity: 0.5;
   background-image:
-    linear-gradient(to right, #ece8dd 1px, transparent 1px),
-    linear-gradient(to bottom, #ece8dd 1px, transparent 1px);
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
   background-size: 4rem 4rem;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
 }
@@ -208,4 +235,65 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ── Theme system ──────────────────────────────────────────────
+   Generic aliases alongside the ink/paper/accent names above, so any
+   code (or future component) can reach the palette by its conventional
+   names too. Same values, same [data-theme="dark"] override. */
+:root {
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
+  --muted: var(--color-ink-soft);
+  --border: var(--color-line);
+  --card: var(--color-paper-warm);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+}
+
+/* ThemeToggle icon: sun rays retract/fade while the moon crescent grows
+   in, with a slight rotate+scale on the whole glyph. Pure CSS driven by
+   the [data-theme] attribute — no per-frame JS. */
+.theme-toggle-sun,
+.theme-toggle-moon {
+  transition: opacity 0.4s var(--ease-out-expo, ease), transform 0.4s var(--ease-out-expo, ease);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.theme-toggle-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+.theme-toggle-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+:root[data-theme='dark'] .theme-toggle-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+:root[data-theme='dark'] .theme-toggle-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Circular reveal overlay for the theme-switch transition. A fixed layer
+   clipped to an expanding circle centered on the toggle button; its own
+   background sweeps through a dark-gray/accent-red pass-through before
+   the new theme is fully visible underneath. Driven by Web Animations
+   API (ThemeToggle.jsx) so it works identically in every browser. */
+.theme-transition-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 55%, #1a1a1a) 0%, #1a1a1a 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-sun,
+  .theme-toggle-moon {
+    transition: opacity 0.15s linear;
+    transform: none !important;
+  }
 }

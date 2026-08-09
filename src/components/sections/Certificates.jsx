@@ -78,7 +78,7 @@ export default function Certificates() {
   }
 
   return (
-    <section id="certificates" className="relative w-full py-24 bg-[#f7f5f0] border-t border-[#a07d33]/10 overflow-hidden ambient-ocean">
+    <section id="certificates" className="relative w-full py-24 bg-(--card) border-t border-(--accent)/10 overflow-hidden ambient-ocean">
       {/* Decorative texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')]" />
       <LiquidGlassFilter />
@@ -86,13 +86,13 @@ export default function Certificates() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="eyebrow text-[#a07d33] mb-4">
+          <p className="eyebrow text-(--accent) mb-4">
             VERIFIED CREDENTIALS
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
-            <span className="w-1 h-1 rounded-full bg-[#a07d33]/60" />
-            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
+            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-(--accent)/50" />
+            <span className="w-1 h-1 rounded-full bg-(--accent)/60" />
+            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-(--accent)/50" />
           </div>
           <h2 className="font-headings text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest text-gold-gradient uppercase">
             Certificates
@@ -107,7 +107,7 @@ export default function Certificates() {
           tabIndex={0}
           role="region"
           aria-label="Certificates — horizontally scrollable list"
-          className="no-scrollbar -mx-6 md:-mx-12 flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-6 md:px-12 pb-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#a07d33]"
+          className="no-scrollbar -mx-6 md:-mx-12 flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-6 md:px-12 pb-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent)"
         >
           {certificates.map((cert, idx) => {
             const link = cert.verifyUrl || cert.file || cert.image
@@ -119,10 +119,10 @@ export default function Certificates() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
-                className="card-lift p-8 rounded-sm flex flex-col relative overflow-hidden group shadow-lg bg-[#ffffff] border border-[#a07d33]/10 w-[78vw] sm:w-[22rem] shrink-0 snap-start"
+                className="card-lift p-8 rounded-sm flex flex-col relative overflow-hidden group shadow-lg bg-(--background) border border-(--accent)/10 w-[78vw] sm:w-[22rem] shrink-0 snap-start"
               >
                 {cert.image ? (
-                  <div className="w-full aspect-[4/3] mb-6 rounded-sm overflow-hidden border border-[#a07d33]/20 bg-[#f7f5f0]">
+                  <div className="w-full aspect-[4/3] mb-6 rounded-sm overflow-hidden border border-(--accent)/20 bg-(--card)">
                     <img
                       src={cert.image}
                       alt={cert.title}
@@ -131,21 +131,21 @@ export default function Certificates() {
                     />
                   </div>
                 ) : (
-                  <div className="w-16 h-16 rounded-full border border-[#a07d33]/40 bg-[#a07d33]/15 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ease-out">
-                    <FaStamp size={24} className="text-[#a07d33]" />
+                  <div className="w-16 h-16 rounded-full border border-(--accent)/40 bg-(--accent)/15 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ease-out">
+                    <FaStamp size={24} className="text-(--accent)" />
                   </div>
                 )}
 
                 {/* Title & Issuer */}
                 <div className="mb-4">
-                  <h3 className="font-headings text-lg font-bold text-[#191712] tracking-wide leading-tight group-hover:text-[#a07d33] transition-colors">
+                  <h3 className="font-headings text-lg font-bold text-(--foreground) tracking-wide leading-tight group-hover:text-(--accent) transition-colors">
                     {cert.title}
                   </h3>
-                  <p className="text-[#5f594c] text-[9px] font-label tracking-[0.2em] uppercase mt-3">
+                  <p className="text-(--muted) text-[9px] font-label tracking-[0.2em] uppercase mt-3">
                     {cert.issuer}{cert.date ? ` • ${cert.date}` : ''}
                   </p>
                   {cert.credentialId && (
-                    <p className="text-[#5f594c] text-[9px] font-body mt-1">Credential ID: {cert.credentialId}</p>
+                    <p className="text-(--muted) text-[9px] font-body mt-1">Credential ID: {cert.credentialId}</p>
                   )}
                 </div>
 
@@ -155,7 +155,7 @@ export default function Certificates() {
                     href={link}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-auto flex items-center gap-2 text-[#5f594c] hover:text-[#191712] text-[10px] font-semibold font-label tracking-[0.2em] uppercase transition-colors"
+                    className="mt-auto flex items-center gap-2 text-(--muted) hover:text-(--foreground) text-[10px] font-semibold font-label tracking-[0.2em] uppercase transition-colors"
                   >
                     <span>View Credential</span>
                     <FaExternalLinkAlt size={10} />
@@ -163,7 +163,7 @@ export default function Certificates() {
                 ) : null}
 
                 {/* Top border trim */}
-                <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#a07d33] opacity-40 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-(--accent) opacity-40 group-hover:opacity-100 transition-opacity" />
               </motion.div>
             )
           })}
@@ -190,7 +190,7 @@ export default function Certificates() {
                 aria-selected={i === active}
                 role="tab"
                 className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === active ? 'w-7 bg-[#a07d33]' : 'w-1.5 bg-[#a07d33]/25 hover:bg-[#a07d33]/50'
+                  i === active ? 'w-7 bg-(--accent)' : 'w-1.5 bg-(--accent)/25 hover:bg-(--accent)/50'
                 }`}
               />
             ))}

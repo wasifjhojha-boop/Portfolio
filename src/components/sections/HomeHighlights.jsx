@@ -130,13 +130,13 @@ export default function HomeHighlights() {
       <section
         ref={metricsRef}
         aria-label="Results at a glance"
-        className="relative w-full bg-[#ffffff] border-t border-[#a07d33]/10 py-20 md:py-24 ambient-ocean overflow-hidden"
+        className="relative w-full bg-(--background) border-t border-(--accent)/10 py-20 md:py-24 ambient-ocean overflow-hidden"
       >
         <MorphicBackground ballColor="#d4a13a" className="absolute inset-0 -z-0 bg-transparent" />
 
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <div className="text-center mb-14">
-            <p className="eyebrow text-[#a07d33] mb-4">Proof In The Numbers</p>
+            <p className="eyebrow text-(--accent) mb-4">Proof In The Numbers</p>
             <h2 className="font-headings text-3xl md:text-5xl font-extrabold tracking-widest text-gold-gradient uppercase">
               Measurable Results
             </h2>
@@ -148,10 +148,10 @@ export default function HomeHighlights() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6">
             {METRICS.map((m) => (
               <div key={m.label} className="text-center">
-                <p className="font-headings text-3xl md:text-[2.75rem] font-extrabold text-[#a07d33] leading-none tabular-nums drop-shadow-[0_2px_12px_rgba(160,125,51,0.25)]">
+                <p className="font-headings text-3xl md:text-[2.75rem] font-extrabold text-(--accent) leading-none tabular-nums drop-shadow-[0_2px_12px_rgba(160,125,51,0.25)]">
                   <Counter active={metricsIn} to={m.to} decimals={m.decimals} prefix={m.prefix} suffix={m.suffix} />
                 </p>
-                <p className="font-label text-[9px] md:text-[10px] tracking-[0.2em] uppercase text-[#5f594c] mt-3 leading-snug">
+                <p className="font-label text-[9px] md:text-[10px] tracking-[0.2em] uppercase text-(--muted) mt-3 leading-snug">
                   {m.label}
                 </p>
               </div>
@@ -164,11 +164,11 @@ export default function HomeHighlights() {
       <section
         ref={workRef}
         aria-label="Selected work"
-        className="relative w-full bg-[#ffffff] border-t border-[#a07d33]/10 py-20 md:py-24 ambient-ocean overflow-hidden"
+        className="relative w-full bg-(--background) border-t border-(--accent)/10 py-20 md:py-24 ambient-ocean overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <div className="text-center mb-14 md:mb-16">
-            <p className="eyebrow text-[#a07d33] mb-4">Selected Work</p>
+            <p className="eyebrow text-(--accent) mb-4">Selected Work</p>
             <h2 className="font-headings text-3xl md:text-5xl font-extrabold tracking-widest text-gold-gradient uppercase">
               Selected Work
             </h2>
@@ -181,7 +181,7 @@ export default function HomeHighlights() {
                 style={{ transitionDelay: `${i * 100}ms` }}
                 className={`glass-panel card-lift rounded-sm overflow-hidden flex flex-col ${REVEAL} ${shown(workIn)}`}
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-[#f7f5f0]">
+                <div className="relative aspect-[16/10] overflow-hidden bg-(--card)">
                   {/* Not lazy-loaded: native lazy loading does not reliably
                       trigger inside the GSAP-pinned page flow, leaving the
                       cards blank. Only three small images, so eager is fine. */}
@@ -191,23 +191,23 @@ export default function HomeHighlights() {
                     decoding="async"
                     className="w-full h-full object-cover opacity-85"
                   />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 bg-[#ffffff]/80 backdrop-blur-sm text-[8px] font-label font-semibold tracking-[0.2em] uppercase text-[#a07d33] rounded-sm">
+                  <span className="absolute top-3 left-3 px-2.5 py-1 bg-(--background)/80 backdrop-blur-sm text-[8px] font-label font-semibold tracking-[0.2em] uppercase text-(--accent) rounded-sm">
                     {p.category}
                   </span>
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
-                  <h3 className="font-headings text-base font-bold tracking-wide text-[#191712] leading-snug mb-3">
+                  <h3 className="font-headings text-base font-bold tracking-wide text-(--foreground) leading-snug mb-3">
                     {p.title}
                   </h3>
-                  <p className="font-body text-xs text-[#5f594c] leading-relaxed mb-5 flex-1">
+                  <p className="font-body text-xs text-(--muted) leading-relaxed mb-5 flex-1">
                     {p.story?.[0]?.slice(0, 130)}…
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {p.techStack?.slice(0, 3).map((t) => (
                       <span
                         key={t}
-                        className="px-2 py-0.5 text-[8px] font-label tracking-[0.15em] uppercase text-[#5f594c] border border-[#a07d33]/15 rounded-sm"
+                        className="px-2 py-0.5 text-[8px] font-label tracking-[0.15em] uppercase text-(--muted) border border-(--accent)/15 rounded-sm"
                       >
                         {t}
                       </span>
@@ -221,7 +221,7 @@ export default function HomeHighlights() {
           <div className="text-center mt-12">
             <a
               href="/projects"
-              className="group inline-flex items-center gap-3 px-8 py-3.5 border border-[#a07d33]/40 text-[#191712] font-label font-semibold text-[10px] tracking-[0.22em] uppercase hover:bg-[#a07d33]/10 hover:border-[#a07d33] hover:text-[#a07d33] transition-all duration-300 rounded-sm"
+              className="group inline-flex items-center gap-3 px-8 py-3.5 border border-(--accent)/40 text-(--foreground) font-label font-semibold text-[10px] tracking-[0.22em] uppercase hover:bg-(--accent)/10 hover:border-(--accent) hover:text-(--accent) transition-all duration-300 rounded-sm"
             >
               View All Projects
               <FaArrowRight size={10} className="group-hover:translate-x-1 transition-transform duration-300" />
@@ -233,21 +233,21 @@ export default function HomeHighlights() {
       {/* ── Closing CTA ── */}
       <section
         aria-label="Start a project"
-        className="relative w-full bg-[#ffffff] border-t border-[#a07d33]/10 py-24 md:py-28 ambient-ocean overflow-hidden"
+        className="relative w-full bg-(--background) border-t border-(--accent)/10 py-24 md:py-28 ambient-ocean overflow-hidden"
       >
         <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-          <p className="eyebrow text-[#a07d33] mb-5">Drop Anchor</p>
+          <p className="eyebrow text-(--accent) mb-5">Drop Anchor</p>
           <h2 className="font-headings text-3xl md:text-5xl font-extrabold tracking-widest text-gold-gradient uppercase mb-6">
             Let&apos;s Build Something
           </h2>
-          <p className="font-body text-sm md:text-base text-[#5f594c] leading-relaxed mb-10">
+          <p className="font-body text-sm md:text-base text-(--muted) leading-relaxed mb-10">
             Whether you need campaigns that convert, a site that ranks, or a build that does both —
             I&apos;d like to hear what you&apos;re working on.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/contact"
-              className="px-8 py-4 rounded-sm bg-gradient-to-br from-[#e8c97a] via-[#a07d33] to-[#b8862a] text-[#ffffff] font-label font-semibold text-[10px] tracking-[0.22em] uppercase shadow-[0_8px_24px_-8px_rgba(160,125,51,0.6)] hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-8px_rgba(160,125,51,0.7)] transition-all duration-300"
+              className="px-8 py-4 rounded-sm bg-gradient-to-br from-[#e8c97a] via-(--accent) to-[#b8862a] text-[#ffffff] font-label font-semibold text-[10px] tracking-[0.22em] uppercase shadow-[0_8px_24px_-8px_rgba(160,125,51,0.6)] hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-8px_rgba(160,125,51,0.7)] transition-all duration-300"
             >
               Start a Project
             </a>
@@ -255,7 +255,7 @@ export default function HomeHighlights() {
               href={contact.resume}
               target="_blank"
               rel="noreferrer"
-              className="px-8 py-4 rounded-sm border border-[#a07d33]/40 text-[#191712] font-label font-semibold text-[10px] tracking-[0.22em] uppercase hover:bg-[#a07d33]/10 hover:border-[#a07d33] hover:text-[#a07d33] hover:-translate-y-0.5 transition-all duration-300"
+              className="px-8 py-4 rounded-sm border border-(--accent)/40 text-(--foreground) font-label font-semibold text-[10px] tracking-[0.22em] uppercase hover:bg-(--accent)/10 hover:border-(--accent) hover:text-(--accent) hover:-translate-y-0.5 transition-all duration-300"
             >
               Download CV
             </a>

@@ -21,7 +21,7 @@ export default function ShipScene() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-[130vh] bg-[#ffffff] overflow-hidden">
+    <section ref={sectionRef} className="relative w-full min-h-[130vh] bg-(--background) overflow-hidden">
       {/* 3D Canvas Background */}
       <div className="absolute inset-0 z-0">
         <Scene />
@@ -32,7 +32,7 @@ export default function ShipScene() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#ffffff] to-transparent pointer-events-none z-10" />
 
       {/* Decorative Border Line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-[1px] bg-gradient-to-r from-transparent via-[#a07d33]/30 to-transparent z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-[1px] bg-gradient-to-r from-transparent via-(--accent)/30 to-transparent z-10" />
 
       {/* Content Overlay */}
       <div className="relative z-20 w-full h-full flex flex-col items-center justify-center px-6 text-center pointer-events-none">
@@ -40,18 +40,18 @@ export default function ShipScene() {
           ref={overlayRef}
           className="max-w-2xl transform opacity-0 translate-y-8 transition-all duration-1000 ease-out"
         >
-          <p className="font-label text-[10px] md:text-xs tracking-[0.5em] text-[#a07d33] uppercase mb-4">
+          <p className="font-label text-[10px] md:text-xs tracking-[0.5em] text-(--accent) uppercase mb-4">
             INTERACTIVE 3D
           </p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#a07d33]/50" />
-            <span className="w-1 h-1 rounded-full bg-[#a07d33]/60 inline-block" />
-            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#a07d33]/50" />
+            <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-(--accent)/50" />
+            <span className="w-1 h-1 rounded-full bg-(--accent)/60 inline-block" />
+            <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-(--accent)/50" />
           </div>
-          <h2 className="font-headings text-4xl md:text-6xl font-bold tracking-tight text-[#191712] mb-6">
+          <h2 className="font-headings text-4xl md:text-6xl font-bold tracking-tight text-(--foreground) mb-6">
             3D <span className="font-light">Lab</span>
           </h2>
-          <p className="font-body text-sm md:text-base text-[#5f594c] leading-relaxed">
+          <p className="font-body text-sm md:text-base text-(--muted) leading-relaxed">
             A real-time scene built with React Three Fiber — custom GLSL shaders for the
             water and sky, instanced geometry, and a camera that responds to scroll and
             cursor. Everything here runs in the browser at 60fps.
@@ -61,7 +61,7 @@ export default function ShipScene() {
             {['React Three Fiber', 'Three.js', 'GLSL', 'WebGL', 'GSAP'].map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-[9px] font-label tracking-[0.15em] uppercase text-[#5f594c] border border-[#a07d33]/15 rounded-sm"
+                className="px-3 py-1 text-[9px] font-label tracking-[0.15em] uppercase text-(--muted) border border-(--accent)/15 rounded-sm"
               >
                 {tag}
               </span>
@@ -71,7 +71,7 @@ export default function ShipScene() {
           <div className="mt-10 pointer-events-auto">
             <a
               href="/projects"
-              className="inline-block px-8 py-3 border border-[#a07d33]/40 bg-[#ffffff]/40 text-[#191712] font-label font-semibold text-[10px] tracking-widest uppercase hover:bg-[#a07d33]/10 hover:border-[#a07d33] transition-all duration-300 backdrop-blur-sm"
+              className="inline-block px-8 py-3 border border-(--accent)/40 bg-(--background)/40 text-(--foreground) font-label font-semibold text-[10px] tracking-widest uppercase hover:bg-(--accent)/10 hover:border-(--accent) transition-all duration-300 backdrop-blur-sm"
             >
               See More Work
             </a>
