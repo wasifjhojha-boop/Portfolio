@@ -5,6 +5,7 @@ import { contact } from '../../content/contact'
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
+  { label: 'Landing', href: '/landing' },
   { label: '3D Lab', href: '/lab' },
   { label: 'About', href: '/about' },
   { label: 'Skills', href: '/skills' },
