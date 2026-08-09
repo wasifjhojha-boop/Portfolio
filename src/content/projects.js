@@ -99,7 +99,8 @@ export const projects = [
     title: "Scrap Traders",
     category: "Marketing",
     topics: ["Problem", "Business Goals", "Research", "Wireframes", "Development", "SEO", "Deployment", "Future Plans"],
-    image: "/projects/scrap-traders.svg",
+    image: "/projects/scrap-traders.jpg",
+    demo: "https://scrap-traders-ms.vercel.app",
   },
   {
     status: "pending",
