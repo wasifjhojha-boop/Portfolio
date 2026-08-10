@@ -284,6 +284,19 @@ body {
     transition-delay: var(--hd, 0s);
   }
   .js-reveal .hero-line.is-in { transform: translateY(0); }
+
+  /* Same clip-and-rise treatment as the hero headline, but triggered by
+     the existing on-scroll .reveal observer (via its parent's
+     .is-visible) instead of the hero's fixed page-load timer — so text
+     further down the page, like the About heading, animates in when it
+     actually scrolls into view rather than firing before anyone sees it. */
+  .js-reveal .text-line {
+    display: inline-block;
+    transform: translateY(115%);
+    transition: transform 0.9s var(--ease-out-expo);
+    transition-delay: var(--rd, 0s);
+  }
+  .reveal.is-visible .text-line { transform: translateY(0); }
 }
 
 /* Preloader — only ever shown when JS is alive to dismiss it. */
@@ -670,7 +683,7 @@ input, textarea, button, select { font: inherit; color: inherit; }
 
       <div class="lg:pt-4">
         <div class="reveal"><p class="eyebrow-mono">/About me</p></div>
-        <div class="reveal" style="--rd:0.08s"><h2 id="about-heading" class="display mt-6 text-ink-50 text-[clamp(2.4rem,6vw,5rem)]">One crew, one ship.</h2></div>
+        <div class="reveal" style="--rd:0.08s"><h2 id="about-heading" class="display mt-6 text-ink-50 text-[clamp(2.4rem,6vw,5rem)]"><span class="block overflow-hidden pb-[0.04em]"><span class="text-line block" style="--rd:0.1s">One crew,</span></span><span class="block overflow-hidden pb-[0.04em]"><span class="text-line block" style="--rd:0.2s">one ship.</span></span></h2></div>
         <div class="mt-10 space-y-6"><div class="reveal" style="--rd:0.16s"><p class="max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">I'm Mohd Wasif, based in Delhi — a detail-oriented digital marketing professional with hands-on experience in Google Ads, Meta Ads, SEO, and website optimization.</p></div><div class="reveal" style="--rd:0.26s"><p class="max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">My work spans paid campaigns, keyword research, and CPC/CTR optimization, alongside full-stack development with React, Next.js, and WordPress — plus a growing focus on 3D web with Three.js and React Three Fiber, and AI-assisted workflows.</p></div><div class="reveal" style="--rd:0.36s"><p class="max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">I hold multiple digital marketing certifications and I'm currently sharpening ROI, brand awareness, and Amazon PPC alongside the engineering side of the craft.</p></div></div>
       </div>
     </div>
