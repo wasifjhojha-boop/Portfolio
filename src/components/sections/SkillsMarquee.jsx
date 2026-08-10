@@ -19,7 +19,7 @@ export default function SkillsMarquee() {
   return (
     <section
       aria-label="Skills"
-      className="relative w-full bg-[#f6f1e6] py-8 md:py-10 border-y border-(--accent)/15"
+      className="relative w-full bg-(--card) py-8 md:py-10 border-y border-(--accent)/15"
     >
       <Marquee
         items={WORDS}
