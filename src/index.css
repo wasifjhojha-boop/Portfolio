@@ -17,7 +17,8 @@
   --font-body: 'Inter', sans-serif;
   --font-serif: 'Cormorant Garamond', serif;
 
-  /* Light palette (default). Deep red accent on warm ivory. Values are
+  /* Light palette (default). Gold accent on warm ivory — the original
+     brand accent, restored after a red-accent experiment. Values are
      real CSS custom properties (Tailwind v4 @theme), so every bg-paper /
      text-ink / border-accent utility below re-themes for free when
      [data-theme="dark"] overrides them further down this file — no
@@ -28,8 +29,8 @@
   --color-paper: #f7f5f2;       /* base surface: warm ivory */
   --color-paper-warm: #f1ece3;  /* alternating section surface */
   --color-line: #e4dcd2;        /* hairlines and borders */
-  --color-accent: #a6192e;      /* deep red */
-  --color-accent-soft: #c9576a;
+  --color-accent: #a07d33;      /* gold, contrast-safe on light */
+  --color-accent-soft: #c9a86a;
   --color-accent-foreground: #ffffff; /* text/icons on a solid accent fill */
 }
 
@@ -44,9 +45,9 @@
   --color-paper: #050505;        /* near-black */
   --color-paper-warm: #0d0d0d;   /* card / alternating surface */
   --color-line: rgba(255, 255, 255, 0.1);
-  --color-accent: #e50914;       /* cinematic deep red */
-  --color-accent-soft: #ff4550;
-  --color-accent-foreground: #ffffff;
+  --color-accent: #d4a13a;       /* brighter gold — reads better on near-black */
+  --color-accent-soft: #e8c97a;
+  --color-accent-foreground: #191712;
 }
 
 /* Base style resets and scroll behavior */
