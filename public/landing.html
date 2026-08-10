@@ -297,6 +297,34 @@ body {
     transition-delay: var(--rd, 0s);
   }
   .reveal.is-visible .text-line { transform: translateY(0); }
+
+  /* Balloon-inflate letters — pop in with an overshoot bounce, then
+     drift gently. Triggered by the same .reveal/.is-visible scroll
+     observer as everything else on the page, not a fixed page-load
+     timer, so it doesn't fire wasted off-screen if the section starts
+     below the fold (same reasoning as .text-line above). */
+  @keyframes bl-inflate {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  @keyframes bl-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .balloon-letter {
+    display: inline-block;
+    transform: scale(0);
+    opacity: 0;
+  }
+  .reveal.is-visible .balloon-letter {
+    animation:
+      bl-inflate 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) var(--rd, 0s) both,
+      bl-float 3s ease-in-out calc(var(--rd, 0s) + 0.7s) infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .balloon-letter { transform: none; opacity: 1; }
 }
 
 /* Preloader — only ever shown when JS is alive to dismiss it. */
@@ -682,7 +710,9 @@ input, textarea, button, select { font: inherit; color: inherit; }
       </div>
 
       <div class="lg:pt-4">
-        <div class="reveal"><p class="eyebrow-mono">/About me</p></div>
+        <div class="reveal"><p class="display text-2xl sm:text-3xl tracking-[-0.02em]" aria-label="About me">
+          <span class="balloon-letter" style="--rd:0.00s;color:#fff">A</span><span class="balloon-letter" style="--rd:0.07s;color:#e8eaed">B</span><span class="balloon-letter" style="--rd:0.14s;color:#e8eaed">O</span><span class="balloon-letter" style="--rd:0.21s;color:#c8ccd1">U</span><span class="balloon-letter" style="--rd:0.28s;color:#c8ccd1">T</span><span class="balloon-letter" style="--rd:0.35s;color:transparent"> </span><span class="balloon-letter" style="--rd:0.42s;color:#a8adb5">M</span><span class="balloon-letter" style="--rd:0.49s;color:#a8adb5">E</span>
+        </p></div>
         <div class="reveal" style="--rd:0.08s"><h2 id="about-heading" class="display mt-6 text-ink-50 text-[clamp(2.4rem,6vw,5rem)]"><span class="block overflow-hidden pb-[0.04em]"><span class="text-line block" style="--rd:0.1s">One crew,</span></span><span class="block overflow-hidden pb-[0.04em]"><span class="text-line block" style="--rd:0.2s">one ship.</span></span></h2></div>
         <div class="mt-10 space-y-6"><div class="reveal" style="--rd:0.16s"><p class="max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">I'm Mohd Wasif, based in Delhi — a detail-oriented digital marketing professional with hands-on experience in Google Ads, Meta Ads, SEO, and website optimization.</p></div><div class="reveal" style="--rd:0.26s"><p class="max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">My work spans paid campaigns, keyword research, and CPC/CTR optimization, alongside full-stack development with React, Next.js, and WordPress — plus a growing focus on 3D web with Three.js and React Three Fiber, and AI-assisted workflows.</p></div><div class="reveal" style="--rd:0.36s"><p class="max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">I hold multiple digital marketing certifications and I'm currently sharpening ROI, brand awareness, and Amazon PPC alongside the engineering side of the craft.</p></div></div>
       </div>
