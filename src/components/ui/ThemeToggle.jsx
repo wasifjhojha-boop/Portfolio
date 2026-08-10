@@ -1,23 +1,7 @@
 import { useSyncExternalStore } from 'react'
+import { getThemeSnapshot, subscribeTheme } from '../../lib/theme'
 
 const STORAGE_KEY = 'theme'
-
-// Module-level store: <html data-theme> is the single source of truth, so
-// every consumer (just this button) reads the DOM directly instead of
-// needing a Context provider wrapped around the whole app.
-function getSnapshot() {
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
-}
-
-function subscribe(callback) {
-  // Custom event fired by applyTheme(); storage event syncs other tabs.
-  window.addEventListener('themechange', callback)
-  window.addEventListener('storage', callback)
-  return () => {
-    window.removeEventListener('themechange', callback)
-    window.removeEventListener('storage', callback)
-  }
-}
 
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme
@@ -85,7 +69,7 @@ function playTransition(originX, originY, nextTheme) {
 }
 
 export default function ThemeToggle({ className = '' }) {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, () => 'light')
+  const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => 'light')
   const isDark = theme === 'dark'
 
   const handleClick = (e) => {

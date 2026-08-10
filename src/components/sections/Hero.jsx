@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import CharacterScene from '../three/CharacterScene'
+import { FloatingPathsBackground } from '../ui/floating-paths'
+import { getThemeSnapshot, subscribeTheme } from '../../lib/theme'
 import { contact } from '../../content/contact'
 
 // Developer-first ordering: engineering leads, growth work supports it.
@@ -61,6 +63,8 @@ export default function Hero() {
   const mouse = useRef({ x: 0, y: 0 })
   const [reducedMotion, setReducedMotion] = useState(false)
   const [slide, setSlide] = useState(0)
+  const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => 'light')
+  const isDark = theme === 'dark'
 
   // Scroll-driven showcase: GSAP pins the hero while the outer wrapper
   // scrolls, and progress picks the active slide. (position: sticky breaks
@@ -182,6 +186,16 @@ export default function Hero() {
 
         {/* Animated grain */}
         <div className="grain-overlay absolute inset-0 opacity-[0.05]" />
+
+        {/* Drifting line texture — dark mode only, adds depth to the
+            near-black background the way the glow blobs do for light. */}
+        {isDark && (
+          <FloatingPathsBackground
+            position={-1}
+            reducedMotion={reducedMotion}
+            className="absolute inset-0 h-full opacity-40"
+          />
+        )}
       </div>
 
       {/* ── Giant background typography ── */}
