@@ -191,13 +191,13 @@ export default function Hero() {
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none will-change-transform"
       >
         <span
-          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-(--foreground) opacity-[0.07] whitespace-nowrap"
+          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-(--foreground) opacity-(--hero-giant-opacity) whitespace-nowrap"
           style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
         >
           Web
         </span>
         <span
-          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-(--foreground) opacity-[0.07] whitespace-nowrap"
+          className="font-label font-semibold uppercase leading-[0.83] tracking-[-0.02em] text-(--foreground) opacity-(--hero-giant-opacity) whitespace-nowrap"
           style={{ fontSize: 'clamp(5rem, 17vw, 19rem)' }}
         >
           Developer

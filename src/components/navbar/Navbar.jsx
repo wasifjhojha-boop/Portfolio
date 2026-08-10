@@ -68,32 +68,47 @@ export default function Navbar() {
           </svg>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden lg:flex items-center gap-6">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              aria-current={currentPath === item.href ? 'page' : undefined}
-              className={`relative text-[11px] font-label font-medium tracking-[0.22em] uppercase transition-colors duration-300 py-1 group ${
-                currentPath === item.href ? 'text-(--accent)' : 'text-(--muted) hover:text-(--accent)'
-              }`}
-            >
-              {item.label}
-              <span className={`absolute bottom-0 left-0 h-[1px] bg-(--accent) transition-all duration-300 group-hover:w-full ${
-                currentPath === item.href ? 'w-full' : 'w-0'
-              }`} />
-            </a>
-          ))}
-          <a
-            href={contact.resume}
-            target="_blank"
-            rel="noreferrer"
-            className="px-5 py-2 border border-(--accent)/40 text-(--accent) font-label text-[11px] font-semibold tracking-[0.22em] uppercase hover:bg-gradient-to-r hover:from-(--accent) hover:to-(--accent) hover:text-[#ffffff] hover:border-(--accent) transition-all duration-400 rounded-sm"
+        {/* Desktop Navigation — links scroll independently in the space
+            available; CV + theme toggle sit in a shrink-0 group so they're
+            never pushed off past the page's overflow-x-hidden edge (that
+            was the bug: 11 links + CV + toggle in one non-wrapping row
+            overflowed on real laptop widths, clipping the toggle off
+            entirely — mobile always fit since it only shows 2 icons). */}
+        <div className="hidden lg:flex items-center gap-4 min-w-0 flex-1 justify-end">
+          <div
+            className="flex items-center gap-6 overflow-x-auto no-scrollbar min-w-0"
+            style={{
+              maskImage: 'linear-gradient(to right, black calc(100% - 28px), transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, black calc(100% - 28px), transparent)',
+            }}
           >
-            Download CV
-          </a>
-          <ThemeToggle />
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                aria-current={currentPath === item.href ? 'page' : undefined}
+                className={`relative shrink-0 text-[11px] font-label font-medium tracking-[0.22em] uppercase transition-colors duration-300 py-1 group ${
+                  currentPath === item.href ? 'text-(--accent)' : 'text-(--muted) hover:text-(--accent)'
+                }`}
+              >
+                {item.label}
+                <span className={`absolute bottom-0 left-0 h-[1px] bg-(--accent) transition-all duration-300 group-hover:w-full ${
+                  currentPath === item.href ? 'w-full' : 'w-0'
+                }`} />
+              </a>
+            ))}
+          </div>
+          <div className="flex items-center gap-4 shrink-0">
+            <a
+              href={contact.resume}
+              target="_blank"
+              rel="noreferrer"
+              className="px-5 py-2 border border-(--accent)/40 text-(--accent) font-label text-[11px] font-semibold tracking-[0.22em] uppercase hover:bg-gradient-to-r hover:from-(--accent) hover:to-(--accent) hover:text-[#ffffff] hover:border-(--accent) transition-all duration-400 rounded-sm whitespace-nowrap"
+            >
+              Download CV
+            </a>
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* Mobile: theme toggle + hamburger */}

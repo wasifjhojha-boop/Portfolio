@@ -249,6 +249,15 @@ body {
   --card: var(--color-paper-warm);
   --accent: var(--color-accent);
   --accent-foreground: var(--color-accent-foreground);
+  /* Low-alpha light-on-dark reads much fainter than the same alpha
+     dark-on-light (small absolute luminance delta near black), so the
+     hero's giant background typography needs more opacity in dark mode
+     to stay at a comparable visible weight. */
+  --hero-giant-opacity: 0.065;
+}
+
+:root[data-theme='dark'] {
+  --hero-giant-opacity: 0.14;
 }
 
 /* ThemeToggle icon: sun rays retract/fade while the moon crescent grows
