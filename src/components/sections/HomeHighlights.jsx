@@ -1,8 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 import { FaArrowRight } from 'react-icons/fa'
 import { projects } from '../../content/projects'
 import { contact } from '../../content/contact'
+import { bio } from '../../content/profile'
 import MorphicBackground from '../three/MorphicBackground'
+
+// Same reduced-motion check Hero.jsx uses for its own floating blobs.
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduced(mq.matches)
+    const onChange = (e) => setReduced(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+  return reduced
+}
 
 // Real campaign figures from the Muqeem & Brothers case study, plus career
 // totals. Hard numbers are the strongest proof a performance marketer can
@@ -120,9 +135,12 @@ const shown = (on) => (on ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y
 
 export default function HomeHighlights() {
   const metricsRef = useRef(null)
+  const aboutRef = useRef(null)
   const workRef = useRef(null)
   const metricsIn = useRevealed(metricsRef)
+  const aboutIn = useRevealed(aboutRef)
   const workIn = useRevealed(workRef)
+  const reducedMotion = useReducedMotion()
 
   return (
     <>
@@ -157,6 +175,51 @@ export default function HomeHighlights() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── About glance: bio on one side, looping video on the other ── */}
+      <section
+        ref={aboutRef}
+        aria-label="About Mohd Wasif"
+        className="relative w-full bg-(--background) border-t border-(--accent)/10 py-20 md:py-24 ambient-ocean overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className={`${REVEAL} ${shown(aboutIn)}`}>
+            <p className="eyebrow text-(--accent) mb-4">Who I Am</p>
+            <h2 className="font-headings text-3xl md:text-5xl font-extrabold tracking-widest text-gold-gradient uppercase mb-6">
+              {bio.title}
+            </h2>
+            <p className="font-body text-sm md:text-base text-(--muted) leading-relaxed mb-8">
+              {bio.summary[0]}
+            </p>
+            <a
+              href="/about"
+              className="group inline-flex items-center gap-3 px-8 py-3.5 border border-(--accent)/40 text-(--foreground) font-label font-semibold text-[10px] tracking-[0.22em] uppercase hover:bg-(--accent)/10 hover:border-(--accent) hover:text-(--accent) transition-all duration-300 rounded-sm"
+            >
+              Read Full Story
+              <FaArrowRight size={10} className="group-hover:translate-x-1 transition-transform duration-300" />
+            </a>
+          </div>
+
+          {/* Floats gently on both axes — same pattern as the Hero's
+              background blobs, just with a video card riding it. */}
+          <motion.div
+            className={`relative mx-auto w-full max-w-sm aspect-[9/16] rounded-sm overflow-hidden glass-panel card-lift ${REVEAL} ${shown(aboutIn)}`}
+            style={{ transitionDelay: '150ms' }}
+            animate={reducedMotion ? {} : { x: [0, 14, -10, 0], y: [0, -18, 10, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <video
+              src="/videos/about-loop.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
         </div>
       </section>
 
