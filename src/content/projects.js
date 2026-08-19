@@ -132,7 +132,7 @@ export const projects = [
     title: "Zamzam Pet Shop",
     category: "WordPress",
     topics: ["Minimal Design", "Color Palette", "E-commerce Ready"],
-    image: "/projects/pet-shop.svg",
+    image: "/projects/pet-shop.jpg",
   },
 ];
 
